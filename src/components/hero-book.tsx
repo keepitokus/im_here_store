@@ -66,20 +66,33 @@ const HERO_SPREADS = [
 
 export function HeroBook() {
   const [index, setIndex] = useState(0);
+  const [engaged, setEngaged] = useState(false);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (media.matches) return;
+    if (engaged) return;
     const timer = window.setInterval(() => {
       setIndex((v) => (v + 1) % HERO_SPREADS.length);
     }, 5500);
     return () => window.clearInterval(timer);
-  }, []);
+  }, [engaged]);
 
   const current = HERO_SPREADS[index];
 
+  function show(next: number) {
+    setEngaged(true);
+    setIndex(next);
+  }
+
   return (
-    <div className="relative mx-auto w-full">
+    <div
+      className={`hero-book-stage relative mx-auto w-full ${engaged ? "is-engaged" : ""}`}
+      onPointerDown={() => setEngaged(true)}
+    >
+      <div className="hero-book-shadow" aria-hidden="true" />
+      <div className="hero-book-float">
+        <div className="hero-book-tilt">
       {/* Подложка многостраничного книжного блока */}
       <div
         aria-hidden
@@ -103,7 +116,7 @@ export function HeroBook() {
           </div>
 
           {/* Чистая крупная фотография обложки без мелких плавающих миниатюр поверх лиц */}
-          <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#EAE0D2]">
+          <div key={current.id} className="motion-spread relative aspect-[16/10] w-full overflow-hidden bg-[#EAE0D2]">
             <Image
               src={current.mainImage}
               alt={current.mainAlt}
@@ -146,7 +159,7 @@ export function HeroBook() {
                     <button
                       key={item.id}
                       type="button"
-                      onClick={() => setIndex(i)}
+                      onClick={() => show(i)}
                       aria-label={`Показать обложку ${item.title}`}
                       className={`h-3 rounded-full transition-all ${
                         i === index
@@ -159,9 +172,7 @@ export function HeroBook() {
                 <button
                   type="button"
                   onClick={() =>
-                    setIndex(
-                      (index - 1 + HERO_SPREADS.length) % HERO_SPREADS.length
-                    )
+                    show((index - 1 + HERO_SPREADS.length) % HERO_SPREADS.length)
                   }
                   aria-label="Предыдущая книга"
                   className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#C8B9A6] bg-[#FFFDF8] text-[#1F3042] hover:bg-[#EFE7DA]"
@@ -170,7 +181,7 @@ export function HeroBook() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setIndex((index + 1) % HERO_SPREADS.length)}
+                  onClick={() => show((index + 1) % HERO_SPREADS.length)}
                   aria-label="Следующая книга"
                   className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#C8B9A6] bg-[#FFFDF8] text-[#1F3042] hover:bg-[#EFE7DA]"
                 >
@@ -179,6 +190,8 @@ export function HeroBook() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
         </div>
       </div>
     </div>
