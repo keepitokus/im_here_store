@@ -96,8 +96,8 @@ export function BookTimeline({
 
   return (
     <div className="book-timeline w-full min-w-0" data-wide-at={WIDE_CONTAINER_PX}>
-      <div className="book-timeline-compact" data-layout="compact">
-        <ol className="relative ml-3 space-y-4 border-l border-[#D4C5B3] pl-5 sm:ml-4 sm:pl-6">
+      <div className="book-timeline-compact px-4 py-6 sm:px-6 sm:py-8" data-layout="compact">
+        <ol className="relative ml-4 space-y-4 border-l border-[#D4C5B3] pl-5 sm:ml-5 sm:pl-6">
           {events.map((event, index) => {
             const open = event.id === resolvedId;
             const triggerId = `${baseId}-trigger-${event.id}`;
@@ -180,7 +180,9 @@ export function BookTimeline({
             );
           })}
         </ol>
-        {footnote && <p className="mt-5 text-xs leading-relaxed text-[#6E6256]">{footnote}</p>}
+        {footnote && (
+          <p className="mt-6 text-xs leading-relaxed text-[#6E6256]">{footnote}</p>
+        )}
       </div>
 
       <div className="book-timeline-wide" data-layout="wide">
@@ -231,7 +233,7 @@ export function BookTimeline({
             </ol>
           </div>
 
-          <div className={`col-span-5 flex flex-col justify-between p-7 sm:p-10 ${washClassName}`}>
+          <div className={`col-span-5 flex flex-col justify-between px-7 py-8 sm:px-10 sm:py-12 ${washClassName}`}>
             <div className="space-y-4">
               <span className="text-xs uppercase tracking-[0.18em] text-[#7A6855]">
                 {selected.images.length > 0 ? "Кадр выбранной главы" : "Карточка выбранной главы"}
@@ -248,7 +250,9 @@ export function BookTimeline({
                 </p>
               )}
             </div>
-            {footnote && <p className="pt-4 text-xs text-[#6E6256]">{footnote}</p>}
+            {footnote && (
+              <p className="mt-8 text-xs leading-relaxed text-[#6E6256]">{footnote}</p>
+            )}
           </div>
         </div>
       </div>
