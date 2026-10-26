@@ -65,31 +65,31 @@ export default function HomePage() {
       <SiteHeader />
 
       <main className="flex flex-1 flex-col">
-        <section className="order-1 bg-[#F7F2E9] px-5 pb-8 pt-5 lg:hidden">
-          <p className="mh-title text-[13px] font-semibold uppercase tracking-[0.22em] text-[#7A6855]">
+        <section className="order-1 bg-[#F7F2E9] px-5 pb-6 pt-4 lg:hidden">
+          <p className="mh-title text-[13px] font-semibold uppercase tracking-[0.18em] text-[#7A6855]">
             Когда слова важнее подарка
           </p>
-          <h1 className="mh-title mt-3 font-serif text-[34px] leading-[1.08] tracking-normal text-[#1F3042] min-[390px]:text-[42px]">
+          <h1 className="mh-title mt-2 font-serif text-[28px] leading-[1.12] text-[#1F3042] min-[390px]:text-[32px]">
             Есть истории, которые хочется подарить
           </h1>
-          <p className="mh-sub mt-4 max-w-[28ch] text-[17px] leading-snug text-[#2F3E4E]">
+          <p className="mh-sub mt-2 text-base leading-snug text-[#2F3E4E]">
             Ваши фотографии, воспоминания и самые тёплые слова — в одной красивой цифровой книге.
           </p>
 
           <Link
             href="/demo/love-story"
-            className="mh-book mt-6 block"
+            className="mh-book mt-4 block"
             aria-label="Открыть демонстрационную книгу «Наша история»"
           >
             <span className="relative block">
               <span
                 aria-hidden
-                className="absolute inset-y-3 left-4 right-1 rounded-r-[28px] border border-[#E4D3C0] bg-[#EFE4D4]"
+                className="absolute inset-y-2 left-3 right-1 rounded-r-[24px] border border-[#E4D3C0] bg-[#EFE4D4]"
               />
-              <span className="relative block overflow-hidden rounded-[28px] border border-[#D8C9B5] bg-[#FFFDF8] shadow-[0_28px_50px_-30px_rgba(31,48,66,0.55)]">
-                <span aria-hidden className="absolute inset-y-0 left-0 z-10 w-3.5 bg-[#6E2F3B]" />
-                <span className="block pl-3.5">
-                  <span className="relative block h-[min(32vh,260px)] w-full overflow-hidden bg-[#EAE0D2]">
+              <span className="relative block overflow-hidden rounded-[24px] border border-[#D8C9B5] bg-[#FFFDF8] shadow-[0_28px_50px_-30px_rgba(31,48,66,0.55)]">
+                <span aria-hidden className="absolute inset-y-0 left-0 z-10 w-3 bg-[#6E2F3B]" />
+                <span className="block pl-3">
+                  <span className="relative block h-[min(26vh,200px)] w-full overflow-hidden bg-[#EAE0D2]">
                     <Image
                       src="/images/books/love-1-cover.webp"
                       alt="Влюблённая пара на каменном мосту — обложка книги «Наша история»"
@@ -99,11 +99,11 @@ export default function HomePage() {
                       className="object-cover object-[center_30%]"
                     />
                   </span>
-                  <span className="block bg-[#F6ECEA] px-5 py-4">
-                    <span className="block text-[13px] font-semibold uppercase tracking-[0.18em] text-[#7A3E4A]">
+                  <span className="block bg-[#F6ECEA] px-4 py-3">
+                    <span className="block text-[13px] font-semibold uppercase tracking-[0.16em] text-[#7A3E4A]">
                       Наша история
                     </span>
-                    <span className="mt-1 block font-serif text-[32px] leading-[1.08] text-[#1F3042]">
+                    <span className="mt-0.5 block font-serif text-2xl leading-[1.1] text-[#1F3042]">
                       Анна и Михаил
                     </span>
                   </span>
@@ -111,15 +111,15 @@ export default function HomePage() {
               </span>
             </span>
           </Link>
-          <p className="mt-3 text-center text-sm text-[#7A6855]">Нажмите, чтобы открыть книгу</p>
+          <p className="mt-2 text-center text-sm text-[#7A6855]">Нажмите, чтобы открыть книгу</p>
 
           <Link
             href="/catalog"
-            className="mt-5 inline-flex min-h-14 w-full items-center justify-center rounded-full bg-[#1F3042] px-6 text-base font-medium text-[#F7F2E9] shadow-xs hover:bg-[#162433]"
+            className="mt-3 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#1F3042] px-6 text-base font-medium text-[#F7F2E9] shadow-xs hover:bg-[#162433]"
           >
             Выбрать подарок
           </Link>
-          <p className="mt-3 text-center text-sm text-[#3E4C5C]">
+          <p className="mt-2 text-center text-sm text-[#3E4C5C]">
             Четыре истории · От 4 990 ₽ · Создаётся онлайн
           </p>
         </section>
