@@ -28,8 +28,8 @@ export default function CatalogPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
-          <ProductCard slug="mother-thanks" />
-          <ProductCard slug="love-story" />
+          <ProductCard slug="mother-thanks" priority />
+          <ProductCard slug="love-story" priority />
           <ProductCard slug="your-day" />
           <ProductCard slug="first-year" />
         </div>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter, Marck_Script } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -16,15 +16,10 @@ const inter = Inter({
   display: "swap",
 });
 
-const marck = Marck_Script({
-  variable: "--font-script",
-  subsets: ["cyrillic", "latin"],
-  weight: "400",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://127.0.0.1:43123"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL || "http://127.0.0.1:43123"
+  ),
   title: {
     default: "Я здесь — цифровые книги для самых близких",
     template: "%s · Я здесь",
@@ -48,7 +43,7 @@ export default function RootLayout({
   return (
     <html
       lang="ru"
-      className={`${cormorant.variable} ${inter.variable} ${marck.variable} h-full antialiased`}
+      className={`${cormorant.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#F7F2E9] text-[#1F3042]">
         {children}

@@ -16,8 +16,13 @@ import { BookContentJsonV1 } from "./book-schema";
 export const DEMO_CUSTOMER_EMAIL = "demo@ya-zdes.ru";
 export const DEMO_ADMIN_EMAIL = "admin@ya-zdes.ru";
 
+const seededDbInstances = new WeakSet<object>();
+
 export function ensureDemoSeed() {
   const db = getDb();
+  if (seededDbInstances.has(db)) {
+    return;
+  }
   const existingDemoUser = db
     .select()
     .from(users)
@@ -25,7 +30,7 @@ export function ensureDemoSeed() {
     .get();
 
   if (existingDemoUser) {
-    // Обновляем старые SVG-заглушки в демо-книгах на реальные фотографии, если база уже была создана
+    // Обновляем старые SVG-заглушки в демо-книгах на реальные фотографии один раз на инстанс БД
     db.update(mediaAssets)
       .set({
         mimeType: "image/webp",
@@ -47,6 +52,7 @@ export function ensureDemoSeed() {
       })
       .where(eq(mediaAssets.id, "med_demo_ls_1"))
       .run();
+    seededDbInstances.add(db);
     return;
   }
 
@@ -473,4 +479,6 @@ export function ensureDemoSeed() {
       updatedAt: now,
     })
     .run();
+
+  seededDbInstances.add(db);
 }

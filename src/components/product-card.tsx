@@ -78,7 +78,13 @@ export const EDITORIAL_PRODUCT_CARDS: Record<ProductSlug, EditorialCardConfig> =
   },
 };
 
-export function ProductCard({ slug }: { slug: ProductSlug }) {
+export function ProductCard({
+  slug,
+  priority = false,
+}: {
+  slug: ProductSlug;
+  priority?: boolean;
+}) {
   const product = PRODUCTS_CATALOG[slug];
   const cfg = EDITORIAL_PRODUCT_CARDS[slug];
   const price = formatRublesFromKopecks(product.initialPriceKopecks);
@@ -107,8 +113,9 @@ export function ProductCard({ slug }: { slug: ProductSlug }) {
                   src={cfg.scenePhoto}
                   alt={cfg.sceneAlt}
                   fill
-                  loading="eager"
-                  sizes="(max-width: 768px) 100vw, 560px"
+                  priority={priority}
+                  loading={priority ? "eager" : "lazy"}
+                  sizes="(max-width: 768px) 100vw, 520px"
                   className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
                 />
               </div>

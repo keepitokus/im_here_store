@@ -5,7 +5,6 @@ import { CinematicDemo } from "@/components/cinematic-demo";
 import { getProductBySlug, PRODUCT_SLUGS } from "@/lib/catalog";
 import { DEMO_SAMPLE_BOOKS } from "@/lib/demo-books";
 import { LANDINGS } from "@/lib/landing";
-import { trackServerEvent } from "@/lib/analytics";
 
 export function generateStaticParams() {
   return PRODUCT_SLUGS.map((slug) => ({ slug }));
@@ -36,7 +35,6 @@ export default async function DemoBookPage({
   if (!product) notFound();
   const sample = DEMO_SAMPLE_BOOKS[product.slug];
   const landing = LANDINGS[product.slug];
-  trackServerEvent({ event: "open_demo", productSlug: product.slug });
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F7F2E9]">

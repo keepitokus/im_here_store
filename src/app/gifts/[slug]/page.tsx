@@ -7,7 +7,6 @@ import { getProductBySlug, PRODUCT_SLUGS } from "@/lib/catalog";
 import { DEMO_SAMPLE_BOOKS } from "@/lib/demo-books";
 import { LANDINGS, SHOW_MOTHERS_DAY_BANNER } from "@/lib/landing";
 import { formatRublesFromKopecks } from "@/lib/utils";
-import { trackServerEvent } from "@/lib/analytics";
 import { ArrowRight, BookOpen, CheckCircle2 } from "lucide-react";
 
 export function generateStaticParams() {
@@ -45,7 +44,6 @@ export default async function GiftProductPage({
 
   const page = LANDINGS[product.slug];
   const sample = DEMO_SAMPLE_BOOKS[product.slug];
-  trackServerEvent({ event: "view_product", productSlug: product.slug });
 
   const price = formatRublesFromKopecks(product.initialPriceKopecks);
 
@@ -172,8 +170,8 @@ export default async function GiftProductPage({
                       src={photo.dataUrl}
                       alt={photo.altText}
                       fill
-                      loading="eager"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                      loading="lazy"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>
@@ -230,8 +228,8 @@ export default async function GiftProductPage({
                         src={spreadPhoto.dataUrl}
                         alt={spreadPhoto.altText}
                         fill
-                        loading="eager"
-                        sizes="(max-width: 640px) 100vw, 280px"
+                        loading="lazy"
+                        sizes="(max-width: 640px) 100vw, 260px"
                         className="object-cover"
                       />
                     </div>

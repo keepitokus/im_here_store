@@ -133,8 +133,8 @@ export default function HomePage() {
                     src="/images/books/love-2-first-date.webp"
                     alt="Молодая пара на первом свидании в уютной книжной кофейне при свечах"
                     fill
-                    loading="eager"
-                    sizes="(max-width: 1024px) 100vw, 680px"
+                    loading="lazy"
+                    sizes="(max-width: 1024px) 100vw, 640px"
                     className="object-cover"
                   />
                 </div>
@@ -150,8 +150,8 @@ export default function HomePage() {
                       src="/images/books/love-3-walk.webp"
                       alt="Осенняя прогулка пары по набережной"
                       fill
-                      loading="eager"
-                      sizes="(max-width: 768px) 50vw, 320px"
+                      loading="lazy"
+                      sizes="(max-width: 768px) 50vw, 300px"
                       className="object-cover"
                     />
                   </div>
@@ -166,8 +166,8 @@ export default function HomePage() {
                       src="/images/books/love-4-travel.webp"
                       alt="Первое путешествие пары к морю"
                       fill
-                      loading="eager"
-                      sizes="(max-width: 768px) 50vw, 320px"
+                      loading="lazy"
+                      sizes="(max-width: 768px) 50vw, 300px"
                       className="object-cover"
                     />
                   </div>
@@ -296,8 +296,8 @@ export default function HomePage() {
                         src={card.img}
                         alt={card.alt}
                         fill
-                        loading="eager"
-                        sizes="(max-width: 768px) 100vw, 400px"
+                        loading="lazy"
+                        sizes="(max-width: 768px) 100vw, 380px"
                         className="object-cover"
                       />
                     </div>
@@ -376,8 +376,8 @@ export default function HomePage() {
                       src={step.img}
                       alt={step.alt}
                       fill
-                      loading="eager"
-                      sizes="(max-width: 768px) 100vw, 400px"
+                      loading="lazy"
+                      sizes="(max-width: 768px) 100vw, 380px"
                       className="object-cover"
                     />
                     <span className="absolute left-4 top-4 rounded-full bg-[#1F3042] px-4 py-1.5 font-serif text-base font-medium text-[#FFFDF8] shadow-xs">
@@ -410,8 +410,8 @@ export default function HomePage() {
                     src="/images/books/story-family-reading.webp"
                     alt="Семья вечером на диване вместе рассматривает цифровую фотокнигу на планшете и телефоне"
                     fill
-                    loading="eager"
-                    sizes="(max-width: 1024px) 100vw, 620px"
+                    loading="lazy"
+                    sizes="(max-width: 1024px) 100vw, 580px"
                     className="object-cover"
                   />
                 </div>

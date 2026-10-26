@@ -508,6 +508,7 @@ export function CinematicDemo({
   }, [spreads.length]);
 
   const spread = spreads[index];
+  const nextPhoto = photos[Math.min(photos.length - 1, index + 1)];
 
   return (
     <div className="layout-container py-8 sm:py-12 space-y-6">
@@ -617,6 +618,19 @@ export function CinematicDemo({
           <ChevronRight className="h-4 w-4" />
         </button>
       </div>
+
+      {/* Предзагрузка фотографии только одного соседнего разворота для мгновенного листания без пустых страниц */}
+      {nextPhoto && index < spreads.length - 1 && (
+        <div className="sr-only pointer-events-none h-0 w-0 overflow-hidden" aria-hidden="true">
+          <Image
+            src={nextPhoto.dataUrl}
+            alt=""
+            width={640}
+            height={480}
+            loading="lazy"
+          />
+        </div>
+      )}
     </div>
   );
 }

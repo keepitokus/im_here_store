@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { isDemoMode } from "@/lib/env";
-import { getCurrentUser } from "@/lib/auth";
-import { ensureDemoSeed } from "@/lib/demo-seed";
 import { SiteNav } from "@/components/site-nav";
 import { BrandLogo } from "@/components/brand-logo";
 
-export async function SiteHeader() {
-  ensureDemoSeed();
+export function SiteHeader({
+  accountLabel = "Кабинет",
+}: {
+  accountLabel?: string;
+} = {}) {
   const demo = isDemoMode();
-  const user = await getCurrentUser();
 
   return (
     <>
@@ -21,7 +21,7 @@ export async function SiteHeader() {
         </div>
       )}
       <header className="sticky top-0 z-40 border-b border-[#DFD2C0] bg-[#F7F2E9]/95 backdrop-blur-md">
-        <SiteNav accountLabel={user ? "Мои книги" : "Кабинет"} />
+        <SiteNav accountLabel={accountLabel} />
       </header>
     </>
   );

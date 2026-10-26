@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -15,7 +16,18 @@ import {
   createDefaultBookContent,
 } from "@/lib/book-schema";
 import { formatRublesFromKopecks } from "@/lib/utils";
-import { BookReaderView, BookReaderPhoto } from "@/components/book-reader";
+import type { BookReaderPhoto } from "@/components/book-reader";
+
+const BookReaderView = dynamic(
+  () => import("@/components/book-reader").then((mod) => mod.BookReaderView),
+  {
+    loading: () => (
+      <div className="p-10 text-center text-sm text-[#4E5D6C]">
+        Подготавливаем интерактивный предпросмотр книги...
+      </div>
+    ),
+  }
+);
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
