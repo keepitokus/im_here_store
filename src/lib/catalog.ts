@@ -1,3 +1,5 @@
+import { EDITOR_COPY } from "@/lib/editor-copy";
+
 export type ProductSlug =
   | "love-story"
   | "mother-thanks"
@@ -9,6 +11,8 @@ export interface ProductQuestionField {
   label: string;
   placeholder: string;
   helperText: string;
+  /** Текст, который попадает в ответ только по явному нажатию «Подставить пример». */
+  example: string;
   required?: boolean;
   type: "short" | "long" | "date" | "number";
   step: "basics" | "questions";
@@ -134,69 +138,13 @@ export const PRODUCTS_CATALOG: Record<ProductSlug, ProductCatalogItem> = {
       },
     ],
     fields: [
-      {
-        id: "partnerNames",
-        label: "Ваши имена",
-        placeholder: "Например: Анна и Михаил",
-        helperText: "Появятся на титульной обложке книги",
-        required: true,
-        type: "short",
-        step: "basics",
-      },
-      {
-        id: "meetingDate",
-        label: "Дата знакомства или начала истории",
-        placeholder: "Например: 14 сентября 2021 или «Той самой осенью»",
-        helperText: "Можно указать точную дату или тёплую формулировку",
-        required: true,
-        type: "short",
-        step: "basics",
-      },
-      {
-        id: "occasionNote",
-        label: "Повод или посвящение на обложке",
-        placeholder: "Например: К нашей пятой годовщине",
-        helperText: "Короткий подзаголовок на первом развороте",
-        required: false,
-        type: "short",
-        step: "basics",
-      },
-      {
-        id: "howWeMet",
-        label: "Как вы познакомились?",
-        placeholder: "Например: В маленькой кофейне на Покровке, когда оба потянулись за последним круассаном...",
-        helperText: "Достаточно 2–4 живых предложений, не нужно писать роман",
-        required: true,
-        type: "long",
-        step: "questions",
-      },
-      {
-        id: "firstDate",
-        label: "Каким было первое свидание?",
-        placeholder: "Например: Мы гуляли под дождём три часа и совсем забыли про зонт...",
-        helperText: "Деталь, улыбка или смешной момент, который помните вы оба",
-        required: false,
-        type: "long",
-        step: "questions",
-      },
-      {
-        id: "favoritePlace",
-        label: "Ваше любимое место",
-        placeholder: "Например: Скамейка на набережной у старого моста или столик у окна в «Маяке»",
-        helperText: "Точка на карте вашей истории",
-        required: false,
-        type: "short",
-        step: "questions",
-      },
-      {
-        id: "personalConfession",
-        label: "Личное признание в финале книги",
-        placeholder: "Например: Спасибо, что рядом с тобой даже обычный вторник становится праздником. Я здесь, всегда рядом.",
-        helperText: "Откроется на последней странице как запечатанное письмо",
-        required: true,
-        type: "long",
-        step: "questions",
-      },
+      question("love-story", "partnerNames", { required: true, type: "short", step: "basics" }),
+      question("love-story", "meetingDate", { required: true, type: "short", step: "basics" }),
+      question("love-story", "occasionNote", { required: false, type: "short", step: "basics" }),
+      question("love-story", "howWeMet", { required: true, type: "long", step: "questions" }),
+      question("love-story", "firstDate", { required: false, type: "long", step: "questions" }),
+      question("love-story", "favoritePlace", { required: false, type: "short", step: "questions" }),
+      question("love-story", "personalConfession", { required: true, type: "long", step: "questions" }),
     ],
     chapterPrompts: [
       {
@@ -275,69 +223,13 @@ export const PRODUCTS_CATALOG: Record<ProductSlug, ProductCatalogItem> = {
       },
     ],
     fields: [
-      {
-        id: "motherName",
-        label: "Как вы обращаетесь к маме в книге?",
-        placeholder: "Например: Любимой маме Елене или Мамочке",
-        helperText: "Станет заголовком обложки и обращения",
-        required: true,
-        type: "short",
-        step: "basics",
-      },
-      {
-        id: "authorName",
-        label: "От кого эта книга?",
-        placeholder: "Например: От твоей дочери Кати",
-        helperText: "Подпись автора на титульном листе и в финальном письме",
-        required: true,
-        type: "short",
-        step: "basics",
-      },
-      {
-        id: "childhoodNickname",
-        label: "Как мама ласково называла вас в детстве?",
-        placeholder: "Например: «Солнышко моё», «Воробушек» или «Профессор»",
-        helperText: "Эта деталь мгновенно вызывает самую тёплую улыбку",
-        required: false,
-        type: "short",
-        step: "questions",
-      },
-      {
-        id: "vividMemory",
-        label: "Яркое воспоминание из детства",
-        placeholder: "Например: Как мы лепили пельмени всей семьёй под старое радио, а на окне замерзали узоры...",
-        helperText: "Любая живая картина из дома, поездок или праздников",
-        required: true,
-        type: "long",
-        step: "questions",
-      },
-      {
-        id: "whatSheTaught",
-        label: "Чему главному мама вас научила?",
-        placeholder: "Например: Не бояться начинать заново, держать слово и всегда находить красоту в простых вещах.",
-        helperText: "Мудрость или привычка, которую вы забрали во взрослую жизнь",
-        required: true,
-        type: "long",
-        step: "questions",
-      },
-      {
-        id: "gratitudeList",
-        label: "За что вы особенно благодарны?",
-        placeholder: "Например: За бессонные ночи перед моими экзаменами, за веру в меня и за самый вкусный яблочный пирог.",
-        helperText: "Можно перечислить через запятую или короткими фразами",
-        required: true,
-        type: "long",
-        step: "questions",
-      },
-      {
-        id: "finalLetterToMom",
-        label: "Финальное письмо маме",
-        placeholder: "Например: Мама, даже когда между нами сотни километров, я всегда чувствую твоё тепло. Спасибо тебе за жизнь и за дом, куда всегда хочется вернуться.",
-        helperText: "Завершающий разворот книги",
-        required: true,
-        type: "long",
-        step: "questions",
-      },
+      question("mother-thanks", "motherName", { required: true, type: "short", step: "basics" }),
+      question("mother-thanks", "authorName", { required: true, type: "short", step: "basics" }),
+      question("mother-thanks", "childhoodNickname", { required: false, type: "short", step: "questions" }),
+      question("mother-thanks", "vividMemory", { required: true, type: "long", step: "questions" }),
+      question("mother-thanks", "whatSheTaught", { required: true, type: "long", step: "questions" }),
+      question("mother-thanks", "gratitudeList", { required: true, type: "long", step: "questions" }),
+      question("mother-thanks", "finalLetterToMom", { required: true, type: "long", step: "questions" }),
     ],
     chapterPrompts: [
       {
@@ -415,69 +307,14 @@ export const PRODUCTS_CATALOG: Record<ProductSlug, ProductCatalogItem> = {
       },
     ],
     fields: [
-      {
-        id: "celebrantName",
-        label: "Имя именинника",
-        placeholder: "Например: Александр или Даша",
-        helperText: "Будет крупно вынесено на обложку издания",
-        required: true,
-        type: "short",
-        step: "basics",
-      },
-      {
-        id: "celebrantAge",
-        label: "Возраст или знаковая цифра (необязательно)",
-        placeholder: "Например: 30 лет или оставьте пустым",
-        helperText: "По желанию — можно не указывать возраст",
-        required: false,
-        type: "short",
-        step: "basics",
-      },
-      {
-        id: "fromWho",
-        label: "От кого подарок?",
-        placeholder: "Например: От твоих близких друзей или От Иры",
-        helperText: "Подпись дарителя",
-        required: true,
-        type: "short",
-        step: "basics",
-      },
-      {
-        id: "mainGreeting",
-        label: "Главное поздравление",
-        placeholder: "Например: С твоим днём! Пусть этот год принесёт столько же вдохновения и смеха, сколько ты даришь всем вокруг.",
-        helperText: "Открывает первый разворот книги",
-        required: true,
-        type: "long",
-        step: "questions",
-      },
-      {
-        id: "bestMoments",
-        label: "Лучшие совместные моменты",
-        placeholder: "Например: Ночной переезд на другой конец города, спонтанная поездка в горы и наши бесконечные разговоры на кухне.",
-        helperText: "Истории, которые заставляют улыбнуться с полуслова",
-        required: true,
-        type: "long",
-        step: "questions",
-      },
-      {
-        id: "whyWeLoveYou",
-        label: "Раздел «За что мы тебя любим»",
-        placeholder: "Например: За твоё умение поддержать без лишних слов, редкую честность и заразительный смех.",
-        helperText: "Главная эмоциональная глава книги",
-        required: true,
-        type: "long",
-        step: "questions",
-      },
-      {
-        id: "wishesForFuture",
-        label: "Пожелания и мечты на новый год жизни",
-        placeholder: "Например: Смелых проектов, спокойных утр у моря и людей рядом, с которыми легко быть собой.",
-        helperText: "Финальный аккорд книги",
-        required: true,
-        type: "long",
-        step: "questions",
-      },
+      question("your-day", "celebrantName", { required: true, type: "short", step: "basics" }),
+      question("your-day", "celebrantAge", { required: false, type: "short", step: "basics" }),
+      question("your-day", "fromWho", { required: true, type: "short", step: "basics" }),
+      question("your-day", "mainGreeting", { required: true, type: "long", step: "questions" }),
+      question("your-day", "bestMoments", { required: true, type: "long", step: "questions" }),
+      question("your-day", "whyWeLoveYou", { required: true, type: "long", step: "questions" }),
+      question("your-day", "wishesForFuture", { required: true, type: "long", step: "questions" }),
+      question("your-day", "finalCongrats", { required: false, type: "long", step: "questions" }),
     ],
     chapterPrompts: [
       {
@@ -556,69 +393,15 @@ export const PRODUCTS_CATALOG: Record<ProductSlug, ProductCatalogItem> = {
       },
     ],
     fields: [
-      {
-        id: "babyName",
-        label: "Имя малыша",
-        placeholder: "Например: Лев или София",
-        helperText: "Данные о ребёнке приватны по умолчанию и закрыты от поисковиков",
-        required: true,
-        type: "short",
-        step: "basics",
-      },
-      {
-        id: "birthDate",
-        label: "Дата рождения",
-        placeholder: "Например: 12 мая 2026",
-        helperText: "Точка отсчёта для глав 0–12 месяцев",
-        required: true,
-        type: "short",
-        step: "basics",
-      },
-      {
-        id: "birthMetrics",
-        label: "Рост и вес при рождении (необязательно)",
-        placeholder: "Например: 3 450 г · 52 см (можно пропустить)",
-        helperText: "Заполняется только по желанию родителей",
-        required: false,
-        type: "short",
-        step: "basics",
-      },
-      {
-        id: "firstAchievements",
-        label: "Главные достижения и первые открытия",
-        placeholder: "Например: Первая осознанная улыбка в 6 недель, переворот на животик в 4 месяца, первые шаги у дивана...",
-        helperText: "Можно дополнять книгу новыми записями весь оплаченный период",
-        required: true,
-        type: "long",
-        step: "questions",
-      },
-      {
-        id: "firstWords",
-        label: "Первые слова, звуки и улыбки",
-        placeholder: "Например: «Ма-ма», «Ба-ба», смешное «Агу-гу» при виде кота и восторг от мыльных пузырей.",
-        helperText: "Те самые милые мелочи, которые быстрее всего забываются без записи",
-        required: false,
-        type: "long",
-        step: "questions",
-      },
-      {
-        id: "monthsHighlights",
-        label: "Заметки по месяцам (0–12 мес.)",
-        placeholder: "Например: 1 мес — знакомимся с миром; 3 мес — смеётся в голос; 6 мес — пробует брокколи; 12 мес — задувает первую свечку!",
-        helperText: "Вы также сможете вести отдельные карточки месяцев в таймлайне ниже",
-        required: true,
-        type: "long",
-        step: "questions",
-      },
-      {
-        id: "letterToBaby",
-        label: "Письмо малышу в будущее",
-        placeholder: "Например: Когда ты вырастешь и откроешь эту книгу, знай: твой приход сделал наш мир бесконечно светлее...",
-        helperText: "Финальная глава от мамы и папы",
-        required: true,
-        type: "long",
-        step: "questions",
-      },
+      question("first-year", "babyName", { required: true, type: "short", step: "basics" }),
+      question("first-year", "birthDate", { required: true, type: "short", step: "basics" }),
+      question("first-year", "birthMetrics", { required: false, type: "short", step: "basics" }),
+      question("first-year", "howWeWelcomed", { required: false, type: "long", step: "questions" }),
+      question("first-year", "firstSmile", { required: false, type: "long", step: "questions" }),
+      question("first-year", "firstAchievements", { required: true, type: "long", step: "questions" }),
+      question("first-year", "firstWords", { required: false, type: "long", step: "questions" }),
+      question("first-year", "monthsHighlights", { required: true, type: "long", step: "questions" }),
+      question("first-year", "letterToBaby", { required: true, type: "long", step: "questions" }),
     ],
     chapterPrompts: [
       {
@@ -659,4 +442,23 @@ export function isValidProductSlug(slug: string): slug is ProductSlug {
 export function getProductBySlug(slug: string): ProductCatalogItem | null {
   if (!isValidProductSlug(slug)) return null;
   return PRODUCTS_CATALOG[slug];
+}
+
+function question(
+  slug: ProductSlug,
+  id: string,
+  meta: Pick<ProductQuestionField, "required" | "type" | "step">
+): ProductQuestionField {
+  const copy = EDITOR_COPY[slug].fields[id];
+  if (!copy) {
+    throw new Error(`Нет подсказок редактора для ${slug}.${id}`);
+  }
+  return {
+    id,
+    label: copy.label,
+    placeholder: copy.placeholder,
+    helperText: copy.hint,
+    example: copy.example,
+    ...meta,
+  };
 }

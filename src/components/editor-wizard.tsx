@@ -10,6 +10,7 @@ import {
   PRODUCT_SLUGS,
   ProductSlug,
 } from "@/lib/catalog";
+import { editorCopy, insertExample } from "@/lib/editor-copy";
 import { DEMO_SAMPLE_BOOKS } from "@/lib/demo-books";
 import {
   BookContentJsonV1,
@@ -47,16 +48,6 @@ import {
   AlertCircle,
 } from "lucide-react";
 
-const WIZARD_STEPS = [
-  { num: 1, title: "Выбор подарка" },
-  { num: 2, title: "Имена и повод" },
-  { num: 3, title: "Фотографии" },
-  { num: 4, title: "Вопросы по теме" },
-  { num: 5, title: "Оформление" },
-  { num: 6, title: "Предпросмотр" },
-  { num: 7, title: "Оплата" },
-];
-
 export interface EditorWizardProps {
   initialSlug: ProductSlug;
   initialUser: { id: string; email: string; name?: string | null } | null;
@@ -86,6 +77,7 @@ export function EditorWizard({
   const [step, setStep] = useState<number>(existingBook ? 2 : 1);
   const [selectedSlug, setSelectedSlug] = useState<ProductSlug>(initialSlug);
   const product = PRODUCTS_CATALOG[selectedSlug];
+  const copy = editorCopy(selectedSlug);
 
   const [bookId, setBookId] = useState<string | null>(() => {
     if (existingBook?.id) return existingBook.id;
@@ -471,7 +463,7 @@ export function EditorWizard({
               Редактор издания · Шаг {step} из 7
             </div>
             <h1 className="font-serif text-xl sm:text-2xl font-semibold text-[#231C18]">
-              {product.title} — {WIZARD_STEPS[step - 1]?.title}
+              {product.title} — {copy.steps[step - 1]?.title}
             </h1>
           </div>
 
@@ -512,14 +504,15 @@ export function EditorWizard({
 
         {/* Индикатор 7 шагов */}
         <div className="grid grid-cols-7 gap-1.5 pt-1">
-          {WIZARD_STEPS.map((s) => {
-            const active = s.num === step;
-            const done = s.num < step;
+          {copy.steps.map((s, index) => {
+            const num = index + 1;
+            const active = num === step;
+            const done = num < step;
             return (
               <button
-                key={s.num}
+                key={num}
                 type="button"
-                onClick={() => setStep(s.num)}
+                onClick={() => setStep(num)}
                 className={`flex flex-col items-start rounded-xl p-2 text-left transition-colors ${
                   active
                     ? "bg-[#2B1E1A] text-[#FAF7F2]"
@@ -529,7 +522,7 @@ export function EditorWizard({
                 }`}
               >
                 <span className="text-[10px] font-semibold uppercase">
-                  Шаг {s.num}
+                  Шаг {num}
                 </span>
                 <span className="text-xs font-medium truncate w-full hidden sm:inline">
                   {s.title}
@@ -555,11 +548,9 @@ export function EditorWizard({
         <section className="rounded-3xl border border-[#DFD6CA] bg-[#FFFEFA] p-6 sm:p-8 space-y-6">
           <div className="space-y-1">
             <h2 className="font-serif text-2xl font-semibold text-[#231C18]">
-              1. Выберите издание для вашей истории
+              1. {copy.steps[0].title}
             </h2>
-            <p className="text-sm text-[#574940]">
-              От выбранного повода зависят вопросы, цветовые темы и структура глав.
-            </p>
+            <p className="text-sm text-[#574940]">{copy.steps[0].lead}</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -620,11 +611,9 @@ export function EditorWizard({
         <section className="rounded-3xl border border-[#DFD6CA] bg-[#FFFEFA] p-6 sm:p-8 space-y-6">
           <div className="space-y-1">
             <h2 className="font-serif text-2xl font-semibold text-[#231C18]">
-              2. Имена, дата и обложка книги
+              2. {copy.steps[1].title}
             </h2>
-            <p className="text-sm text-[#574940]">
-              Заполните главные ориентиры. Вы сможете изменить любое слово позже.
-            </p>
+            <p className="text-sm text-[#574940]">{copy.steps[1].lead}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -641,13 +630,13 @@ export function EditorWizard({
                     </span>
                   )}
                 </label>
+                <p className="text-xs text-[#7A6B60]">{field.helperText}</p>
                 <Input
                   id={`field-${field.id}`}
                   value={content.answers[field.id] || ""}
                   onChange={(e) => updateAnswer(field.id, e.target.value)}
                   placeholder={field.placeholder}
                 />
-                <p className="text-xs text-[#7A6B60]">{field.helperText}</p>
               </div>
             ))}
           </div>
@@ -658,32 +647,50 @@ export function EditorWizard({
                 htmlFor="cover-title"
                 className="block text-sm font-medium text-[#231C18]"
               >
-                Заголовок на обложке книги
+                {copy.coverTitle.label}
               </label>
+              <p className="text-xs text-[#7A6B60]">{copy.coverTitle.hint}</p>
               <Input
                 id="cover-title"
                 value={content.coverTitle}
                 onChange={(e) =>
                   setContent((p) => ({ ...p, coverTitle: e.target.value }))
                 }
-                placeholder="Заголовок обложки"
+                placeholder={copy.coverTitle.placeholder}
               />
             </div>
 
             <div className="space-y-1.5">
-              <label
-                htmlFor="cover-dedication"
-                className="block text-sm font-medium text-[#231C18]"
-              >
-                Короткое посвящение на титульном листе (необязательно)
-              </label>
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <label
+                  htmlFor="cover-dedication"
+                  className="block text-sm font-medium text-[#231C18]"
+                >
+                  {copy.dedication.label}{" "}
+                  <span className="text-xs font-normal text-[#7A6B60]">(необязательно)</span>
+                </label>
+                <button
+                  type="button"
+                  className="text-xs font-medium text-[#6E2638] hover:underline disabled:opacity-40"
+                  disabled={Boolean(content.dedication.trim())}
+                  onClick={() =>
+                    setContent((p) => ({
+                      ...p,
+                      dedication: insertExample(p.dedication, copy.dedication.example),
+                    }))
+                  }
+                >
+                  Подставить пример
+                </button>
+              </div>
+              <p className="text-xs text-[#7A6B60]">{copy.dedication.hint}</p>
               <Input
                 id="cover-dedication"
                 value={content.dedication}
                 onChange={(e) =>
                   setContent((p) => ({ ...p, dedication: e.target.value }))
                 }
-                placeholder="Например: С любовью в наш особенный день"
+                placeholder={copy.dedication.placeholder}
               />
             </div>
           </div>
@@ -696,12 +703,9 @@ export function EditorWizard({
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="space-y-1">
               <h2 className="font-serif text-2xl font-semibold text-[#231C18]">
-                3. Фотографии вашей истории (до 30 снимков)
+                3. {copy.photos.title} (до 30 снимков)
               </h2>
-              <p className="text-sm text-[#574940]">
-                Поддерживаются JPEG, PNG и WebP до 15 МБ. На сервере проверяется
-                сигнатура файла, выполняется авто-поворот и оптимизация.
-              </p>
+              <p className="text-sm text-[#574940]">{copy.photos.lead}</p>
             </div>
             <span className="rounded-full bg-[#EFE9DE] px-3.5 py-1 text-xs font-semibold text-[#231C18]">
               Загружено: {photos.length} / 30
@@ -716,11 +720,12 @@ export function EditorWizard({
               >
                 Подпись к загружаемой фотографии (по желанию)
               </label>
+              <p className="text-xs text-[#7A6B60]">{copy.photos.caption.hint}</p>
               <Input
                 id="photo-caption-input"
                 value={photoCaptionDraft}
                 onChange={(e) => setPhotoCaptionDraft(e.target.value)}
-                placeholder="Например: Июльский вечер на набережной"
+                placeholder={copy.photos.caption.placeholder}
               />
             </div>
 
@@ -806,12 +811,9 @@ export function EditorWizard({
         <section className="rounded-3xl border border-[#DFD6CA] bg-[#FFFEFA] p-6 sm:p-8 space-y-8">
           <div className="space-y-1">
             <h2 className="font-serif text-2xl font-semibold text-[#231C18]">
-              4. Короткие вопросы для книги {product.title}
+              4. {copy.steps[3].title}
             </h2>
-            <p className="text-sm text-[#574940]">
-              Не нужно писать длинные эссе — двух-трёх искренних фраз достаточно.
-              Необязательные поля можно оставить пустыми.
-            </p>
+            <p className="text-sm text-[#574940]">{copy.questionsLead}</p>
           </div>
 
           <div className="space-y-5">
@@ -829,18 +831,17 @@ export function EditorWizard({
                   </label>
                   <button
                     type="button"
+                    disabled={Boolean((content.answers[field.id] || "").trim())}
                     onClick={() =>
-                      updateAnswer(
-                        field.id,
-                        field.placeholder.replace(/^Например:\s*/i, "")
-                      )
+                      updateAnswer(field.id, insertExample(content.answers[field.id] || "", field.example))
                     }
-                    className="text-xs font-medium text-[#6E2638] hover:underline"
+                    className="text-xs font-medium text-[#6E2638] hover:underline disabled:opacity-40"
                   >
                     Подставить пример
                   </button>
                 </div>
 
+                <p className="text-xs text-[#7A6B60]">{field.helperText}</p>
                 {field.type === "long" ? (
                   <Textarea
                     id={`q-${field.id}`}
@@ -856,7 +857,6 @@ export function EditorWizard({
                     placeholder={field.placeholder}
                   />
                 )}
-                <p className="text-xs text-[#7A6B60]">{field.helperText}</p>
               </div>
             ))}
           </div>
@@ -866,12 +866,9 @@ export function EditorWizard({
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
                 <h3 className="font-serif text-xl font-semibold text-[#231C18]">
-                  Таймлайн памятных дат и моментов
+                  {copy.timeline.title}
                 </h3>
-                <p className="text-xs text-[#7A6B60]">
-                  Точные даты сортируются автоматически, а для неопределённых дат
-                  можно написать свободный текст (например, «Той самой весной»).
-                </p>
+                <p className="text-xs text-[#7A6B60]">{copy.timeline.hint}</p>
               </div>
               <Button
                 type="button"
@@ -939,7 +936,7 @@ export function EditorWizard({
                           return { ...p, timeline: next };
                         });
                       }}
-                      placeholder="Например: Осень 2022"
+                      placeholder={copy.timeline.datePlaceholder}
                     />
                   </div>
                   <div className="sm:col-span-5 space-y-1">
@@ -956,7 +953,7 @@ export function EditorWizard({
                           return { ...p, timeline: next };
                         });
                       }}
-                      placeholder="Название момента"
+                      placeholder={copy.timeline.titlePlaceholder}
                     />
                     <Input
                       value={ev.description}
@@ -968,7 +965,7 @@ export function EditorWizard({
                           return { ...p, timeline: next };
                         });
                       }}
-                      placeholder="Короткое описание..."
+                      placeholder={copy.timeline.descriptionPlaceholder}
                       className="mt-1.5"
                     />
                     <label className="mt-2 block text-[11px] font-medium text-[#7A6B60]">
@@ -1023,12 +1020,9 @@ export function EditorWizard({
         <section className="rounded-3xl border border-[#DFD6CA] bg-[#FFFEFA] p-6 sm:p-8 space-y-8">
           <div className="space-y-1">
             <h2 className="font-serif text-2xl font-semibold text-[#231C18]">
-              5. Палитра оформления и настройки приватности
+              5. {copy.steps[4].title}
             </h2>
-            <p className="text-sm text-[#574940]">
-              Выберите цветовую тему издания и при желании установите защитный
-              PIN-код для получателя.
-            </p>
+            <p className="text-sm text-[#574940]">{copy.steps[4].lead}</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1103,9 +1097,7 @@ export function EditorWizard({
         <section className="space-y-4">
           <div className="rounded-2xl border border-[#E8CC88] bg-[#FFF5DC] p-4 flex flex-wrap items-center justify-between gap-3">
             <div className="text-xs sm:text-sm text-[#6B4800]">
-              <strong>Шаг 6 · Предпросмотр перед оплатой:</strong> так будет
-              выглядеть ваша книга. Водяной знак «ПРЕДПРОСМОТР» исчезнет сразу
-              после оплаты.
+              <strong>Шаг 6 · {copy.steps[5].title}:</strong> {copy.preview.banner}
             </div>
             {bookId && (
               <Link
@@ -1139,7 +1131,7 @@ export function EditorWizard({
               Ваша книга «{content.coverTitle}» готова к публикации
             </h2>
             <p className="text-sm text-[#574940] leading-relaxed">
-              Стоимость издания {product.title} составляет{" "}
+              {copy.publishLead} Стоимость издания {product.title} составляет{" "}
               <strong>{formatRublesFromKopecks(product.initialPriceKopecks)}</strong>{" "}
               (включая 12 месяцев приватного размещения, секретную ссылку, QR-код и
               возможность скачивания архива).

@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import { BookContentJsonV1, sortTimelineEvents } from "@/lib/book-schema";
+import { editorCopy } from "@/lib/editor-copy";
 import { BookTimeline } from "@/components/book-timeline";
 import { toTimelineEvents } from "@/lib/timeline-view";
 import { getProductBySlug, isValidProductSlug } from "@/lib/catalog";
@@ -85,6 +86,11 @@ export function BookReaderView({
   const borderClass = theme?.borderClass || "border-[#E6CDD2]";
   const textClass = theme?.textClass || "text-[#231C18]";
   const mutedClass = theme?.mutedClass || "text-[#6E5D53]";
+
+  const previewCopy = isValidProductSlug(content.productSlug)
+    ? editorCopy(content.productSlug).preview
+    : null;
+  const emptyFragment = previewCopy?.emptyFragment ?? "";
 
   const spreads = useMemo(() => {
     const items: { id: string; label: string; node: React.ReactNode }[] = [];
@@ -178,21 +184,19 @@ export function BookReaderView({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className={`rounded-2xl border ${borderClass} p-5 space-y-2`}>
                 <h3 className={`font-serif text-xl font-medium ${textClass}`}>
-                  Как мы познакомились
+                  {product?.fields.find((field) => field.id === "howWeMet")?.label || "Как всё начиналось?"}
                 </h3>
                 <p className={`text-sm sm:text-base leading-relaxed whitespace-pre-line ${textClass}`}>
-                  {content.answers.howWeMet ||
-                    "Иногда одна случайная минута меняет маршрут целой жизни."}
+                  {content.answers.howWeMet || emptyFragment}
                 </p>
               </div>
 
               <div className={`rounded-2xl border ${borderClass} p-5 space-y-2`}>
                 <h3 className={`font-serif text-xl font-medium ${textClass}`}>
-                  Наше первое свидание
+                  {product?.fields.find((field) => field.id === "firstDate")?.label || "Наш самый счастливый момент"}
                 </h3>
                 <p className={`text-sm sm:text-base leading-relaxed whitespace-pre-line ${textClass}`}>
-                  {content.answers.firstDate ||
-                    "Тот самый вечер, когда разговор не хотелось заканчивать."}
+                  {content.answers.firstDate || emptyFragment}
                 </p>
               </div>
             </div>
@@ -240,7 +244,7 @@ export function BookReaderView({
             <div className="space-y-5">
               <div className={`rounded-2xl border ${borderClass} p-5 space-y-2`}>
                 <h3 className={`font-serif text-xl font-medium ${textClass}`}>
-                  Яркое воспоминание детства
+                  {product?.fields.find((field) => field.id === "vividMemory")?.label || "Моё любимое воспоминание"}
                 </h3>
                 <p className={`text-sm sm:text-base leading-relaxed whitespace-pre-line ${textClass}`}>
                   {content.answers.vividMemory}
@@ -259,7 +263,7 @@ export function BookReaderView({
 
                 <div className={`rounded-2xl border ${borderClass} p-5 space-y-2`}>
                   <h3 className={`font-serif text-xl font-medium ${textClass}`}>
-                    За что я говорю тебе «Спасибо»
+                    {product?.fields.find((field) => field.id === "gratitudeList")?.label || "За что я тебе благодарен"}
                   </h3>
                   <p className={`text-sm sm:text-base leading-relaxed whitespace-pre-line ${textClass}`}>
                     {content.answers.gratitudeList}
@@ -299,7 +303,9 @@ export function BookReaderView({
 
             <div className={`rounded-2xl ${badgeClass} p-5 sm:p-6`}>
               <p className="font-serif text-lg sm:text-xl leading-relaxed">
-                «{content.answers.mainGreeting}»
+                {content.answers.mainGreeting
+                  ? `«${content.answers.mainGreeting}»`
+                  : emptyFragment}
               </p>
               {content.answers.fromWho && (
                 <p className="mt-2 text-xs font-medium uppercase tracking-wider opacity-80">
@@ -311,7 +317,7 @@ export function BookReaderView({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className={`rounded-2xl border ${borderClass} p-5 space-y-2`}>
                 <h3 className={`font-serif text-xl font-medium ${textClass}`}>
-                  Лучшие совместные моменты
+                  {product?.fields.find((field) => field.id === "bestMoments")?.label || "Наше любимое воспоминание"}
                 </h3>
                 <p className={`text-sm sm:text-base leading-relaxed whitespace-pre-line ${textClass}`}>
                   {content.answers.bestMoments}
@@ -320,13 +326,24 @@ export function BookReaderView({
 
               <div className={`rounded-2xl border ${borderClass} p-5 space-y-2`}>
                 <h3 className={`font-serif text-xl font-medium ${textClass}`}>
-                  За что мы тебя любим и ценим
+                  {product?.fields.find((field) => field.id === "whyWeLoveYou")?.label || "За что мы тебя любим"}
                 </h3>
                 <p className={`text-sm sm:text-base leading-relaxed whitespace-pre-line ${textClass}`}>
                   {content.answers.whyWeLoveYou}
                 </p>
               </div>
             </div>
+
+            {content.answers.finalCongrats && (
+              <div className={`rounded-2xl border ${borderClass} p-5 space-y-2`}>
+                <h3 className={`font-serif text-xl font-medium ${textClass}`}>
+                  {product?.fields.find((field) => field.id === "finalCongrats")?.label}
+                </h3>
+                <p className={`text-sm sm:text-base leading-relaxed whitespace-pre-line ${textClass}`}>
+                  {content.answers.finalCongrats}
+                </p>
+              </div>
+            )}
           </div>
         ),
       });
@@ -361,10 +378,32 @@ export function BookReaderView({
               )}
             </div>
 
+            {content.answers.howWeWelcomed && (
+              <div className={`rounded-2xl border ${borderClass} p-5 space-y-2`}>
+                <h3 className={`font-serif text-xl font-medium ${textClass}`}>
+                  {product?.fields.find((field) => field.id === "howWeWelcomed")?.label}
+                </h3>
+                <p className={`text-sm sm:text-base leading-relaxed whitespace-pre-line ${textClass}`}>
+                  {content.answers.howWeWelcomed}
+                </p>
+              </div>
+            )}
+
+            {content.answers.firstSmile && (
+              <div className={`rounded-2xl border ${borderClass} p-5 space-y-2`}>
+                <h3 className={`font-serif text-xl font-medium ${textClass}`}>
+                  {product?.fields.find((field) => field.id === "firstSmile")?.label}
+                </h3>
+                <p className={`text-sm sm:text-base leading-relaxed whitespace-pre-line ${textClass}`}>
+                  {content.answers.firstSmile}
+                </p>
+              </div>
+            )}
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className={`rounded-2xl border ${borderClass} p-5 space-y-2`}>
                 <h3 className={`font-serif text-xl font-medium ${textClass}`}>
-                  Первые достижения и открытия
+                  {product?.fields.find((field) => field.id === "firstAchievements")?.label || "Первые достижения"}
                 </h3>
                 <p className={`text-sm sm:text-base leading-relaxed whitespace-pre-line ${textClass}`}>
                   {content.answers.firstAchievements}
@@ -374,10 +413,10 @@ export function BookReaderView({
               <div className={`rounded-2xl border ${borderClass} p-5 space-y-2`}>
                 <h3 className={`font-serif text-xl font-medium flex items-center gap-2 ${textClass}`}>
                   <MessageCircleHeart className="h-5 w-5 opacity-75" />
-                  Первые слова и звуки
+                  {product?.fields.find((field) => field.id === "firstWords")?.label || "Первые слова и звуки"}
                 </h3>
                 <p className={`text-sm sm:text-base leading-relaxed whitespace-pre-line ${textClass}`}>
-                  {content.answers.firstWords || "Первые улыбки и нежный лепет"}
+                  {content.answers.firstWords || emptyFragment}
                 </p>
               </div>
             </div>
@@ -510,11 +549,14 @@ export function BookReaderView({
     // 5. Финальное письмо
     const finalLetterText =
       content.finalLetterBody ||
-      content.answers.personalConfession ||
-      content.answers.finalLetterToMom ||
-      content.answers.wishesForFuture ||
-      content.answers.letterToBaby ||
-      "Спасибо за то, что ты есть в моей жизни. Я здесь.";
+      (content.productSlug === "love-story" ? content.answers.personalConfession : "") ||
+      (content.productSlug === "mother-thanks" ? content.answers.finalLetterToMom : "") ||
+      (content.productSlug === "your-day"
+        ? content.answers.finalCongrats || content.answers.wishesForFuture
+        : "") ||
+      (content.productSlug === "first-year" ? content.answers.letterToBaby : "") ||
+      previewCopy?.emptyLetter ||
+      emptyFragment;
 
     items.push({
       id: "final-letter",
@@ -581,6 +623,8 @@ export function BookReaderView({
     mutedClass,
     photos,
     product,
+    previewCopy,
+    emptyFragment,
     sortedTimeline,
     textClass,
     viewMode,

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { PRODUCT_SLUGS, ProductSlug, getProductBySlug } from "./catalog";
+import { EDITOR_COPY } from "./editor-copy";
 
 export const TimelineEventInputSchema = z.object({
   id: z.string().min(1),
@@ -77,20 +78,13 @@ export function createDefaultBookContent(slug: ProductSlug): BookContentJsonV1 {
       {
         id: "tl_1",
         eventDate: null,
-        dateLabel: "Особенный день",
-        title: "Начало истории",
+        dateLabel: EDITOR_COPY[slug].timeline.defaultDateLabel,
+        title: EDITOR_COPY[slug].timeline.defaultTitle,
         description: "",
       },
     ],
     favoriteMediaId: null,
-    finalLetterTitle:
-      slug === "mother-thanks"
-        ? "Письмо маме"
-        : slug === "first-year"
-        ? "Письмо малышу в будущее"
-        : slug === "your-day"
-        ? "Главное пожелание"
-        : "Моё признание тебе",
+    finalLetterTitle: EDITOR_COPY[slug].finalLetterTitle,
     finalLetterBody: "",
     pinEnabled: false,
   };
