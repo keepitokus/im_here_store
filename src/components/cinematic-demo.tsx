@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ProductSlug, PRODUCTS_CATALOG } from "@/lib/catalog";
 import { DemoSampleBook } from "@/lib/demo-books";
 import { formatRublesFromKopecks } from "@/lib/utils";
-import { ChevronLeft, ChevronRight, Sparkles, MailOpen, Calendar } from "lucide-react";
+import { ChevronLeft, ChevronRight, Sparkles, MailOpen, Calendar, Layers, BookOpen } from "lucide-react";
 import { BrandLogo } from "@/components/brand-logo";
 
 interface Spread {
@@ -40,6 +40,7 @@ export function CinematicDemo({
   const content = sample.content;
   const photos = sample.photos;
   const [index, setIndex] = useState(0);
+  const [viewMode, setViewMode] = useState<"spreads" | "scroll">("spreads");
   const [activeTimelineIdx, setActiveTimelineIdx] = useState(0);
 
   const p0 = photos[0];
@@ -495,6 +496,7 @@ export function CinematicDemo({
   ];
 
   useEffect(() => {
+    if (viewMode !== "spreads") return;
     function onKey(event: KeyboardEvent) {
       if (event.key === "ArrowRight") {
         setIndex((value) => Math.min(spreads.length - 1, value + 1));
@@ -505,7 +507,7 @@ export function CinematicDemo({
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [spreads.length]);
+  }, [spreads.length, viewMode]);
 
   const spread = spreads[index];
   const nextPhoto = photos[Math.min(photos.length - 1, index + 1)];
@@ -562,62 +564,103 @@ export function CinematicDemo({
         </div>
       </div>
 
-      {/* Вкладки всех 8 разворотов */}
-      <div
-        className="flex gap-2 overflow-x-auto pb-1"
-        role="tablist"
-        aria-label="Развороты демонстрационной книги"
-      >
-        {spreads.map((item, itemIndex) => (
-          <button
-            key={item.id}
-            type="button"
-            role="tab"
-            aria-selected={itemIndex === index}
-            onClick={() => setIndex(itemIndex)}
-            className={`min-h-11 shrink-0 rounded-full px-4 text-sm font-medium transition-colors ${
-              itemIndex === index
-                ? "bg-[#1F3042] text-[#FFFDF8]"
-                : "border border-[#DFD2C0] bg-[#FFFDF8] text-[#3E4C5C] hover:bg-[#EFE7DA]"
-            }`}
+      {/* Вкладки разворотов и переключатель «все страницы сразу» */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div
+          className="flex gap-2 overflow-x-auto pb-1"
+          role="tablist"
+          aria-label="Развороты демонстрационной книги"
+        >
+          {spreads.map((item, itemIndex) => (
+            <button
+              key={item.id}
+              type="button"
+              role="tab"
+              aria-selected={viewMode === "spreads" && itemIndex === index}
+              onClick={() => {
+                setViewMode("spreads");
+                setIndex(itemIndex);
+              }}
+              className={`min-h-11 shrink-0 rounded-full px-4 text-sm font-medium transition-colors ${
+                viewMode === "spreads" && itemIndex === index
+                  ? "bg-[#1F3042] text-[#FFFDF8]"
+                  : "border border-[#DFD2C0] bg-[#FFFDF8] text-[#3E4C5C] hover:bg-[#EFE7DA]"
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setViewMode(viewMode === "spreads" ? "scroll" : "spreads")}
+          aria-pressed={viewMode === "scroll"}
+          className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-[#1F3042] bg-[#FFFDF8] px-4 text-sm font-medium text-[#1F3042] hover:bg-[#EFE7DA]"
+        >
+          {viewMode === "spreads" ? (
+            <>
+              <Layers className="h-4 w-4" />
+              <span>Все страницы сразу</span>
+            </>
+          ) : (
+            <>
+              <BookOpen className="h-4 w-4" />
+              <span>Режим листания</span>
+            </>
+          )}
+        </button>
+      </div>
+
+      {viewMode === "spreads" ? (
+        <>
+          {/* Основной книжный разворот */}
+          <div
+            className="paper-shadow overflow-hidden rounded-3xl border border-[#DFD2C0] bg-[#FFFDF8]"
+            aria-live="polite"
           >
-            {item.label}
-          </button>
-        ))}
-      </div>
+            {spread.node}
+          </div>
 
-      {/* Основной книжный разворот */}
-      <div
-        className="paper-shadow overflow-hidden rounded-3xl border border-[#DFD2C0] bg-[#FFFDF8]"
-        aria-live="polite"
-      >
-        {spread.node}
-      </div>
-
-      {/* Нижняя панель навигации по страницам */}
-      <div className="flex items-center justify-between gap-3 rounded-2xl border border-[#DFD2C0] bg-[#FFFDF8] px-4 py-3">
-        <button
-          type="button"
-          className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-[#D4C5B3] px-4 text-sm font-medium text-[#1F3042] disabled:opacity-40 hover:bg-[#EFE7DA]"
-          disabled={index === 0}
-          onClick={() => setIndex((v) => v - 1)}
-        >
-          <ChevronLeft className="h-4 w-4" />
-          <span>Предыдущий разворот</span>
-        </button>
-        <p className="text-xs sm:text-sm font-medium text-[#4E5D6C]">
-          Разворот {index + 1} из {spreads.length} · {spread.label}
-        </p>
-        <button
-          type="button"
-          className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-[#1F3042] px-5 text-sm font-medium text-[#FFFDF8] disabled:opacity-40 hover:bg-[#162433]"
-          disabled={index === spreads.length - 1}
-          onClick={() => setIndex((v) => v + 1)}
-        >
-          <span>Следующий разворот</span>
-          <ChevronRight className="h-4 w-4" />
-        </button>
-      </div>
+          {/* Нижняя панель навигации по страницам */}
+          <div className="flex items-center justify-between gap-3 rounded-2xl border border-[#DFD2C0] bg-[#FFFDF8] px-4 py-3">
+            <button
+              type="button"
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-[#D4C5B3] px-4 text-sm font-medium text-[#1F3042] disabled:opacity-40 hover:bg-[#EFE7DA]"
+              disabled={index === 0}
+              onClick={() => setIndex((v) => v - 1)}
+            >
+              <ChevronLeft className="h-4 w-4" />
+              <span>Предыдущий разворот</span>
+            </button>
+            <p className="text-xs sm:text-sm font-medium text-[#4E5D6C]">
+              Разворот {index + 1} из {spreads.length} · {spread.label}
+            </p>
+            <button
+              type="button"
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-[#1F3042] px-5 text-sm font-medium text-[#FFFDF8] disabled:opacity-40 hover:bg-[#162433]"
+              disabled={index === spreads.length - 1}
+              onClick={() => setIndex((v) => v + 1)}
+            >
+              <span>Следующий разворот</span>
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+        </>
+      ) : (
+        <div className="space-y-8">
+          {spreads.map((item, itemIndex) => (
+            <section key={item.id} aria-label={item.label} className="space-y-3">
+              <p className="text-xs font-medium uppercase tracking-[0.14em] text-[#7A6855]">
+                Разворот {itemIndex + 1} из {spreads.length} · {item.label}
+              </p>
+              <div className="paper-shadow overflow-hidden rounded-3xl border border-[#DFD2C0] bg-[#FFFDF8]">
+                {item.node}
+              </div>
+            </section>
+          ))}
+        </div>
+      )}
 
       {/* Предзагрузка фотографии только одного соседнего разворота для мгновенного листания без пустых страниц */}
       {nextPhoto && index < spreads.length - 1 && (
