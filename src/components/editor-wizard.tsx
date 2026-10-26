@@ -971,6 +971,28 @@ export function EditorWizard({
                       placeholder="Короткое описание..."
                       className="mt-1.5"
                     />
+                    <label className="mt-2 block text-[11px] font-medium text-[#7A6B60]">
+                      Фотография события
+                    </label>
+                    <select
+                      value={ev.mediaAssetId || ""}
+                      onChange={(e) => {
+                        const val = e.target.value || null;
+                        setContent((p) => {
+                          const next = [...p.timeline];
+                          next[idx] = { ...next[idx], mediaAssetId: val };
+                          return { ...p, timeline: next };
+                        });
+                      }}
+                      className="flex min-h-11 w-full rounded-xl border border-[#D8CFC4] bg-[#FFFEFA] px-3 text-sm text-[#231C18]"
+                    >
+                      <option value="">Без фотографии — только текст</option>
+                      {photos.map((photo) => (
+                        <option key={photo.id} value={photo.id}>
+                          {photo.caption || photo.altText}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div className="sm:col-span-1 flex justify-end pt-5">
                     {content.timeline.length > 1 && (
