@@ -22,44 +22,43 @@ for d in api account admin checkout orders preview b create; do
   fi
 done
 
-mkdir -p "src/app/account" "src/app/create/[slug]"
+mkdir -p "src/app/account" "src/app/admin" "src/app/create/[slug]"
 
 cat > src/app/account/page.tsx <<'EOF'
-import { SiteHeader, SiteFooter } from "@/components/site-layout";
-import { StaticOnlyNotice } from "@/components/static-only-notice";
+"use client";
+
+import { FreeAccountApp } from "@/components/free-cabinet";
 
 export default function AccountStaticPage() {
-  return (
-    <div className="min-h-screen flex flex-col">
-      <SiteHeader />
-      <main className="flex-1">
-        <StaticOnlyNotice title="Кабинет недоступен в этой витрине" />
-      </main>
-      <SiteFooter />
-    </div>
-  );
+  return <FreeAccountApp />;
+}
+EOF
+
+cat > src/app/admin/page.tsx <<'EOF'
+"use client";
+
+import { FreeAdminApp } from "@/components/free-cabinet";
+
+export default function AdminStaticPage() {
+  return <FreeAdminApp />;
 }
 EOF
 
 cat > "src/app/create/[slug]/page.tsx" <<'EOF'
-import { SiteHeader, SiteFooter } from "@/components/site-layout";
-import { StaticOnlyNotice } from "@/components/static-only-notice";
+import { FreeEditor } from "@/components/free-editor";
 import { PRODUCT_SLUGS } from "@/lib/catalog";
 
 export function generateStaticParams() {
   return PRODUCT_SLUGS.map((slug) => ({ slug }));
 }
 
-export default function CreateStaticPage() {
-  return (
-    <div className="min-h-screen flex flex-col">
-      <SiteHeader />
-      <main className="flex-1">
-        <StaticOnlyNotice title="Редактор открывается в полной версии" />
-      </main>
-      <SiteFooter />
-    </div>
-  );
+export default async function CreateStaticPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  return <FreeEditor slug={slug} />;
 }
 EOF
 

@@ -11,6 +11,13 @@ import {
   ProductSlug,
 } from "@/lib/catalog";
 import { editorCopy, insertExample } from "@/lib/editor-copy";
+import {
+  getFreeBook,
+  requestFreeCode,
+  saveFreeBook,
+  verifyFreeCode,
+  type FreePhoto,
+} from "@/lib/browser-demo";
 import { DEMO_SAMPLE_BOOKS } from "@/lib/demo-books";
 import {
   BookContentJsonV1,
@@ -63,7 +70,8 @@ export function EditorWizard({
   initialSlug,
   initialUser,
   existingBook,
-}: EditorWizardProps) {
+  freeMode = false,
+}: EditorWizardProps & { freeMode?: boolean }) {
   const router = useRouter();
 
   const [user, setUser] = useState(initialUser);
@@ -157,6 +165,23 @@ export function EditorWizard({
     token: string | null;
   } | null> => {
     if (bookId) return { id: bookId, token: editToken };
+    if (freeMode) {
+      const id = `free_${Date.now().toString(36)}`;
+      setBookId(id);
+      setEditToken("free");
+      setSaveState("saved");
+      saveFreeBook({
+        id,
+        ownerEmail: user?.email || "guest@ya-zdes.ru",
+        productSlug: selectedSlug,
+        title: content.coverTitle,
+        content,
+        photos: photos as FreePhoto[],
+        status: "draft",
+        updatedAt: new Date().toISOString(),
+      });
+      return { id, token: "free" };
+    }
     if (!user) return null;
 
     setSaveState("saving");
@@ -178,7 +203,7 @@ export function EditorWizard({
     setEditToken(data.editToken);
     setSaveState("saved");
     return { id: data.book.id, token: data.editToken };
-  }, [bookId, editToken, user, selectedSlug, content.coverTitle]);
+  }, [bookId, editToken, user, selectedSlug, content, photos, freeMode]);
 
   const syncToServer = useCallback(
     async (completedEditorStep = false) => {
@@ -194,6 +219,22 @@ export function EditorWizard({
           if (!created) return false;
           currentId = created.id;
           currentToken = created.token;
+        }
+
+        if (freeMode && currentId) {
+          const existing = getFreeBook(currentId);
+          saveFreeBook({
+            id: currentId,
+            ownerEmail: user?.email || existing?.ownerEmail || "guest@ya-zdes.ru",
+            productSlug: selectedSlug,
+            title: content.coverTitle,
+            content,
+            photos: photos as FreePhoto[],
+            status: completedEditorStep ? "published" : existing?.status || "draft",
+            updatedAt: new Date().toISOString(),
+          });
+          setSaveState("saved");
+          return true;
         }
 
         const res = await fetch(`/api/books/${currentId}`, {
@@ -220,7 +261,7 @@ export function EditorWizard({
         return false;
       }
     },
-    [user, editToken, bookId, ensureServerBookCreated, content, rawPin]
+    [user, editToken, bookId, ensureServerBookCreated, content, photos, rawPin, freeMode, selectedSlug]
   );
 
   // Debounce автосохранение на сервер (ТЗ Раздел 5)
@@ -236,6 +277,14 @@ export function EditorWizard({
     e.preventDefault();
     setAuthLoading(true);
     setAuthError(null);
+    if (freeMode) {
+      const next = requestFreeCode(authEmail);
+      setIssuedDemoCode(next);
+      setAuthCode(next);
+      setAuthStep("code");
+      setAuthLoading(false);
+      return;
+    }
     try {
       const res = await fetch("/api/auth/request-code", {
         method: "POST",
@@ -263,6 +312,13 @@ export function EditorWizard({
     e.preventDefault();
     setAuthLoading(true);
     setAuthError(null);
+    if (freeMode) {
+      const nextUser = verifyFreeCode(authEmail, authCode);
+      if (!nextUser) setAuthError("Неверный код");
+      else setUser({ id: nextUser.id, email: nextUser.email, name: nextUser.name });
+      setAuthLoading(false);
+      return;
+    }
     try {
       const res = await fetch("/api/auth/verify", {
         method: "POST",
@@ -296,6 +352,36 @@ export function EditorWizard({
     }
 
     setUploadingPhoto(true);
+    if (freeMode) {
+      try {
+        const created = await ensureServerBookCreated();
+        if (!created) return;
+        const dataUrl = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result));
+          reader.onerror = () => reject(new Error("read"));
+          reader.readAsDataURL(file);
+        });
+        const media: FreePhoto = {
+          id: `photo_${Date.now().toString(36)}`,
+          dataUrl,
+          caption: photoCaptionDraft.trim() || file.name.replace(/\.[^.]+$/, ""),
+          altText: photoCaptionDraft.trim() || "Фотография для книги",
+          isFavorite: photos.length === 0,
+        };
+        setPhotos((prev) => [...prev, media]);
+        if (!content.favoriteMediaId) {
+          setContent((prev) => ({ ...prev, favoriteMediaId: media.id }));
+        }
+        setPhotoCaptionDraft("");
+      } catch {
+        setErrorMessage("Не удалось прочитать фотографию");
+      } finally {
+        setUploadingPhoto(false);
+        e.target.value = "";
+      }
+      return;
+    }
     try {
       const created = await ensureServerBookCreated();
       if (!created) {
@@ -342,6 +428,10 @@ export function EditorWizard({
 
   async function handleDeletePhoto(mediaId: string) {
     if (!bookId) return;
+    if (freeMode) {
+      setPhotos((prev) => prev.filter((photo) => photo.id !== mediaId));
+      return;
+    }
     const res = await fetch(
       `/api/books/${bookId}/media?mediaId=${encodeURIComponent(mediaId)}${
         editToken ? `&editToken=${encodeURIComponent(editToken)}` : ""
@@ -1136,6 +1226,11 @@ export function EditorWizard({
               (включая 12 месяцев приватного размещения, секретную ссылку, QR-код и
               возможность скачивания архива).
             </p>
+            {freeMode && (
+              <p className="text-sm text-[#574940]">
+                В этой бесплатной версии оплата не нужна: книга останется в кабинете этого браузера.
+              </p>
+            )}
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
@@ -1144,6 +1239,11 @@ export function EditorWizard({
               variant="rose"
               size="lg"
               onClick={async () => {
+                if (freeMode) {
+                  const ok = await syncToServer(true);
+                  if (ok) router.push("/account");
+                  return;
+                }
                 const ok = await syncToServer(true);
                 if (ok && bookId) {
                   router.push(`/checkout/${bookId}`);
@@ -1157,12 +1257,14 @@ export function EditorWizard({
               }}
             >
               <span>
-                Перейти к оплате ({formatRublesFromKopecks(product.initialPriceKopecks)})
+                {freeMode
+                  ? "Сохранить книгу бесплатно"
+                  : `Перейти к оплате (${formatRublesFromKopecks(product.initialPriceKopecks)})`}
               </span>
               <ChevronRight className="h-4 w-4" />
             </Button>
 
-            {bookId && (
+            {bookId && !freeMode && (
               <Link
                 href={`/preview/${bookId}`}
                 className="inline-flex min-h-[50px] items-center justify-center gap-2 rounded-full border border-[#D8CFC4] bg-[#FFFEFA] px-6 py-3 text-sm font-medium text-[#2B1E1A]"
