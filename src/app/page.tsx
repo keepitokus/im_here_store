@@ -199,10 +199,15 @@ export default function HomePage() {
               <div className="pt-2">
                 <Link
                   href="/demo/love-story"
-                  className="inline-flex min-h-12 items-center gap-2 rounded-full border border-[#7A3E4A] bg-[#F6ECEA] px-6 text-[15px] font-medium text-[#7A3E4A] hover:bg-[#EED9DC] transition-colors"
+                  className="inline-flex max-w-full items-center justify-between gap-4 rounded-full border border-[#7A3E4A] bg-[#F6ECEA] py-3 pl-6 pr-5 text-[15px] font-medium leading-tight text-[#7A3E4A] transition-colors hover:bg-[#EED9DC]"
                 >
-                  <span>Пролистать пример «Наша история» (8 разворотов)</span>
-                  <ArrowRight className="h-4 w-4" />
+                  <span className="text-left">
+                    <span className="block">Пролистать пример «Наша история»</span>
+                    <span className="mt-0.5 block text-[13px] font-medium tracking-wide text-[#7A3E4A]/75">
+                      8 разворотов
+                    </span>
+                  </span>
+                  <ArrowRight className="h-4 w-4 shrink-0" />
                 </Link>
               </div>
             </div>
