@@ -480,18 +480,22 @@ export default function HomePage() {
                     планшете, а полный архив фотографий и текстов всегда можно
                     сохранить себе.
                   </p>
-                  <div className="flex flex-col sm:flex-row gap-3.5 pt-1">
+                  <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:flex-wrap">
                     <Link
                       href="/catalog"
-                      className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#F7F2E9] px-7 text-base font-medium text-[#1F3042] hover:bg-white transition-colors"
+                      className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#F7F2E9] px-7 text-base font-medium text-[#1F3042] hover:bg-white sm:w-auto"
                     >
                       Выбрать подарок
                     </Link>
                     <Link
                       href="/demo/mother-thanks"
-                      className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#F7F2E9]/45 px-6 text-base font-medium text-[#F7F2E9] hover:bg-white/10 transition-colors"
+                      className="inline-flex min-h-12 w-full items-center justify-center rounded-full border border-[#F7F2E9]/45 px-6 py-2.5 text-center text-base font-medium leading-tight text-[#F7F2E9] hover:bg-white/10 sm:w-auto sm:py-0"
                     >
-                      Смотреть демо «Мама, спасибо»
+                      <span className="sm:hidden">
+                        <span className="block whitespace-nowrap">Смотреть демо</span>
+                        <span className="block whitespace-nowrap">«Мама, спасибо»</span>
+                      </span>
+                      <span className="hidden whitespace-nowrap sm:inline">Смотреть демо «Мама, спасибо»</span>
                     </Link>
                   </div>
                 </div>
