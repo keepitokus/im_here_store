@@ -66,38 +66,36 @@ export default function HomePage() {
 
       <main className="flex-1">
         {/* 1. ПЕРВЫЙ ЭКРАН (HERO) */}
-        <section className="hero-stage overflow-hidden border-b border-[#DFD2C0] bg-[#F7F2E9] py-7 sm:py-12 lg:py-20">
-          <div className="sunlight" aria-hidden="true" />
-          <div className="paper-grain" aria-hidden="true" />
+        <section className="border-b border-[#DFD2C0] bg-gradient-to-b from-[#F7F2E9] via-[#F5EFE3] to-[#EFE7DA] py-7 sm:py-12 lg:py-20">
           <div className="layout-container grid grid-cols-1 items-center gap-7 sm:gap-10 lg:grid-cols-12 lg:gap-12">
             {/* Левая колонка */}
             <div className="lg:col-span-6 space-y-4 sm:space-y-6">
-              <div className="hero-rise inline-flex items-center gap-2 rounded-full border border-[#D4C5B3] bg-[#FFFDF8] px-4 py-2 text-xs sm:text-sm font-medium text-[#7A3E4A]">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#D4C5B3] bg-[#FFFDF8] px-4 py-2 text-xs sm:text-sm font-medium text-[#7A3E4A]">
                 <Sparkles className="h-4 w-4 shrink-0" />
                 <span>Цифровые книги-подарки для самых близких</span>
               </div>
 
-              <h1 className="hero-rise hero-rise-2 font-serif text-[38px] leading-[1.04] tracking-tight text-[#1F3042] sm:text-5xl xl:text-[62px]">
+              <h1 className="font-serif text-[38px] leading-[1.04] tracking-tight text-[#1F3042] sm:text-5xl xl:text-[62px]">
                 Есть истории, которые хочется подарить
               </h1>
 
-              <p className="hero-rise hero-rise-3 max-w-[54ch] text-base sm:text-lg leading-[1.6] text-[#2F3E4E]">
+              <p className="max-w-[54ch] text-base sm:text-lg leading-[1.6] text-[#2F3E4E]">
                 Превратите ваши фотографии, воспоминания и самые важные слова в
                 красивую цифровую книгу для близкого человека. Создайте сами —
                 подарите по приватной ссылке или QR-коду.
               </p>
 
-              <div className="hero-rise hero-rise-4 flex flex-col gap-3.5 pt-1 sm:flex-row sm:items-center">
+              <div className="flex flex-col gap-3.5 pt-1 sm:flex-row sm:items-center">
                 <Link
                   href="/catalog"
-                  className="motion-cta inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-[#1F3042] px-7 text-base font-medium text-[#F7F2E9] shadow-xs hover:bg-[#162433]"
+                  className="inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-[#1F3042] px-7 text-base font-medium text-[#F7F2E9] hover:bg-[#162433] transition-colors shadow-xs"
                 >
                   <span>Создать книгу</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
                   href="/demo/love-story"
-                  className="motion-cta inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-[#1F3042] bg-[#FFFDF8] px-6 text-base font-medium text-[#1F3042] hover:bg-[#EFE7DA]"
+                  className="inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-[#1F3042] bg-[#FFFDF8] px-6 text-base font-medium text-[#1F3042] hover:bg-[#EFE7DA] transition-colors"
                 >
                   <BookOpen className="h-4 w-4" />
                   <span>Посмотреть пример</span>
@@ -105,7 +103,7 @@ export default function HomePage() {
               </div>
 
               {/* Спокойная читаемая строка ключевых условий без сжатых микроколонок */}
-              <div className="hero-rise hero-rise-5 rounded-2xl border border-[#DFD2C0] bg-[#FFFDF8]/85 px-5 py-4 text-sm sm:text-[15px] text-[#2F3E4E] flex flex-wrap items-center gap-x-5 gap-y-2">
+              <div className="rounded-2xl border border-[#DFD2C0] bg-[#FFFDF8]/85 px-5 py-4 text-sm sm:text-[15px] text-[#2F3E4E] flex flex-wrap items-center gap-x-5 gap-y-2">
                 <span className="font-semibold text-[#1F3042]">
                   От 4 990 ₽ за готовое издание
                 </span>
@@ -116,6 +114,7 @@ export default function HomePage() {
               </div>
             </div>
 
+            {/* Правая колонка: Крупная цифровая книга */}
             <div className="lg:col-span-6">
               <HeroBook />
             </div>
@@ -127,7 +126,7 @@ export default function HomePage() {
           <div className="layout-container grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-12">
             {/* Фотокомпозиция в чистой сетке без налезающих absolute-элементов */}
             <div className="lg:col-span-7 space-y-4">
-              <figure className="reveal overflow-hidden rounded-3xl border border-[#D8CBB8] bg-[#FFFDF8] shadow-sm">
+              <figure className="overflow-hidden rounded-3xl border border-[#D8CBB8] bg-[#FFFDF8] shadow-sm">
                 <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#EAE0D2]">
                   <Image
                     src="/images/books/love-2-first-date.webp"
@@ -179,7 +178,7 @@ export default function HomePage() {
             </div>
 
             {/* Правая текстовая колонка */}
-            <div className="reveal lg:col-span-5 space-y-5">
+            <div className="lg:col-span-5 space-y-5">
               <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-[#7A3E4A]">
                 Не просто подарок · Ваша живая история
               </p>
@@ -199,7 +198,7 @@ export default function HomePage() {
               <div className="pt-2">
                 <Link
                   href="/demo/love-story"
-                className="motion-cta inline-flex max-w-full items-center justify-between gap-4 rounded-full border border-[#7A3E4A] bg-[#F6ECEA] py-3 pl-6 pr-5 text-[15px] font-medium leading-tight text-[#7A3E4A] hover:bg-[#EED9DC]"
+                  className="inline-flex max-w-full items-center justify-between gap-4 rounded-full border border-[#7A3E4A] bg-[#F6ECEA] py-3 pl-6 pr-5 text-[15px] font-medium leading-tight text-[#7A3E4A] transition-colors hover:bg-[#EED9DC]"
                 >
                   <span className="text-left">
                     <span className="block">Пролистать пример «Наша история»</span>
@@ -220,7 +219,7 @@ export default function HomePage() {
           className="border-y border-[#DFD2C0] bg-[#EFE7DA]/65 py-14 sm:py-20 lg:py-24"
         >
           <div className="layout-container space-y-10">
-            <div className="reveal max-w-2xl space-y-2">
+            <div className="max-w-2xl space-y-2">
               <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-[#7A6855]">
                 Четыре повода · Четыре характера
               </p>
@@ -230,7 +229,7 @@ export default function HomePage() {
             </div>
 
             {/* Сетка 2x2 на 1024px+ и 1 просторная колонка на iPhone и iPad portrait */}
-            <div className="reveal-stagger grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
               <ProductCard slug="mother-thanks" />
               <ProductCard slug="love-story" />
               <ProductCard slug="your-day" />
@@ -332,7 +331,7 @@ export default function HomePage() {
           className="border-y border-[#DFD2C0] bg-[#EFE7DA] py-14 sm:py-20 lg:py-24"
         >
           <div className="layout-container space-y-10">
-            <div className="reveal max-w-2xl space-y-2">
+            <div className="max-w-2xl space-y-2">
               <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-[#7A6855]">
                 Понятный путь без дизайнера
               </p>
@@ -341,7 +340,7 @@ export default function HomePage() {
               </h2>
             </div>
 
-            <ol className="motion-steps reveal-stagger grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
+            <ol className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
               {[
                 {
                   num: "Шаг 01",

@@ -91,7 +91,7 @@ export function ProductCard({
 
   return (
     <article
-      className={`motion-card paper-shadow group flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-[#D8CBB8] ${cfg.paperTone}`}
+      className={`paper-shadow group flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-[#D8CBB8] ${cfg.paperTone}`}
     >
       {/* Верхняя часть: обложка книги с переплётом без перекрывающих лица плавающих миниатюр */}
       <div>
@@ -116,7 +116,7 @@ export function ProductCard({
                   priority={priority}
                   loading={priority ? "eager" : "lazy"}
                   sizes="(max-width: 768px) 100vw, 520px"
-                  className="motion-photo object-cover object-center"
+                  className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
                 />
               </div>
               <div className="flex items-center justify-between border-t border-[#ECE2D4] bg-[#FFFDF8] px-4 py-2.5 text-xs sm:text-[13px] text-[#5C5349]">
@@ -174,14 +174,14 @@ export function ProductCard({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <Link
             href={`/create/${slug}`}
-            className={`motion-cta inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-5 text-[15px] font-medium text-[#FFFDF8] shadow-xs ${cfg.buttonBg}`}
+            className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-5 text-[15px] font-medium text-[#FFFDF8] transition-colors shadow-xs ${cfg.buttonBg}`}
           >
             <span>Создать книгу</span>
             <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             href={`/demo/${slug}`}
-            className="motion-cta inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#1F3042]/35 bg-[#FFFDF8] px-5 text-[15px] font-medium text-[#1F3042] hover:bg-[#F7F2E9]"
+            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#1F3042]/35 bg-[#FFFDF8] px-5 text-[15px] font-medium text-[#1F3042] hover:bg-[#F7F2E9] transition-colors"
           >
             <BookOpen className="h-4 w-4" />
             <span>Посмотреть пример</span>

@@ -545,8 +545,7 @@ export function CinematicDemo({
         <>
           {/* Основной книжный разворот */}
           <div
-            key={spread.id}
-            className="motion-spread paper-shadow overflow-hidden rounded-3xl border border-[#DFD2C0] bg-[#FFFDF8]"
+            className="paper-shadow overflow-hidden rounded-3xl border border-[#DFD2C0] bg-[#FFFDF8]"
             aria-live="polite"
           >
             {spread.node}
