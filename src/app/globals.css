@@ -113,7 +113,7 @@ body {
   display: none;
 }
 
-@container book-timeline (min-width: 880px) {
+@container book-timeline (min-width: 760px) {
   .book-timeline-compact {
     display: none;
   }

@@ -552,26 +552,33 @@ export function CinematicDemo({
           </div>
 
           {/* Нижняя панель навигации по страницам */}
-          <div className="flex items-center justify-between gap-3 rounded-2xl border border-[#DFD2C0] bg-[#FFFDF8] px-4 py-3">
+          <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 rounded-2xl border border-[#DFD2C0] bg-[#FFFDF8] px-3 py-3 sm:gap-3 sm:px-4">
             <button
               type="button"
-              className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-[#D4C5B3] px-4 text-sm font-medium text-[#1F3042] disabled:opacity-40 hover:bg-[#EFE7DA]"
+              aria-label="Предыдущий разворот"
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-[#D4C5B3] px-3 text-sm font-medium text-[#1F3042] disabled:opacity-40 hover:bg-[#EFE7DA] sm:px-4"
               disabled={index === 0}
               onClick={() => setIndex((v) => v - 1)}
             >
               <ChevronLeft className="h-4 w-4" />
-              <span>Предыдущий разворот</span>
+              <span className="hidden sm:inline">Предыдущий разворот</span>
+              <span className="sm:hidden">Назад</span>
             </button>
-            <p className="text-xs sm:text-sm font-medium text-[#4E5D6C]">
-              Разворот {index + 1} из {spreads.length} · {spread.label}
+            <p className="min-w-0 text-center text-xs font-medium text-[#4E5D6C] sm:text-sm">
+              <span className="block truncate">
+                Разворот {index + 1} из {spreads.length}
+              </span>
+              <span className="block truncate">{spread.label}</span>
             </p>
             <button
               type="button"
-              className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-[#1F3042] px-5 text-sm font-medium text-[#FFFDF8] disabled:opacity-40 hover:bg-[#162433]"
+              aria-label="Следующий разворот"
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-[#1F3042] px-3 text-sm font-medium text-[#FFFDF8] disabled:opacity-40 hover:bg-[#162433] sm:px-5"
               disabled={index === spreads.length - 1}
               onClick={() => setIndex((v) => v + 1)}
             >
-              <span>Следующий разворот</span>
+              <span className="hidden sm:inline">Следующий разворот</span>
+              <span className="sm:hidden">Дальше</span>
               <ChevronRight className="h-4 w-4" />
             </button>
           </div>
