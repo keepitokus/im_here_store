@@ -1,5 +1,9 @@
 import { beforeEach, describe, expect, it } from "vitest";
+import fs from "node:fs";
+import path from "node:path";
 import sharp from "sharp";
+import { DEMO_SAMPLE_BOOKS } from "@/lib/demo-books";
+import { PRODUCT_SLUGS } from "@/lib/catalog";
 import { resetDbForTesting, getDb } from "@/lib/db";
 import {
   books,
@@ -224,5 +228,36 @@ describe("«Я здесь» — проверка Фазы 3–6 (медиа-бе
       .where(eq(subscriptionsOrEntitlements.bookId, "book_demo_first_year"))
       .get()!;
     expect(revokedEnt.status).toBe("revoked");
+  });
+
+  it("содержит все 25 локальных оптимизированных WebP-фотографий и по 6 реальных снимков в каждой из 4 демо-книг без SVG-заглушек", () => {
+    for (const slug of PRODUCT_SLUGS) {
+      const sample = DEMO_SAMPLE_BOOKS[slug];
+      expect(sample.photos).toHaveLength(6);
+      expect(sample.characterSummary).toContain("Вымышленный пример");
+      expect(sample.coverImage.startsWith("/images/books/")).toBe(true);
+
+      const coverDiskPath = path.join(process.cwd(), "public", sample.coverImage);
+      expect(fs.existsSync(coverDiskPath)).toBe(true);
+
+      for (const photo of sample.photos) {
+        expect(photo.dataUrl.startsWith("/images/books/")).toBe(true);
+        expect(photo.dataUrl.endsWith(".webp")).toBe(true);
+        expect(photo.altText.length).toBeGreaterThan(10);
+        expect(photo.caption.length).toBeGreaterThan(10);
+        expect(photo.roleLabel.length).toBeGreaterThan(2);
+
+        const fullPath = path.join(process.cwd(), "public", photo.dataUrl);
+        expect(fs.existsSync(fullPath)).toBe(true);
+        const stat = fs.statSync(fullPath);
+        expect(stat.size).toBeGreaterThan(10_000);
+      }
+    }
+
+    const familyStoryImg = path.join(
+      process.cwd(),
+      "public/images/books/story-family-reading.webp"
+    );
+    expect(fs.existsSync(familyStoryImg)).toBe(true);
   });
 });

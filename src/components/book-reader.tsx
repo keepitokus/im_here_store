@@ -2,7 +2,8 @@
 
 import React, { useState, useMemo } from "react";
 import { BookContentJsonV1, sortTimelineEvents } from "@/lib/book-schema";
-import { getProductBySlug } from "@/lib/catalog";
+import { getProductBySlug, isValidProductSlug } from "@/lib/catalog";
+import { DEMO_SAMPLE_BOOKS } from "@/lib/demo-books";
 import { Button } from "@/components/ui/button";
 import {
   ChevronLeft,
@@ -57,8 +58,19 @@ export function BookReaderView({
       const found = photos.find((p) => p.id === content.favoriteMediaId);
       if (found) return found;
     }
-    return photos.find((p) => p.isFavorite) || photos[0] || null;
-  }, [photos, content.favoriteMediaId]);
+    const userFav = photos.find((p) => p.isFavorite) || photos[0];
+    if (userFav) return userFav;
+    if (isValidProductSlug(content.productSlug)) {
+      const fallback = DEMO_SAMPLE_BOOKS[content.productSlug];
+      return {
+        id: "fallback-cover",
+        dataUrl: fallback.coverImage,
+        altText: fallback.coverImageAlt,
+        caption: "Иллюстративная обложка издания (вы можете загрузить свою фотографию в редакторе)",
+      };
+    }
+    return null;
+  }, [photos, content.favoriteMediaId, content.productSlug]);
 
   const [viewMode, setViewMode] = useState<"spreads" | "scroll">("spreads");
   const [currentSpread, setCurrentSpread] = useState(0);
