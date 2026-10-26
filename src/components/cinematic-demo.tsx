@@ -567,7 +567,7 @@ export function CinematicDemo({
       {/* Вкладки разворотов и переключатель «все страницы сразу» */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div
-          className="flex gap-2 overflow-x-auto pb-1"
+          className="no-scrollbar flex min-w-0 max-w-full flex-1 gap-2 overflow-x-auto overflow-y-hidden"
           role="tablist"
           aria-label="Развороты демонстрационной книги"
         >
