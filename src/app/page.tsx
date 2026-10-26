@@ -558,19 +558,19 @@ export default function HomePage() {
                       <CheckCircle2 className="h-4 w-4 shrink-0 text-[#4D6256] mt-1" />
                       <span>{item.afterYear}</span>
                     </div>
-                    <div className="pt-2 flex flex-wrap items-center justify-between gap-3">
+                    <div className="grid grid-cols-1 gap-2.5 pt-2 sm:grid-cols-2">
                       <Link
                         href={`/create/${item.slug}`}
-                        className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-[#1F3042] px-5 text-sm sm:text-[15px] font-medium text-[#F7F2E9] hover:bg-[#162433]"
+                        className="inline-flex min-h-12 items-center justify-center gap-1.5 rounded-full bg-[#1F3042] px-4 text-[15px] font-medium text-[#F7F2E9] hover:bg-[#162433]"
                       >
-                        <span>Создать книгу</span>
-                        <ArrowRight className="h-4 w-4" />
+                        <span className="whitespace-nowrap">Создать книгу</span>
+                        <ArrowRight className="h-4 w-4 shrink-0" />
                       </Link>
                       <Link
                         href={`/demo/${item.slug}`}
-                        className="text-sm sm:text-[15px] font-medium text-[#1F3042] underline decoration-[#B99273] underline-offset-4"
+                        className="inline-flex min-h-12 items-center justify-center gap-1.5 rounded-full border border-[#1F3042]/40 bg-[#FFFDF8] px-4 text-[15px] font-medium text-[#1F3042] hover:bg-[#F7F2E9]"
                       >
-                        Посмотреть пример
+                        <span className="whitespace-nowrap">Посмотреть пример</span>
                       </Link>
                     </div>
                   </div>
@@ -664,17 +664,17 @@ export default function HomePage() {
               Выберите повод, посмотрите живой пример книги и соберите подарок,
               который сохранит ваши самые тёплые слова.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-3.5 pt-2">
+            <div className="mx-auto flex w-full max-w-md flex-col justify-center gap-3 pt-2 sm:max-w-none sm:flex-row">
               <Link
                 href="/catalog"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#F7F2E9] px-8 text-base font-medium text-[#1F3042] hover:bg-white transition-colors"
+                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[#F7F2E9] px-8 text-base font-medium text-[#1F3042] hover:bg-white sm:w-auto"
               >
-                <span>Выбрать подарок</span>
-                <ArrowRight className="h-4 w-4" />
+                <span className="whitespace-nowrap">Выбрать подарок</span>
+                <ArrowRight className="h-4 w-4 shrink-0" />
               </Link>
               <Link
                 href="/demo/love-story"
-                className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#F7F2E9]/45 px-7 text-base font-medium text-[#F7F2E9] hover:bg-white/10 transition-colors"
+                className="inline-flex min-h-12 w-full items-center justify-center whitespace-nowrap rounded-full border border-[#F7F2E9]/45 px-7 text-base font-medium text-[#F7F2E9] hover:bg-white/10 sm:w-auto"
               >
                 Пример «Наша история»
               </Link>

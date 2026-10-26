@@ -119,11 +119,11 @@ export function ProductCard({
                   className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
                 />
               </div>
-              <div className="flex items-center justify-between border-t border-[#ECE2D4] bg-[#FFFDF8] px-4 py-2.5 text-xs sm:text-[13px] text-[#5C5349]">
+              <div className="flex flex-col gap-0.5 border-t border-[#ECE2D4] bg-[#FFFDF8] px-4 py-2.5 text-[13px] text-[#5C5349] sm:flex-row sm:items-center sm:justify-between sm:gap-3">
                 <span className="font-medium text-[#1F3042]">
                   Обложка издания «{cfg.coverMiniTitle}»
                 </span>
-                <span>До 30 фото · 6 глав</span>
+                <span className="whitespace-nowrap">До 30 фото · 6 глав</span>
               </div>
             </div>
           </div>

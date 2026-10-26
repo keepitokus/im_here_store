@@ -275,21 +275,21 @@ export default async function GiftProductPage({
                 </div>
               </div>
 
-              <div className="flex flex-col gap-3.5 sm:flex-row sm:items-center pt-2">
+              <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center">
                 <Link
                   href={`/create/${product.slug}`}
-                  className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-7 text-base font-medium text-[#F7F2E9] ${page.accent}`}
+                  className={`inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full px-6 text-center text-base font-medium leading-tight text-[#F7F2E9] sm:w-auto sm:px-7 ${page.accent}`}
                 >
                   <span>
                     {page.cta} · {price}
                   </span>
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4 shrink-0" />
                 </Link>
                 <Link
                   href={`/demo/${product.slug}`}
-                  className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#1F3042] bg-[#FFFDF8] px-6 text-base font-medium text-[#1F3042]"
+                  className="inline-flex min-h-12 w-full items-center justify-center whitespace-nowrap rounded-full border border-[#1F3042] bg-[#FFFDF8] px-6 text-base font-medium text-[#1F3042] sm:w-auto"
                 >
-                  Посмотреть пример целиком
+                  Посмотреть пример
                 </Link>
               </div>
             </div>
