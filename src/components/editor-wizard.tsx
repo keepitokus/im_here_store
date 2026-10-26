@@ -611,7 +611,7 @@ export function EditorWizard({
                     : "bg-[#FAF7F2] text-[#8C7E73] hover:bg-[#F3EDE3]"
                 }`}
               >
-                <span className="text-[10px] font-semibold uppercase">
+                <span className="text-[13px] font-semibold uppercase">
                   Шаг {num}
                 </span>
                 <span className="text-xs font-medium truncate w-full hidden sm:inline">
@@ -685,7 +685,7 @@ export function EditorWizard({
                     <p className="text-xs text-[#574940] leading-relaxed">
                       {item.subtitle}
                     </p>
-                    <div className="pt-2 border-t border-[#E5DDD2] text-[11px] text-[#7A6B60]">
+                    <div className="pt-2 border-t border-[#E5DDD2] text-[13px] text-[#7A6B60]">
                       Палитра: {item.paletteSummary}
                     </div>
                   </div>
@@ -868,7 +868,7 @@ export function EditorWizard({
                           onClick={() =>
                             setContent((p) => ({ ...p, favoriteMediaId: ph.id }))
                           }
-                          className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-medium ${
+                          className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[13px] font-medium ${
                             isFav
                               ? "bg-[#6E2638] text-white"
                               : "bg-[#EFE9DE] text-[#4A3E36]"
@@ -992,7 +992,7 @@ export function EditorWizard({
                   className="rounded-2xl border border-[#E5DDD2] bg-[#FAF7F2] p-4 grid grid-cols-1 sm:grid-cols-12 gap-3 items-start"
                 >
                   <div className="sm:col-span-3 space-y-1">
-                    <label className="text-[11px] font-medium text-[#7A6B60]">
+                    <label className="text-[13px] font-medium text-[#7A6B60]">
                       Точная дата (по желанию)
                     </label>
                     <Input
@@ -1013,7 +1013,7 @@ export function EditorWizard({
                     />
                   </div>
                   <div className="sm:col-span-3 space-y-1">
-                    <label className="text-[11px] font-medium text-[#7A6B60]">
+                    <label className="text-[13px] font-medium text-[#7A6B60]">
                       Подпись даты (или свободный текст)
                     </label>
                     <Input
@@ -1030,7 +1030,7 @@ export function EditorWizard({
                     />
                   </div>
                   <div className="sm:col-span-5 space-y-1">
-                    <label className="text-[11px] font-medium text-[#7A6B60]">
+                    <label className="text-[13px] font-medium text-[#7A6B60]">
                       Заголовок и короткая деталь
                     </label>
                     <Input
@@ -1058,7 +1058,7 @@ export function EditorWizard({
                       placeholder={copy.timeline.descriptionPlaceholder}
                       className="mt-1.5"
                     />
-                    <label className="mt-2 block text-[11px] font-medium text-[#7A6B60]">
+                    <label className="mt-2 block text-[13px] font-medium text-[#7A6B60]">
                       Фотография события
                     </label>
                     <select

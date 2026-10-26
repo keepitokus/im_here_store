@@ -159,7 +159,7 @@ export function BookTimeline({
                   >
                     <div className="overflow-hidden">
                       <div className="space-y-4 px-4 pb-5">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#8A7563]">
+                        <p className="text-[13px] font-semibold uppercase tracking-[0.16em] text-[#8A7563]">
                           Глава 0{index + 1}
                         </p>
                         <EventPhotos images={event.images} />

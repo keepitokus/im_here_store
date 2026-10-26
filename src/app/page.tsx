@@ -66,10 +66,10 @@ export default function HomePage() {
 
       <main className="flex flex-1 flex-col">
         <section className="order-1 bg-[#F7F2E9] px-5 pb-8 pt-5 lg:hidden">
-          <p className="mh-title text-[11px] font-semibold uppercase tracking-[0.22em] text-[#7A6855]">
+          <p className="mh-title text-[13px] font-semibold uppercase tracking-[0.22em] text-[#7A6855]">
             Когда слова важнее подарка
           </p>
-          <h1 className="mh-title mt-3 font-serif text-[34px] leading-[1.02] tracking-tight text-[#1F3042] min-[390px]:text-[42px]">
+          <h1 className="mh-title mt-3 font-serif text-[34px] leading-[1.08] tracking-normal text-[#1F3042] min-[390px]:text-[42px]">
             Есть истории, которые хочется подарить
           </h1>
           <p className="mh-sub mt-4 max-w-[28ch] text-[17px] leading-snug text-[#2F3E4E]">
@@ -100,10 +100,10 @@ export default function HomePage() {
                     />
                   </span>
                   <span className="block bg-[#F6ECEA] px-5 py-4">
-                    <span className="block text-[11px] font-semibold uppercase tracking-[0.18em] text-[#7A3E4A]">
+                    <span className="block text-[13px] font-semibold uppercase tracking-[0.18em] text-[#7A3E4A]">
                       Наша история
                     </span>
-                    <span className="mt-1 block font-serif text-[32px] leading-none text-[#1F3042]">
+                    <span className="mt-1 block font-serif text-[32px] leading-[1.08] text-[#1F3042]">
                       Анна и Михаил
                     </span>
                   </span>
@@ -134,7 +134,7 @@ export default function HomePage() {
                 <span>Цифровые книги-подарки для самых близких</span>
               </div>
 
-              <h1 className="font-serif text-[38px] leading-[1.04] tracking-tight text-[#1F3042] sm:text-5xl xl:text-[62px]">
+              <h1 className="font-serif text-[38px] leading-[1.08] text-[#1F3042] sm:text-5xl xl:text-[62px]">
                 Есть истории, которые хочется подарить
               </h1>
 

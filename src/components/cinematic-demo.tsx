@@ -82,7 +82,7 @@ export function CinematicDemo({
               className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-black/20" />
-            <div className="absolute bottom-4 left-4 rounded-full bg-black/55 px-3.5 py-1 text-[11px] text-[#FFFDF8] backdrop-blur-xs">
+            <div className="absolute bottom-4 left-4 rounded-full bg-black/55 px-3.5 py-1 text-[13px] text-[#FFFDF8] backdrop-blur-xs">
               {p0.caption}
             </div>
           </div>
@@ -91,7 +91,7 @@ export function CinematicDemo({
             className={`flex flex-col justify-between p-7 sm:p-12 lg:col-span-5 ${wash}`}
           >
             <div className="space-y-2">
-              <p className="text-[11px] uppercase tracking-[0.22em] text-[#7A6855]">
+              <p className="text-[13px] uppercase tracking-[0.22em] text-[#7A6855]">
                 Коллекционное цифровое издание · Лист I
               </p>
               <span className="inline-block rounded-full border border-[#1F3042]/20 bg-[#FFFDF8]/80 px-3 py-1 text-xs font-medium text-[#1F3042]">
@@ -159,7 +159,7 @@ export function CinematicDemo({
                 />
               </div>
               <figcaption className="p-4">
-                <span className="text-[10px] uppercase tracking-[0.18em] text-[#8A7563] block">
+                <span className="text-[13px] uppercase tracking-[0.18em] text-[#8A7563] block">
                   {p1.roleLabel}
                 </span>
                 <p className="mt-1 font-serif text-base text-[#1F3042]">
@@ -187,7 +187,7 @@ export function CinematicDemo({
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
           <figcaption className="absolute inset-x-0 bottom-0 p-7 text-[#FFFDF8] sm:p-12">
-            <span className="text-[11px] uppercase tracking-[0.22em] text-[#E5D7C3]">
+            <span className="text-[13px] uppercase tracking-[0.22em] text-[#E5D7C3]">
               Полноэкранный разворот · {p2.roleLabel}
             </span>
             <h3 className="mt-2 font-serif text-3xl sm:text-5xl">
@@ -281,7 +281,7 @@ export function CinematicDemo({
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <span className="absolute left-2.5 top-2.5 rounded-full bg-black/60 px-2.5 py-0.5 text-[10px] font-medium text-[#FFFDF8]">
+                  <span className="absolute left-2.5 top-2.5 rounded-full bg-black/60 px-2.5 py-0.5 text-[13px] font-medium text-[#FFFDF8]">
                     0{i + 1} · {photo.roleLabel}
                   </span>
                 </div>
@@ -374,7 +374,7 @@ export function CinematicDemo({
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
             <div className="absolute bottom-5 left-5 right-5 text-[#FFFDF8]">
-              <p className="text-[11px] uppercase tracking-[0.2em] text-[#EAE0D2]">
+              <p className="text-[13px] uppercase tracking-[0.2em] text-[#EAE0D2]">
                 {p5.roleLabel}
               </p>
               <p className="mt-1 font-serif text-2xl sm:text-3xl">
@@ -415,7 +415,7 @@ export function CinematicDemo({
               </div>
             </div>
 
-            <p className="text-[11px] text-[#6E6256]">
+            <p className="text-[13px] text-[#6E6256]">
               {sample.disclaimer}
             </p>
           </div>

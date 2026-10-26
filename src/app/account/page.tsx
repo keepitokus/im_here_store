@@ -165,7 +165,7 @@ export default async function AccountPage() {
                                 {formatRuDate(book.graceUntil)}
                               </div>
                             )}
-                            <div className="text-[11px] text-[#4A6151] flex items-center gap-1 pt-0.5">
+                            <div className="text-[13px] text-[#4A6151] flex items-center gap-1 pt-0.5">
                               <ShieldCheck className="h-3 w-3" />
                               <span>
                                 Автосписания отключены (

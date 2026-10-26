@@ -278,7 +278,7 @@ export function CheckoutClient({
                 <Sparkles className="h-4 w-4 shrink-0" />
                 <span>Локальный платёжный симулятор DEMO_MODE</span>
               </div>
-              <p className="text-[11px] text-[#6B4800]/90 leading-relaxed">
+              <p className="text-[13px] text-[#6B4800]/90 leading-relaxed">
                 Кнопка оплаты выше сразу проведёт тестовый платёж. Вы также можете
                 протестировать нештатные сценарии (отказ оплаты или задержку
                 фоновой публикации):

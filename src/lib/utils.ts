@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export function formatRublesFromKopecks(kopecks: number): string {
   const rubles = Math.round(kopecks / 100);
-  return new Intl.NumberFormat("ru-RU").format(rubles) + " ₽";
+  return new Intl.NumberFormat("ru-RU").format(rubles) + "\u00a0₽";
 }
 
 export function formatRuDate(dateStr?: string | null): string {
