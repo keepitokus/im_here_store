@@ -2,8 +2,10 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import { ProductCatalogItem } from "@/lib/catalog";
+import { DEMO_SAMPLE_BOOKS } from "@/lib/demo-books";
 import { formatRublesFromKopecks } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -97,24 +99,37 @@ export function CheckoutClient({
     }
   }
 
+  const sample = DEMO_SAMPLE_BOOKS[product.slug];
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       <div className="lg:col-span-7 space-y-6">
         <div className="rounded-3xl border border-[#DFD6CA] bg-[#FFFEFA] p-6 sm:p-8 space-y-6">
-          <div className="space-y-1.5">
-            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-[#6E2638]">
-              {orderType === "renewal"
-                ? "Ручное продление размещения · Без автосписаний"
-                : "Оформление заказа · Шаг 7 из 7"}
-            </span>
-            <h1 className="font-serif text-2xl sm:text-4xl font-semibold text-[#231C18]">
-              {orderType === "renewal"
-                ? `Продление книги «${bookTitle}» на 1 год`
-                : `Публикация книги «${bookTitle}»`}
-            </h1>
-            <p className="text-sm text-[#574940]">
-              Издание: <strong>{product.title}</strong> ({product.paletteSummary})
-            </p>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-5 border-b border-[#ECE4D8] pb-5">
+            <div className="relative h-28 w-40 shrink-0 overflow-hidden rounded-2xl border border-[#DFD2C0] shadow-xs">
+              <Image
+                src={sample.coverImage}
+                alt={sample.coverImageAlt}
+                fill
+                sizes="160px"
+                className="object-cover"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-[#6E2638]">
+                {orderType === "renewal"
+                  ? "Ручное продление размещения · Без автосписаний"
+                  : "Оформление заказа · Шаг 7 из 7"}
+              </span>
+              <h1 className="font-serif text-2xl sm:text-4xl font-semibold text-[#231C18]">
+                {orderType === "renewal"
+                  ? `Продление книги «${bookTitle}» на 1 год`
+                  : `Публикация книги «${bookTitle}»`}
+              </h1>
+              <p className="text-sm text-[#574940]">
+                Издание: <strong>{product.title}</strong> ({product.paletteSummary})
+              </p>
+            </div>
           </div>
 
           <div className="rounded-2xl border border-[#EAE2D6] bg-[#FAF7F2] p-5 space-y-3 text-sm text-[#3F342D]">
