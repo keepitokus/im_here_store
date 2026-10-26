@@ -77,7 +77,7 @@ export function SiteNav({ accountLabel }: { accountLabel: string }) {
           aria-label="Я здесь — на главную"
           className="inline-flex min-h-11 items-center gap-2.5 whitespace-nowrap rounded-lg py-0.5 pr-1 sm:pr-2"
         >
-          <BrandLogo size="header" />
+          <BrandLogo size="header" className="h-11 w-11 sm:h-12 sm:w-12 xl:h-16 xl:w-16" />
         </Link>
       </div>
 
@@ -101,14 +101,14 @@ export function SiteNav({ accountLabel }: { accountLabel: string }) {
       <div className="flex shrink-0 items-center justify-end gap-2.5 sm:gap-3.5">
         <Link
           href="/account"
-          className="hidden sm:inline-flex min-h-11 items-center justify-center whitespace-nowrap rounded-full border border-[#1F3042]/30 bg-[#FFFDF8] px-4 text-sm sm:text-[15px] font-medium text-[#1F3042] transition-colors hover:bg-[#EFE7DA]"
+          className="hidden lg:inline-flex min-h-11 items-center justify-center whitespace-nowrap rounded-full border border-[#1F3042]/30 bg-[#FFFDF8] px-4 text-sm sm:text-[15px] font-medium text-[#1F3042] transition-colors hover:bg-[#EFE7DA]"
         >
           {accountLabel}
         </Link>
 
         <Link
           href="/catalog"
-          className="inline-flex min-h-11 items-center justify-center whitespace-nowrap rounded-full bg-[#1F3042] px-3.5 sm:px-5 text-[13px] sm:text-[15px] font-medium text-[#F7F2E9] shadow-xs transition-colors hover:bg-[#162433]"
+          className="hidden lg:inline-flex min-h-11 items-center justify-center whitespace-nowrap rounded-full bg-[#1F3042] px-3.5 sm:px-5 text-[13px] sm:text-[15px] font-medium text-[#F7F2E9] shadow-xs transition-colors hover:bg-[#162433]"
         >
           Создать книгу
         </Link>

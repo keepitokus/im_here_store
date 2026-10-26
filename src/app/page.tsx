@@ -64,9 +64,68 @@ export default function HomePage() {
     <div className="min-h-screen flex flex-col">
       <SiteHeader />
 
-      <main className="flex-1">
-        {/* 1. ПЕРВЫЙ ЭКРАН (HERO) */}
-        <section className="border-b border-[#DFD2C0] bg-gradient-to-b from-[#F7F2E9] via-[#F5EFE3] to-[#EFE7DA] py-7 sm:py-12 lg:py-20">
+      <main className="flex flex-1 flex-col">
+        <section className="order-1 bg-[#F7F2E9] px-5 pb-8 pt-5 lg:hidden">
+          <p className="mh-title text-[11px] font-semibold uppercase tracking-[0.22em] text-[#7A6855]">
+            Когда слова важнее подарка
+          </p>
+          <h1 className="mh-title mt-3 font-serif text-[34px] leading-[1.02] tracking-tight text-[#1F3042] min-[390px]:text-[42px]">
+            Есть истории, которые хочется подарить
+          </h1>
+          <p className="mh-sub mt-4 max-w-[28ch] text-[17px] leading-snug text-[#2F3E4E]">
+            Ваши фотографии, воспоминания и самые тёплые слова — в одной красивой цифровой книге.
+          </p>
+
+          <Link
+            href="/demo/love-story"
+            className="mh-book mt-6 block"
+            aria-label="Открыть демонстрационную книгу «Наша история»"
+          >
+            <span className="relative block">
+              <span
+                aria-hidden
+                className="absolute inset-y-3 left-4 right-1 rounded-r-[28px] border border-[#E4D3C0] bg-[#EFE4D4]"
+              />
+              <span className="relative block overflow-hidden rounded-[28px] border border-[#D8C9B5] bg-[#FFFDF8] shadow-[0_28px_50px_-30px_rgba(31,48,66,0.55)]">
+                <span aria-hidden className="absolute inset-y-0 left-0 z-10 w-3.5 bg-[#6E2F3B]" />
+                <span className="block pl-3.5">
+                  <span className="relative block h-[min(32vh,260px)] w-full overflow-hidden bg-[#EAE0D2]">
+                    <Image
+                      src="/images/books/love-1-cover.webp"
+                      alt="Влюблённая пара на каменном мосту — обложка книги «Наша история»"
+                      fill
+                      priority
+                      sizes="100vw"
+                      className="object-cover object-[center_30%]"
+                    />
+                  </span>
+                  <span className="block bg-[#F6ECEA] px-5 py-4">
+                    <span className="block text-[11px] font-semibold uppercase tracking-[0.18em] text-[#7A3E4A]">
+                      Наша история
+                    </span>
+                    <span className="mt-1 block font-serif text-[32px] leading-none text-[#1F3042]">
+                      Анна и Михаил
+                    </span>
+                  </span>
+                </span>
+              </span>
+            </span>
+          </Link>
+          <p className="mt-3 text-center text-sm text-[#7A6855]">Нажмите, чтобы открыть книгу</p>
+
+          <Link
+            href="/catalog"
+            className="mt-5 inline-flex min-h-14 w-full items-center justify-center rounded-full bg-[#1F3042] px-6 text-base font-medium text-[#F7F2E9] shadow-xs hover:bg-[#162433]"
+          >
+            Выбрать подарок
+          </Link>
+          <p className="mt-3 text-center text-sm text-[#3E4C5C]">
+            Четыре истории · От 4 990 ₽ · Создаётся онлайн
+          </p>
+        </section>
+
+        {/* 1. ПЕРВЫЙ ЭКРАН (HERO) — десктоп */}
+        <section className="hidden border-b border-[#DFD2C0] bg-gradient-to-b from-[#F7F2E9] via-[#F5EFE3] to-[#EFE7DA] py-7 sm:py-12 lg:block lg:py-20">
           <div className="layout-container grid grid-cols-1 items-center gap-7 sm:gap-10 lg:grid-cols-12 lg:gap-12">
             {/* Левая колонка */}
             <div className="lg:col-span-6 space-y-4 sm:space-y-6">
@@ -121,8 +180,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 2. ВИЗУАЛЬНЫЙ СТОРИТЕЛЛИНГ №1: «Помните, как всё начиналось?» */}
-        <section className="py-14 sm:py-20 lg:py-24">
+        <section className="hidden py-14 sm:py-20 lg:block lg:py-24">
           <div className="layout-container grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-12">
             {/* Фотокомпозиция в чистой сетке без налезающих absolute-элементов */}
             <div className="lg:col-span-7 space-y-4">
@@ -215,7 +273,7 @@ export default function HomePage() {
         {/* 3. КАТАЛОГ ЧЕТЫРЁХ ПОДАРКОВ (СТРОЙНАЯ СЕТКА 2x2 ОДНОЙ ИЕРАРХИИ) */}
         <section
           id="gifts"
-          className="border-y border-[#DFD2C0] bg-[#EFE7DA]/65 py-14 sm:py-20 lg:py-24"
+          className="order-2 border-y border-[#DFD2C0] bg-[#EFE7DA]/65 py-14 sm:py-20 lg:order-none lg:py-24"
         >
           <div className="layout-container space-y-10">
             <div className="max-w-2xl space-y-2">
@@ -237,8 +295,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 4. ФОТОГАЛЕРЕЯ «Самые дорогие моменты не должны теряться среди тысяч фотографий» */}
-        <section className="py-14 sm:py-20 lg:py-24">
+        <section className="order-4 py-14 sm:py-20 lg:order-none lg:py-24">
           <div className="layout-container space-y-10">
             <div className="max-w-3xl space-y-3">
               <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-[#7A6855]">
@@ -327,7 +384,7 @@ export default function HomePage() {
         {/* 5. КАК ЭТО РАБОТАЕТ — 3 ШАГА */}
         <section
           id="how"
-          className="border-y border-[#DFD2C0] bg-[#EFE7DA] py-14 sm:py-20 lg:py-24"
+          className="order-3 border-y border-[#DFD2C0] bg-[#EFE7DA] py-14 sm:py-20 lg:order-none lg:py-24"
         >
           <div className="layout-container space-y-10">
             <div className="max-w-2xl space-y-2">
@@ -396,8 +453,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 6. SPLIT-BANNER «Однажды вы откроете эту книгу снова» */}
-        <section className="py-14 sm:py-20 lg:py-24">
+        <section className="order-5 py-14 sm:py-20 lg:order-none lg:py-24">
           <div className="layout-container">
             <div className="paper-shadow overflow-hidden rounded-3xl border border-[#1F3042] bg-[#1F3042]">
               <div className="grid grid-cols-1 lg:grid-cols-12">
@@ -447,7 +503,7 @@ export default function HomePage() {
         {/* 7. ПРОЗРАЧНАЯ СТОИМОСТЬ (КРУПНЫЕ ЧИТАЕМЫЕ КАРТОЧКИ НА ВСЕХ УСТРОЙСТВАХ) */}
         <section
           id="pricing"
-          className="border-t border-[#DFD2C0] bg-[#EFE7DA]/50 py-14 sm:py-20 lg:py-24"
+          className="order-6 border-t border-[#DFD2C0] bg-[#EFE7DA]/50 py-14 sm:py-20 lg:order-none lg:py-24"
         >
           <div className="layout-container space-y-10">
             <div className="max-w-3xl space-y-3">
@@ -521,7 +577,7 @@ export default function HomePage() {
         </section>
 
         {/* 8. ЧАСТЫЕ ВОПРОСЫ (FAQ) */}
-        <section id="faq" className="py-14 sm:py-20 lg:py-24">
+        <section id="faq" className="order-7 py-14 sm:py-20 lg:order-none lg:py-24">
           <div className="layout-container">
             <div className="mx-auto max-w-4xl space-y-8">
               <div className="space-y-2">
@@ -592,7 +648,7 @@ export default function HomePage() {
         </section>
 
         {/* 9. ФИНАЛЬНЫЙ CTA */}
-        <section className="bg-[#1F3042] py-16 text-center text-[#F7F2E9] sm:py-20">
+        <section className="order-8 bg-[#1F3042] py-16 text-center text-[#F7F2E9] sm:py-20 lg:order-none">
           <div className="layout-container space-y-6">
             <div className="flex justify-center">
               <BrandLogo size="lg" variant="light" />
