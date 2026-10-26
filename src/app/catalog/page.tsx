@@ -13,25 +13,25 @@ export default function CatalogPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <SiteHeader />
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-12 sm:px-6 sm:py-16 space-y-10">
+      <main className="layout-container flex-1 py-12 sm:py-16 lg:py-20 space-y-10">
         <div className="max-w-3xl space-y-3">
-          <p className="text-xs uppercase tracking-[0.22em] text-[#8A7563]">
+          <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-[#7A6855]">
             Коллекция изданий «Я здесь» · {PRODUCT_SLUGS.length} книги
           </p>
-          <h1 className="font-serif text-4xl leading-tight text-[#1F3042] sm:text-6xl">
+          <h1 className="font-serif text-4xl leading-tight text-[#1F3042] sm:text-5xl lg:text-6xl">
             Кому вы хотите подарить историю?
           </h1>
-          <p className="text-base leading-relaxed text-[#3E4C5C]">
+          <p className="text-base sm:text-lg leading-relaxed text-[#2F3E4E]">
             Каждое издание оформлено как дорогой фотоальбом: со своей палитрой,
             обложкой, хронологией и личным письмом в финале.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <ProductCard slug="mother-thanks" featured />
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
+          <ProductCard slug="mother-thanks" />
           <ProductCard slug="love-story" />
           <ProductCard slug="your-day" />
-          <ProductCard slug="first-year" featured />
+          <ProductCard slug="first-year" />
         </div>
       </main>
       <SiteFooter />

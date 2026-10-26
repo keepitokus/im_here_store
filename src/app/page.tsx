@@ -10,7 +10,54 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { SHOW_MOTHERS_DAY_BANNER } from "@/lib/landing";
-import { ArrowRight, BookOpen, Sparkles } from "lucide-react";
+import { ArrowRight, BookOpen, Sparkles, CheckCircle2 } from "lucide-react";
+
+const PRICING_ITEMS = [
+  {
+    slug: "mother-thanks",
+    title: "«Мама, спасибо»",
+    subtitle: "Книга благодарности маме с семейным фотоархивом и письмом",
+    price: "5 990 ₽",
+    duration: "12 месяцев доступа по приватной ссылке",
+    afterYear:
+      "Включено скачивание полного архива книги (тексты и фото). Автосписаний и скрытых платежей нет.",
+    badge: "Сезонный выбор ко Дню матери",
+    tone: "bg-[#EEF3F6] border-[#C9D8E4]",
+  },
+  {
+    slug: "love-story",
+    title: "«Наша история»",
+    subtitle: "Романтическое издание для пары: знакомство, свидания, таймлайн и признание",
+    price: "4 990 ₽",
+    duration: "12 месяцев доступа по приватной ссылке",
+    afterYear:
+      "Включено скачивание полного архива книги. Продление в текущем выпуске не требуется.",
+    badge: "Для пары и годовщины",
+    tone: "bg-[#F6ECEA] border-[#E2C8CC]",
+  },
+  {
+    slug: "your-day",
+    title: "«Твой день»",
+    subtitle: "Персональный праздничный журнал ко дню рождения или юбилею близкого человека",
+    price: "5 990 ₽",
+    duration: "12 месяцев доступа по приватной ссылке",
+    afterYear:
+      "Включено скачивание полного архива книги. Без подписок и дополнительных доплат.",
+    badge: "День рождения и юбилей",
+    tone: "bg-[#F8F1E4] border-[#E2D0B0]",
+  },
+  {
+    slug: "first-year",
+    title: "«Мой первый год»",
+    subtitle: "Приватная хроника малыша от рождения до 12 месяцев: достижения, слова и фото",
+    price: "4 990 ₽",
+    duration: "Первые 12 месяцев размещения и обновления",
+    afterYear:
+      "Добровольное продление со 2-го года — 990 ₽/год отдельным разовым платежом. Без автосписаний.",
+    badge: "Продление 990 ₽/год по желанию",
+    tone: "bg-[#F3F6F2] border-[#CAD9CE]",
+  },
+] as const;
 
 export default function HomePage() {
   return (
@@ -19,64 +66,55 @@ export default function HomePage() {
 
       <main className="flex-1">
         {/* 1. ПЕРВЫЙ ЭКРАН (HERO) */}
-        <section className="relative overflow-hidden border-b border-[#E5D9C8] bg-gradient-to-b from-[#F7F2E9] via-[#F5EFE3] to-[#EFE7DA] py-10 sm:py-16 lg:py-20">
-          <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:gap-12">
+        <section className="border-b border-[#DFD2C0] bg-gradient-to-b from-[#F7F2E9] via-[#F5EFE3] to-[#EFE7DA] py-7 sm:py-12 lg:py-20">
+          <div className="layout-container grid grid-cols-1 items-center gap-7 sm:gap-10 lg:grid-cols-12 lg:gap-12">
             {/* Левая колонка */}
-            <div className="lg:col-span-6 space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#D8C9B5] bg-[#FFFDF8] px-4 py-1.5 text-xs font-medium text-[#7A3E4A]">
-                <Sparkles className="h-3.5 w-3.5" />
-                <span>Цифровые коллекционные книги для самых близких</span>
+            <div className="lg:col-span-6 space-y-4 sm:space-y-6">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#D4C5B3] bg-[#FFFDF8] px-4 py-2 text-xs sm:text-sm font-medium text-[#7A3E4A]">
+                <Sparkles className="h-4 w-4 shrink-0" />
+                <span>Цифровые книги-подарки для самых близких</span>
               </div>
 
-              <h1 className="font-serif text-4xl leading-[0.96] tracking-tight text-[#1F3042] sm:text-6xl lg:text-[64px]">
+              <h1 className="font-serif text-[38px] leading-[1.04] tracking-tight text-[#1F3042] sm:text-5xl xl:text-[62px]">
                 Есть истории, которые хочется подарить
               </h1>
 
-              <p className="max-w-xl text-base leading-relaxed text-[#2F3E4E] sm:text-lg">
+              <p className="max-w-[54ch] text-base sm:text-lg leading-[1.6] text-[#2F3E4E]">
                 Превратите ваши фотографии, воспоминания и самые важные слова в
-                красивую цифровую книгу для близкого человека.
+                красивую цифровую книгу для близкого человека. Создайте сами —
+                подарите по приватной ссылке или QR-коду.
               </p>
 
-              <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:items-center">
+              <div className="flex flex-col gap-3.5 pt-1 sm:flex-row sm:items-center">
                 <Link
                   href="/catalog"
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#1F3042] px-7 text-sm sm:text-base font-medium text-[#F7F2E9] hover:bg-[#162433] transition-colors shadow-sm"
+                  className="inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-[#1F3042] px-7 text-base font-medium text-[#F7F2E9] hover:bg-[#162433] transition-colors shadow-xs"
                 >
                   <span>Создать книгу</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
                   href="/demo/love-story"
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#1F3042] bg-[#FFFDF8]/80 px-6 text-sm sm:text-base font-medium text-[#1F3042] hover:bg-[#FFFDF8] transition-colors"
+                  className="inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-[#1F3042] bg-[#FFFDF8] px-6 text-base font-medium text-[#1F3042] hover:bg-[#EFE7DA] transition-colors"
                 >
                   <BookOpen className="h-4 w-4" />
                   <span>Посмотреть пример</span>
                 </Link>
               </div>
 
-              <div className="grid grid-cols-3 gap-4 border-t border-[#DFD2C0] pt-5 text-xs text-[#4E5D6C]">
-                <div>
-                  <span className="font-serif text-xl sm:text-2xl font-semibold text-[#1F3042] block">
-                    от 4 990 ₽
-                  </span>
-                  <span>фиксированная цена без скрытых доплат</span>
-                </div>
-                <div>
-                  <span className="font-serif text-xl sm:text-2xl font-semibold text-[#1F3042] block">
-                    до 30 фото
-                  </span>
-                  <span>ваши снимки, даты и личное письмо</span>
-                </div>
-                <div>
-                  <span className="font-serif text-xl sm:text-2xl font-semibold text-[#1F3042] block">
-                    По ссылке и QR
-                  </span>
-                  <span>открывается на любом телефоне</span>
-                </div>
+              {/* Спокойная читаемая строка ключевых условий без сжатых микроколонок */}
+              <div className="rounded-2xl border border-[#DFD2C0] bg-[#FFFDF8]/85 px-5 py-4 text-sm sm:text-[15px] text-[#2F3E4E] flex flex-wrap items-center gap-x-5 gap-y-2">
+                <span className="font-semibold text-[#1F3042]">
+                  От 4 990 ₽ за готовое издание
+                </span>
+                <span className="text-[#B99273]">•</span>
+                <span>До 30 ваших фотографий</span>
+                <span className="text-[#B99273]">•</span>
+                <span>12 месяцев доступа без автосписаний</span>
               </div>
             </div>
 
-            {/* Правая колонка: Крупная цифровая книга с фотографиями и перелистыванием */}
+            {/* Правая колонка: Крупная цифровая книга */}
             <div className="lg:col-span-6">
               <HeroBook />
             </div>
@@ -84,63 +122,85 @@ export default function HomePage() {
         </section>
 
         {/* 2. ВИЗУАЛЬНЫЙ СТОРИТЕЛЛИНГ №1: «Помните, как всё начиналось?» */}
-        <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-center">
-            <div className="relative lg:col-span-7">
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-[#DFD2C0] shadow-lg">
-                <Image
-                  src="/images/books/love-2-first-date.webp"
-                  alt="Молодая пара на первом свидании в уютной кофейне при свечах"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 680px"
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                <p className="absolute bottom-5 left-5 right-5 font-serif text-lg italic text-[#FFFDF8] sm:text-xl">
-                  «Две чашки кофе у дождливого окна и разговор, который изменил всё...»
-                </p>
-              </div>
-              <div className="mt-4 grid grid-cols-2 gap-4 sm:absolute sm:-bottom-8 sm:right-6 sm:mt-0 sm:w-72">
-                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border-2 border-[#FFFDF8] shadow-lg">
+        <section className="py-14 sm:py-20 lg:py-24">
+          <div className="layout-container grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-12">
+            {/* Фотокомпозиция в чистой сетке без налезающих absolute-элементов */}
+            <div className="lg:col-span-7 space-y-4">
+              <figure className="overflow-hidden rounded-3xl border border-[#D8CBB8] bg-[#FFFDF8] shadow-sm">
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#EAE0D2]">
                   <Image
-                    src="/images/books/love-3-walk.webp"
-                    alt="Осенняя прогулка пары по набережной"
+                    src="/images/books/love-2-first-date.webp"
+                    alt="Молодая пара на первом свидании в уютной книжной кофейне при свечах"
                     fill
-                    sizes="180px"
+                    loading="eager"
+                    sizes="(max-width: 1024px) 100vw, 680px"
                     className="object-cover"
                   />
                 </div>
-                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border-2 border-[#FFFDF8] shadow-lg">
-                  <Image
-                    src="/images/books/love-4-travel.webp"
-                    alt="Первое путешествие пары к морю"
-                    fill
-                    sizes="180px"
-                    className="object-cover"
-                  />
-                </div>
+                <figcaption className="border-t border-[#EAE0D2] bg-[#FFFDF8] px-5 py-3.5 text-sm sm:text-[15px] italic text-[#3E4C5C]">
+                  «Две чашки кофе у дождливого окна и разговор, который изменил всё...» — разворот из книги «Наша история»
+                </figcaption>
+              </figure>
+
+              <div className="grid grid-cols-2 gap-4">
+                <figure className="overflow-hidden rounded-2xl border border-[#D8CBB8] bg-[#FFFDF8]">
+                  <div className="relative aspect-[4/3] w-full">
+                    <Image
+                      src="/images/books/love-3-walk.webp"
+                      alt="Осенняя прогулка пары по набережной"
+                      fill
+                      loading="eager"
+                      sizes="(max-width: 768px) 50vw, 320px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <figcaption className="px-4 py-2.5 text-xs sm:text-sm text-[#3E4C5C]">
+                    Осенняя прогулка вдвоём
+                  </figcaption>
+                </figure>
+
+                <figure className="overflow-hidden rounded-2xl border border-[#D8CBB8] bg-[#FFFDF8]">
+                  <div className="relative aspect-[4/3] w-full">
+                    <Image
+                      src="/images/books/love-4-travel.webp"
+                      alt="Первое путешествие пары к морю"
+                      fill
+                      loading="eager"
+                      sizes="(max-width: 768px) 50vw, 320px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <figcaption className="px-4 py-2.5 text-xs sm:text-sm text-[#3E4C5C]">
+                    Первая поездка к Балтийскому морю
+                  </figcaption>
+                </figure>
               </div>
             </div>
 
-            <div className="space-y-5 lg:col-span-5 lg:pl-6">
-              <p className="text-xs uppercase tracking-[0.22em] text-[#7A3E4A]">
-                Живые эмоции вместо дежурных подарков
+            {/* Правая текстовая колонка */}
+            <div className="lg:col-span-5 space-y-5">
+              <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-[#7A3E4A]">
+                Не просто подарок · Ваша живая история
               </p>
-              <h2 className="font-serif text-4xl leading-tight text-[#1F3042] sm:text-5xl">
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-[42px] leading-[1.12] text-[#1F3042]">
                 Помните, как всё начиналось?
               </h2>
-              <p className="text-base leading-relaxed text-[#2F3E4E]">
+              <p className="text-base sm:text-[17px] leading-[1.6] text-[#2F3E4E]">
                 Первые свидания. Мамины объятия. Детский смех и рассветы в кругу
-                друзей. Мы собираем эти кадры и короткие подлинные фразы в
-                коллекционное цифровое издание, которое можно листать страница за
-                страницей.
+                близких друзей. Мы собираем ваши фотографии и короткие искренние
+                слова в коллекционное цифровое издание, к которому хочется
+                возвращаться.
+              </p>
+              <p className="text-base leading-[1.6] text-[#3E4C5C]">
+                Вам не нужно писать длинные тексты или владеть дизайном —
+                достаточно выбрать повод и ответить на бережные вопросы.
               </p>
               <div className="pt-2">
                 <Link
                   href="/demo/love-story"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-[#7A3E4A] underline decoration-[#B99273] underline-offset-4"
+                  className="inline-flex min-h-12 items-center gap-2 rounded-full border border-[#7A3E4A] bg-[#F6ECEA] px-6 text-[15px] font-medium text-[#7A3E4A] hover:bg-[#EED9DC] transition-colors"
                 >
-                  <span>Пролистать историю Анны и Михаила (8 разворотов)</span>
+                  <span>Пролистать пример «Наша история» (8 разворотов)</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
@@ -148,167 +208,190 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 3. КАТАЛОГ ЧЕТЫРЁХ ПОДАРКОВ (ЖУРНАЛЬНЫЕ КАРТОЧКИ С ОБЛОЖКАМИ И ФОТО) */}
-        <section id="gifts" className="border-t border-[#E5D9C8] bg-[#F3ECE0]/60 py-16 sm:py-24">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 space-y-10">
-            <div className="flex flex-wrap items-end justify-between gap-4">
-              <div className="space-y-2">
-                <p className="text-xs uppercase tracking-[0.22em] text-[#8A7563]">
-                  Четыре коллекционных издания
+        {/* 3. КАТАЛОГ ЧЕТЫРЁХ ПОДАРКОВ (СТРОЙНАЯ СЕТКА 2x2 ОДНОЙ ИЕРАРХИИ) */}
+        <section
+          id="gifts"
+          className="border-y border-[#DFD2C0] bg-[#EFE7DA]/65 py-14 sm:py-20 lg:py-24"
+        >
+          <div className="layout-container space-y-10">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div className="space-y-2 max-w-2xl">
+                <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-[#7A6855]">
+                  Четыре повода · Четыре характера
                 </p>
-                <h2 className="font-serif text-4xl text-[#1F3042] sm:text-5xl">
+                <h2 className="font-serif text-3xl sm:text-4xl lg:text-[44px] leading-[1.1] text-[#1F3042]">
                   Выберите книгу для вашего близкого человека
                 </h2>
               </div>
               {SHOW_MOTHERS_DAY_BANNER && (
-                <p className="rounded-full border border-[#C8D8E4] bg-[#EEF3F6] px-4 py-1.5 text-xs font-medium text-[#2C4A6B]">
-                  Ко Дню матери — 29 ноября · «Мама, спасибо» в сезонном фокусе
-                </p>
+                <div className="inline-flex items-center rounded-full border border-[#B8CCDC] bg-[#EEF3F6] px-4 py-2 text-sm font-medium text-[#1F3852]">
+                  Ко Дню матери 29 ноября — «Мама, спасибо»
+                </div>
               )}
             </div>
 
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              <ProductCard slug="mother-thanks" featured />
+            {/* Сетка 2x2 на 1024px+ и 1 просторная колонка на iPhone и iPad portrait */}
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
+              <ProductCard slug="mother-thanks" />
               <ProductCard slug="love-story" />
               <ProductCard slug="your-day" />
-              <ProductCard slug="first-year" featured />
+              <ProductCard slug="first-year" />
             </div>
           </div>
         </section>
 
-        {/* 4. ВИЗУАЛЬНЫЙ СТОРИТЕЛЛИНГ №2: ХУДОЖЕСТВЕННЫЙ КОЛЛАЖ СЕМЕЙНЫХ СНИМКОВ */}
-        <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24 space-y-10">
-          <div className="max-w-3xl space-y-3">
-            <p className="text-xs uppercase tracking-[0.22em] text-[#8A7563]">
-              Эстетика коллекционной фотокниги
-            </p>
-            <h2 className="font-serif text-4xl leading-tight text-[#1F3042] sm:text-5xl">
-              Самые дорогие моменты не должны теряться среди тысяч фотографий
-            </h2>
-            <p className="text-base leading-relaxed text-[#2F3E4E]">
-              В телефоне хранятся тысячи случайных кадров, к которым редко
-              возвращаются. Отобранные 15–30 фотографий с вашими подписями и
-              письмом превращаются в семейную реликвию.
-            </p>
-          </div>
+        {/* 4. ФОТОГАЛЕРЕЯ «Самые дорогие моменты не должны теряться среди тысяч фотографий» */}
+        <section className="py-14 sm:py-20 lg:py-24">
+          <div className="layout-container space-y-10">
+            <div className="max-w-3xl space-y-3">
+              <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-[#7A6855]">
+                Эстетика коллекционной фотокниги
+              </p>
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-[44px] leading-[1.12] text-[#1F3042]">
+                Самые дорогие моменты не должны теряться среди тысяч фотографий
+              </h2>
+              <p className="text-base sm:text-[17px] leading-[1.6] text-[#2F3E4E]">
+                В памяти телефона хранятся тысячи случайных снимков, которые
+                редко открывают. Отобранные 15–30 фотографий с вашими подписями
+                и личным письмом превращаются в семейную книгу.
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
-            <figure className="group relative aspect-[4/3] overflow-hidden rounded-3xl border border-[#DFD2C0] lg:col-span-5">
-              <Image
-                src="/images/books/mom-2-childhood.webp"
-                alt="Мама ведёт маленькую дочку с белыми бантами в первый класс"
-                fill
-                sizes="(max-width: 1024px) 100vw, 460px"
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
-              <figcaption className="absolute bottom-4 left-4 right-4 text-[#FFFDF8]">
-                <span className="text-[10px] uppercase tracking-[0.18em] text-[#DCE7F0]">
-                  Из демо «Мама, спасибо»
-                </span>
-                <p className="font-serif text-xl">
-                  1 сентября, белые банты и мамина рука
-                </p>
-              </figcaption>
-            </figure>
-
-            <figure className="group relative aspect-[4/3] overflow-hidden rounded-3xl border border-[#DFD2C0] lg:col-span-4">
-              <Image
-                src="/images/books/baby-3-smile.webp"
-                alt="Первая радостная улыбка трёхмесячного малыша"
-                fill
-                sizes="(max-width: 1024px) 100vw, 360px"
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
-              <figcaption className="absolute bottom-4 left-4 right-4 text-[#FFFDF8]">
-                <span className="text-[10px] uppercase tracking-[0.18em] text-[#DFE9E1]">
-                  Из демо «Мой первый год»
-                </span>
-                <p className="font-serif text-xl">
-                  Первая осознанная улыбка в 6 недель
-                </p>
-              </figcaption>
-            </figure>
-
-            <figure className="group relative aspect-[4/3] overflow-hidden rounded-3xl border border-[#DFD2C0] sm:col-span-2 lg:col-span-3">
-              <Image
-                src="/images/books/day-4-moments.webp"
-                alt="Друзья на вершине горного перевала на золотом рассвете"
-                fill
-                sizes="(max-width: 1024px) 100vw, 300px"
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
-              <figcaption className="absolute bottom-4 left-4 right-4 text-[#FFFDF8]">
-                <span className="text-[10px] uppercase tracking-[0.18em] text-[#F5E6C8]">
-                  Из демо «Твой день»
-                </span>
-                <p className="font-serif text-xl">Рассвет выше облаков</p>
-              </figcaption>
-            </figure>
+            {/* Три сбалансированные карточки с отдельными читаемыми подписями под фото */}
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
+              {[
+                {
+                  img: "/images/books/mom-2-childhood.webp",
+                  alt: "Мама ведёт маленькую дочку с белыми бантами в первый класс",
+                  tag: "Из примера «Мама, спасибо»",
+                  title: "1 сентября, белые банты и мамина рука",
+                  text: "Детские воспоминания и благодарность за тепло родного дома, собранные в светлую книгу для мамы.",
+                  href: "/demo/mother-thanks",
+                },
+                {
+                  img: "/images/books/baby-3-smile.webp",
+                  alt: "Первая радостная улыбка трёхмесячного малыша",
+                  tag: "Из примера «Мой первый год»",
+                  title: "Первая осознанная улыбка и первые шаги",
+                  text: "Хроника взросления малыша от 0 до 12 месяцев, которую можно дополнять весь год.",
+                  href: "/demo/first-year",
+                },
+                {
+                  img: "/images/books/day-4-moments.webp",
+                  alt: "Друзья на вершине горного перевала на золотом рассвете",
+                  tag: "Из примера «Твой день»",
+                  title: "Рассветы, путешествия и слова друзей",
+                  text: "Праздничное издание ко дню рождения с лучшими совместными историями и тостом.",
+                  href: "/demo/your-day",
+                },
+              ].map((card) => (
+                <article
+                  key={card.title}
+                  className="paper-shadow flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-[#D8CBB8] bg-[#FFFDF8]"
+                >
+                  <div>
+                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#EAE0D2]">
+                      <Image
+                        src={card.img}
+                        alt={card.alt}
+                        fill
+                        loading="eager"
+                        sizes="(max-width: 768px) 100vw, 400px"
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="p-6 space-y-2.5">
+                      <span className="text-xs sm:text-[13px] font-semibold uppercase tracking-[0.14em] text-[#7A6855] block">
+                        {card.tag}
+                      </span>
+                      <h3 className="font-serif text-2xl sm:text-[26px] leading-snug text-[#1F3042]">
+                        {card.title}
+                      </h3>
+                      <p className="text-[15px] sm:text-base leading-relaxed text-[#2F3E4E]">
+                        {card.text}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="px-6 pb-6 pt-2">
+                    <Link
+                      href={card.href}
+                      className="inline-flex items-center gap-1.5 text-sm sm:text-[15px] font-medium text-[#1F3042] underline decoration-[#B99273] underline-offset-4 hover:text-[#7A3E4A]"
+                    >
+                      <span>Открыть этот пример</span>
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
-        {/* 5. КАК ЭТО РАБОТАЕТ — 3 ШАГА С ВИЗУАЛЬНЫМИ ПРИМЕРАМИ */}
-        <section id="how" className="border-y border-[#E5D9C8] bg-[#EFE7DA] py-16 sm:py-24">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 space-y-10">
+        {/* 5. КАК ЭТО РАБОТАЕТ — 3 ШАГА */}
+        <section
+          id="how"
+          className="border-y border-[#DFD2C0] bg-[#EFE7DA] py-14 sm:py-20 lg:py-24"
+        >
+          <div className="layout-container space-y-10">
             <div className="max-w-2xl space-y-2">
-              <p className="text-xs uppercase tracking-[0.22em] text-[#8A7563]">
-                Без дизайнера и долгих анкет
+              <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-[#7A6855]">
+                Понятный путь без дизайнера
               </p>
-              <h2 className="font-serif text-4xl text-[#1F3042] sm:text-5xl">
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-[44px] leading-[1.12] text-[#1F3042]">
                 Три шага до готового подарка
               </h2>
             </div>
 
-            <ol className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            <ol className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
               {[
                 {
-                  num: "01",
+                  num: "Шаг 01",
                   title: "Выберите историю",
-                  text: "Один из четырёх поводов со своей палитрой, структурой глав и бережными подсказками.",
+                  text: "Четыре готовых сценария со своей палитрой, структурой глав и подсказками. Регистрация для старта не нужна.",
                   img: "/images/books/mom-4-home.webp",
                   alt: "Тёплый семейный момент на кухне",
                 },
                 {
-                  num: "02",
+                  num: "Шаг 02",
                   title: "Добавьте фотографии и слова",
-                  text: "Загрузите до 30 снимков с телефона и ответьте на короткие вопросы. Черновик сохраняется сам.",
+                  text: "Загрузите до 30 снимков с телефона и ответьте на короткие вопросы. Черновик автоматически сохраняется.",
                   img: "/images/books/love-5-home.webp",
                   alt: "Пара в новой квартире среди огоньков",
                 },
                 {
-                  num: "03",
+                  num: "Шаг 03",
                   title: "Подарите по ссылке или QR",
-                  text: "Пролистайте предпросмотр до оплаты, оплатите заказ и мгновенно отправьте ссылку близкому человеку.",
+                  text: "Пролистайте полный предпросмотр до оплаты, оплатите заказ и мгновенно отправьте ссылку или QR-код близкому человеку.",
                   img: "/images/books/day-5-details.webp",
                   alt: "Праздничный конверт с сургучной печатью и бокалы",
                 },
               ].map((step) => (
                 <li
                   key={step.num}
-                  className="overflow-hidden rounded-3xl border border-[#DFD2C0] bg-[#FFFDF8] shadow-xs flex flex-col justify-between"
+                  className="paper-shadow flex h-full flex-col overflow-hidden rounded-3xl border border-[#D8CBB8] bg-[#FFFDF8]"
                 >
-                  <div className="relative aspect-[16/10] w-full overflow-hidden">
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#EAE0D2]">
                     <Image
                       src={step.img}
                       alt={step.alt}
                       fill
-                      sizes="(max-width: 768px) 100vw, 380px"
+                      loading="eager"
+                      sizes="(max-width: 768px) 100vw, 400px"
                       className="object-cover"
                     />
-                    <span className="absolute left-4 top-4 rounded-full bg-[#1F3042] px-3 py-1 font-serif text-lg text-[#FFFDF8]">
-                      Шаг {step.num}
+                    <span className="absolute left-4 top-4 rounded-full bg-[#1F3042] px-4 py-1.5 font-serif text-base font-medium text-[#FFFDF8] shadow-xs">
+                      {step.num}
                     </span>
                   </div>
-                  <div className="p-6 space-y-2">
-                    <h3 className="font-serif text-2xl font-semibold text-[#1F3042]">
-                      {step.title}
-                    </h3>
-                    <p className="text-sm leading-relaxed text-[#3E4C5C]">
-                      {step.text}
-                    </p>
+                  <div className="flex flex-1 flex-col justify-between p-6 sm:p-7 space-y-3">
+                    <div className="space-y-2.5">
+                      <h3 className="font-serif text-2xl sm:text-[28px] font-medium leading-tight text-[#1F3042]">
+                        {step.title}
+                      </h3>
+                      <p className="text-base leading-relaxed text-[#2F3E4E]">
+                        {step.text}
+                      </p>
+                    </div>
                   </div>
                 </li>
               ))}
@@ -316,155 +399,227 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 6. ВИЗУАЛЬНЫЙ СТОРИТЕЛЛИНГ №3: «Однажды вы откроете эту книгу снова» */}
-        <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
-          <div className="relative overflow-hidden rounded-3xl border border-[#DFD2C0] bg-[#1F3042] shadow-xl">
-            <div className="grid grid-cols-1 lg:grid-cols-12">
-              <div className="relative min-h-[320px] lg:col-span-7 lg:min-h-[480px]">
-                <Image
-                  src="/images/books/story-family-reading.webp"
-                  alt="Семья вечером на диване вместе рассматривает цифровую фотокнигу на планшете и телефоне"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 680px"
-                  className="object-cover"
-                />
-              </div>
-              <div className="flex flex-col justify-center p-7 text-[#F7F2E9] sm:p-12 lg:col-span-5 space-y-5">
-                <p className="text-xs uppercase tracking-[0.22em] text-[#D8C3A8]">
-                  Истории, к которым возвращаются
-                </p>
-                <h2 className="font-serif text-3xl leading-tight sm:text-5xl">
-                  Однажды вы откроете эту книгу снова
-                </h2>
-                <p className="text-sm leading-relaxed text-[#E6DDD0] sm:text-base">
-                  Через месяц, на следующую годовщину или тихим семейным вечером.
-                  Книга открывается по приватной ссылке на любом телефоне или
-                  планшете, а полный архив всегда можно сохранить себе.
-                </p>
-                <div className="pt-2 flex flex-wrap gap-3">
-                  <Link
-                    href="/catalog"
-                    className="inline-flex min-h-11 items-center rounded-full bg-[#F7F2E9] px-6 text-sm font-medium text-[#1F3042] hover:bg-white"
-                  >
-                    Выбрать повод
-                  </Link>
-                  <Link
-                    href="/demo/mother-thanks"
-                    className="inline-flex min-h-11 items-center rounded-full border border-[#F7F2E9]/40 px-5 text-sm text-[#F7F2E9] hover:bg-white/10"
-                  >
-                    Смотреть демо «Мама, спасибо»
-                  </Link>
+        {/* 6. SPLIT-BANNER «Однажды вы откроете эту книгу снова» */}
+        <section className="py-14 sm:py-20 lg:py-24">
+          <div className="layout-container">
+            <div className="paper-shadow overflow-hidden rounded-3xl border border-[#1F3042] bg-[#1F3042]">
+              <div className="grid grid-cols-1 lg:grid-cols-12">
+                <div className="relative min-h-[280px] sm:min-h-[360px] lg:col-span-6 lg:min-h-[460px]">
+                  <Image
+                    src="/images/books/story-family-reading.webp"
+                    alt="Семья вечером на диване вместе рассматривает цифровую фотокнигу на планшете и телефоне"
+                    fill
+                    loading="eager"
+                    sizes="(max-width: 1024px) 100vw, 620px"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-14 text-[#F7F2E9] lg:col-span-6 space-y-6">
+                  <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-[#D8C3A8]">
+                    Истории, к которым возвращаются
+                  </p>
+                  <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl leading-[1.1]">
+                    Однажды вы откроете эту книгу снова
+                  </h2>
+                  <p className="text-base sm:text-[17px] leading-[1.6] text-[#EAE2D6]">
+                    Через месяц, на следующую годовщину или тихим семейным
+                    вечером. Книга открывается по приватной ссылке на любом
+                    телефоне или планшете, а полный архив фотографий и текстов
+                    всегда можно сохранить себе.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3.5 pt-1">
+                    <Link
+                      href="/catalog"
+                      className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#F7F2E9] px-7 text-base font-medium text-[#1F3042] hover:bg-white transition-colors"
+                    >
+                      Выбрать подарок
+                    </Link>
+                    <Link
+                      href="/demo/mother-thanks"
+                      className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#F7F2E9]/45 px-6 text-base font-medium text-[#F7F2E9] hover:bg-white/10 transition-colors"
+                    >
+                      Смотреть демо «Мама, спасибо»
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 7. ПРОЗРАЧНАЯ СТОИМОСТЬ */}
-        <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
-          <div className="rounded-3xl border border-[#DFD2C0] bg-[#FFFDF8] p-6 sm:p-10 space-y-6">
-            <div className="space-y-1">
-              <p className="text-xs uppercase tracking-[0.2em] text-[#8A7563]">
-                Честные правила размещения
+        {/* 7. ПРОЗРАЧНАЯ СТОИМОСТЬ (КРУПНЫЕ ЧИТАЕМЫЕ КАРТОЧКИ НА ВСЕХ УСТРОЙСТВАХ) */}
+        <section
+          id="pricing"
+          className="border-t border-[#DFD2C0] bg-[#EFE7DA]/50 py-14 sm:py-20 lg:py-24"
+        >
+          <div className="layout-container space-y-10">
+            <div className="max-w-3xl space-y-3">
+              <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-[#7A6855]">
+                Честные условия и фиксированные цены
               </p>
-              <h2 className="font-serif text-3xl sm:text-4xl text-[#1F3042]">
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-[44px] leading-[1.12] text-[#1F3042]">
                 Прозрачная стоимость без скрытых подписок
               </h2>
+              <p className="text-base sm:text-[17px] leading-[1.6] text-[#2F3E4E]">
+                Вы платите один раз при публикации готовой книги. Предпросмотр
+                до оплаты бесплатен.
+              </p>
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[640px] text-left text-sm">
-                <thead className="text-xs uppercase tracking-[0.14em] text-[#8A7563]">
-                  <tr className="border-b border-[#EAE0D2]">
-                    <th className="py-3 font-medium">Издание</th>
-                    <th className="py-3 font-medium">Первая покупка</th>
-                    <th className="py-3 font-medium">Условия после первого года</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#EAE0D2]">
-                  <tr>
-                    <td className="py-4 font-serif text-xl text-[#1F3042]">«Наша история»</td>
-                    <td className="py-4 font-semibold">4 990 ₽ · 12 месяцев</td>
-                    <td className="py-4 text-[#3E4C5C]">
-                      Включено скачивание полного архива книги. Продление в текущем выпуске не продаётся.
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="py-4 font-serif text-xl text-[#1F3042]">«Мама, спасибо»</td>
-                    <td className="py-4 font-semibold">5 990 ₽ · 12 месяцев</td>
-                    <td className="py-4 text-[#3E4C5C]">
-                      12 месяцев доступа по ссылке и скачивание архива своих материалов.
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="py-4 font-serif text-xl text-[#1F3042]">«Твой день»</td>
-                    <td className="py-4 font-semibold">5 990 ₽ · 12 месяцев</td>
-                    <td className="py-4 text-[#3E4C5C]">
-                      12 месяцев доступа по ссылке и скачивание архива.
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="py-4 font-serif text-xl text-[#1F3042]">«Мой первый год»</td>
-                    <td className="py-4 font-semibold">4 990 ₽ · первый год</td>
-                    <td className="py-4 text-[#3E4C5C]">
-                      Добровольное ручное продление — <strong>990 ₽/год</strong> отдельным платежом, без автосписаний.
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+
+            <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-6">
+              {PRICING_ITEMS.map((item) => (
+                <div
+                  key={item.slug}
+                  className={`rounded-3xl border p-6 sm:p-8 flex flex-col justify-between gap-6 ${item.tone}`}
+                >
+                  <div className="space-y-3">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="rounded-full bg-[#FFFDF8] px-3.5 py-1 text-xs sm:text-[13px] font-medium text-[#1F3042] border border-[#D8CBB8]">
+                        {item.badge}
+                      </span>
+                      <span className="font-serif text-3xl sm:text-4xl font-semibold text-[#1F3042]">
+                        {item.price}
+                      </span>
+                    </div>
+
+                    <h3 className="font-serif text-2xl sm:text-3xl font-medium text-[#1F3042]">
+                      {item.title}
+                    </h3>
+                    <p className="text-base leading-relaxed text-[#2F3E4E]">
+                      {item.subtitle}
+                    </p>
+                  </div>
+
+                  <div className="border-t border-[#D8CBB8]/80 pt-4 space-y-3">
+                    <div className="flex items-start gap-2.5 text-sm sm:text-[15px] text-[#1F3042]">
+                      <CheckCircle2 className="h-4 w-4 shrink-0 text-[#4D6256] mt-1" />
+                      <span>
+                        <strong>Срок размещения:</strong> {item.duration}
+                      </span>
+                    </div>
+                    <div className="flex items-start gap-2.5 text-sm sm:text-[15px] text-[#2F3E4E]">
+                      <CheckCircle2 className="h-4 w-4 shrink-0 text-[#4D6256] mt-1" />
+                      <span>{item.afterYear}</span>
+                    </div>
+                    <div className="pt-2 flex flex-wrap items-center justify-between gap-3">
+                      <Link
+                        href={`/create/${item.slug}`}
+                        className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-[#1F3042] px-5 text-sm sm:text-[15px] font-medium text-[#F7F2E9] hover:bg-[#162433]"
+                      >
+                        <span>Создать книгу</span>
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                      <Link
+                        href={`/demo/${item.slug}`}
+                        className="text-sm sm:text-[15px] font-medium text-[#1F3042] underline decoration-[#B99273] underline-offset-4"
+                      >
+                        Посмотреть пример
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
         {/* 8. ЧАСТЫЕ ВОПРОСЫ (FAQ) */}
-        <section id="faq" className="mx-auto max-w-3xl px-4 pb-20 sm:px-6">
-          <h2 className="font-serif text-4xl text-[#1F3042]">Частые вопросы</h2>
-          <Accordion type="single" collapsible className="mt-4 rounded-3xl border border-[#DFD2C0] bg-[#FFFDF8] px-6 py-2">
-            <AccordionItem value="a">
-              <AccordionTrigger>Это цифровая или печатная книга?</AccordionTrigger>
-              <AccordionContent>
-                Это интерактивная цифровая книга: получатель открывает её по приватной ссылке или QR-коду с любого телефона, планшета или компьютера. Бумажный тираж не печатается.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="b">
-              <AccordionTrigger>Можно ли увидеть книгу до оплаты и отредактировать позже?</AccordionTrigger>
-              <AccordionContent>
-                Да. Вы собираете книгу в редакторе и бесплатно листаете полный предпросмотр до оплаты. После покупки вы можете вернуться в личный кабинет и поправить тексты.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="c">
-              <AccordionTrigger>Кто сможет открыть мою книгу?</AccordionTrigger>
-              <AccordionContent>
-                Каждая книга получает случайный непредсказуемый адрес и закрыта от поисковых систем. Дополнительно вы можете установить защитный PIN-код из 4–8 цифр.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="d">
-              <AccordionTrigger>Сколько фотографий можно загрузить и как работает продление «Мой первый год»?</AccordionTrigger>
-              <AccordionContent>
-                До 30 фотографий (JPEG, PNG, WebP до 15 МБ каждая). Все книги размещаются на 12 месяцев. Для «Мой первый год» доступно ручное продление за 990 ₽/год (с льготным хранением 90 дней и напоминаниями за 30, 7 и 1 день). Никаких автоматических списаний нет.
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+        <section id="faq" className="py-14 sm:py-20 lg:py-24">
+          <div className="layout-container">
+            <div className="mx-auto max-w-4xl space-y-8">
+              <div className="space-y-2">
+                <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-[#7A6855]">
+                  Ответы на важные вопросы
+                </p>
+                <h2 className="font-serif text-3xl sm:text-4xl lg:text-[44px] leading-[1.12] text-[#1F3042]">
+                  Частые вопросы перед покупкой
+                </h2>
+              </div>
+
+              <Accordion
+                type="single"
+                collapsible
+                className="rounded-3xl border border-[#D8CBB8] bg-[#FFFDF8] px-6 py-3 sm:px-8 shadow-xs"
+              >
+                <AccordionItem value="a">
+                  <AccordionTrigger>
+                    Это цифровая или печатная книга?
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    Это интерактивная цифровая книга: получатель открывает её по
+                    приватной ссылке или QR-коду с любого телефона, планшета или
+                    компьютера. Бумажный тираж не печатается, поэтому книгу можно
+                    создать и подарить в тот же день.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="b">
+                  <AccordionTrigger>
+                    Можно ли увидеть книгу до оплаты и отредактировать позже?
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    Да. Вы собираете книгу в пошаговом редакторе и бесплатно
+                    листаете полный предпросмотр до оплаты. После покупки вы
+                    можете в любой момент вернуться в личный кабинет и поправить
+                    тексты или подписи.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="c">
+                  <AccordionTrigger>
+                    Кто сможет открыть мою книгу и защищены ли фотографии?
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    Каждая опубликованная книга получает уникальный
+                    непредсказуемый адрес и закрыта от поисковых систем (
+                    <code>noindex</code>). Дополнительно вы можете установить
+                    защитный PIN-код из 4–8 цифр, чтобы открыть книгу мог только
+                    ваш близкий человек.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="d">
+                  <AccordionTrigger>
+                    Сколько фотографий можно загрузить и что будет через год?
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    В книгу можно загрузить до 30 фотографий (JPEG, PNG или WebP
+                    до 15 МБ каждая). Каждая книга размещается на 12 месяцев. Для
+                    издания «Мой первый год» доступно добровольное ручное
+                    продление за 990 ₽/год (с льготным хранением 90 дней и
+                    напоминаниями за 30, 7 и 1 день). Для всех книг в личном
+                    кабинете всегда доступно бесплатное скачивание полного архива
+                    ваших материалов.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+          </div>
         </section>
 
-        {/* 9. ФИНАЛЬНЫЙ ЭКРАН */}
-        <section className="bg-[#1F3042] px-4 py-16 text-center text-[#F7F2E9] sm:px-6 sm:py-20">
-          <p className="font-script text-4xl text-[#D8C3A8]">Я здесь</p>
-          <h2 className="mx-auto mt-3 max-w-3xl font-serif text-4xl sm:text-6xl">
-            У каждой семьи есть история. Начните со своей.
-          </h2>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link
-              href="/catalog"
-              className="inline-flex min-h-12 items-center rounded-full bg-[#F7F2E9] px-7 text-sm sm:text-base font-medium text-[#1F3042] hover:bg-white"
-            >
-              Создать книгу
-            </Link>
-            <Link
-              href="/demo/love-story"
-              className="inline-flex min-h-12 items-center rounded-full border border-[#F7F2E9]/40 px-6 text-sm sm:text-base text-[#F7F2E9] hover:bg-white/10"
-            >
-              Посмотреть пример
-            </Link>
+        {/* 9. ФИНАЛЬНЫЙ CTA */}
+        <section className="bg-[#1F3042] py-16 text-center text-[#F7F2E9] sm:py-20">
+          <div className="layout-container space-y-6">
+            <p className="font-script text-4xl text-[#D8C3A8]">Я здесь</p>
+            <h2 className="mx-auto max-w-3xl font-serif text-3xl sm:text-5xl lg:text-[54px] leading-[1.08]">
+              У каждой семьи есть история. Начните со своей.
+            </h2>
+            <p className="mx-auto max-w-xl text-base sm:text-lg text-[#E2D9CC]">
+              Выберите повод, посмотрите живой пример книги и соберите подарок,
+              который сохранит ваши самые тёплые слова.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-3.5 pt-2">
+              <Link
+                href="/catalog"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#F7F2E9] px-8 text-base font-medium text-[#1F3042] hover:bg-white transition-colors"
+              >
+                <span>Выбрать подарок</span>
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/demo/love-story"
+                className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#F7F2E9]/45 px-7 text-base font-medium text-[#F7F2E9] hover:bg-white/10 transition-colors"
+              >
+                Посмотреть пример
+              </Link>
+            </div>
           </div>
         </section>
       </main>

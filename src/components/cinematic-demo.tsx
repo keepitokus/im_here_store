@@ -507,28 +507,28 @@ export function CinematicDemo({
   const spread = spreads[index];
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 space-y-6">
+    <div className="layout-container py-8 sm:py-12 space-y-6">
       {/* Переключатель между 4 демо-книгами и шапка образца */}
-      <div className="flex flex-col gap-4 rounded-2xl border border-[#DFD2C0] bg-[#FFFDF8] p-4 sm:p-6">
+      <div className="flex flex-col gap-4 rounded-3xl border border-[#DFD2C0] bg-[#FFFDF8] p-5 sm:p-7">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="text-xs uppercase tracking-[0.18em] text-[#8A7563]">
+            <p className="text-xs sm:text-sm uppercase tracking-[0.16em] text-[#7A6855]">
               {sample.characterSummary}
             </p>
-            <h1 className="font-serif text-3xl sm:text-4xl text-[#1F3042] mt-0.5">
+            <h1 className="font-serif text-3xl sm:text-4xl text-[#1F3042] mt-1">
               Демонстрационная книга {title}
             </h1>
           </div>
           <div className="flex flex-wrap items-center gap-2.5">
             <Link
               href={`/gifts/${slug}`}
-              className="inline-flex min-h-11 items-center rounded-full border border-[#1F3042]/30 px-4 text-xs sm:text-sm font-medium text-[#1F3042] hover:bg-[#EFE7DA]"
+              className="inline-flex min-h-11 items-center rounded-full border border-[#1F3042]/30 px-4 text-sm font-medium text-[#1F3042] hover:bg-[#EFE7DA]"
             >
               О подарке
             </Link>
             <Link
               href={`/create/${slug}`}
-              className={`inline-flex min-h-11 items-center rounded-full px-5 text-xs sm:text-sm font-medium text-[#F7F2E9] ${accent}`}
+              className={`inline-flex min-h-11 items-center rounded-full px-5 text-sm font-medium text-[#F7F2E9] ${accent}`}
             >
               Создать свою · {formatRublesFromKopecks(price)}
             </Link>
@@ -536,7 +536,7 @@ export function CinematicDemo({
         </div>
 
         {/* Быстрое переключение между 4 примерами */}
-        <div className="flex flex-wrap items-center gap-2 border-t border-[#ECE2D4] pt-3 text-xs">
+        <div className="flex flex-wrap items-center gap-2 border-t border-[#ECE2D4] pt-4 text-sm">
           <span className="text-[#7A6855] font-medium">Все 4 примера книг:</span>
           {SLUG_LABELS.map((item) => {
             const active = item.slug === slug;
@@ -545,7 +545,7 @@ export function CinematicDemo({
               <Link
                 key={item.slug}
                 href={`/demo/${item.slug}`}
-                className={`rounded-full px-3.5 py-1.5 font-medium transition-colors ${
+                className={`rounded-full px-4 py-1.5 font-medium transition-colors ${
                   active
                     ? "bg-[#1F3042] text-[#F7F2E9]"
                     : "bg-[#F3ECE0] text-[#2F3E4E] hover:bg-[#E5D9C8]"
@@ -560,7 +560,7 @@ export function CinematicDemo({
 
       {/* Вкладки всех 8 разворотов */}
       <div
-        className="flex gap-1.5 overflow-x-auto pb-1"
+        className="flex gap-2 overflow-x-auto pb-1"
         role="tablist"
         aria-label="Развороты демонстрационной книги"
       >
@@ -571,10 +571,10 @@ export function CinematicDemo({
             role="tab"
             aria-selected={itemIndex === index}
             onClick={() => setIndex(itemIndex)}
-            className={`min-h-10 shrink-0 rounded-full px-4 text-xs font-medium transition-colors ${
+            className={`min-h-11 shrink-0 rounded-full px-4 text-sm font-medium transition-colors ${
               itemIndex === index
                 ? "bg-[#1F3042] text-[#FFFDF8]"
-                : "border border-[#DFD2C0] bg-[#FFFDF8] text-[#4E5D6C] hover:bg-[#EFE7DA]"
+                : "border border-[#DFD2C0] bg-[#FFFDF8] text-[#3E4C5C] hover:bg-[#EFE7DA]"
             }`}
           >
             {item.label}
