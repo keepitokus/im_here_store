@@ -613,7 +613,7 @@ export function BookReaderView({
         <div
           className={`flex flex-wrap items-center justify-between gap-3 rounded-2xl border ${borderClass} ${cardClass} px-4 py-3 shadow-xs`}
         >
-          <div className="flex items-center gap-2 overflow-x-auto py-1">
+          <div className="no-scrollbar flex w-full min-w-0 gap-2 overflow-x-auto py-1">
             {spreads.map((sp, idx) => (
               <button
                 key={sp.id}
@@ -659,30 +659,32 @@ export function BookReaderView({
           <div className="space-y-6">
             {spreads[currentSpread]?.node}
 
-            <div className="flex items-center justify-between gap-3 pt-2">
+            <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 pt-2">
               <Button
                 type="button"
                 variant="outline"
+                aria-label="Предыдущая страница"
                 disabled={currentSpread === 0}
                 onClick={() => setCurrentSpread((p) => Math.max(0, p - 1))}
               >
                 <ChevronLeft className="h-4 w-4" />
-                <span>Предыдущая страница</span>
+                <span className="hidden sm:inline">Предыдущая страница</span>
               </Button>
 
-              <span className={`text-xs font-medium ${mutedClass}`}>
+              <span className={`min-w-0 text-center text-xs font-medium ${mutedClass}`}>
                 Разворот {currentSpread + 1} из {spreads.length}
               </span>
 
               <Button
                 type="button"
                 variant="default"
+                aria-label="Следующая страница"
                 disabled={currentSpread === spreads.length - 1}
                 onClick={() =>
                   setCurrentSpread((p) => Math.min(spreads.length - 1, p + 1))
                 }
               >
-                <span>Следующая страница</span>
+                <span className="hidden sm:inline">Следующая страница</span>
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </div>

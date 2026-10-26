@@ -25,7 +25,7 @@ function EventPhotos({ images }: { images: TimelineImage[] }) {
         src={image.src}
         alt={image.alt}
         fill
-        sizes="(max-width: 880px) 100vw, 420px"
+        sizes="(max-width: 760px) 100vw, 420px"
         className="object-cover"
         unoptimized={image.src.startsWith("data:") || image.src.startsWith("blob:")}
       />
