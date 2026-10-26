@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ProductSlug, PRODUCTS_CATALOG } from "@/lib/catalog";
 import { formatRublesFromKopecks } from "@/lib/utils";
 import { ArrowRight, BookOpen } from "lucide-react";
+import { BrandLogo } from "@/components/brand-logo";
 
 interface EditorialCardConfig {
   slug: ProductSlug;
@@ -88,9 +89,9 @@ export function ProductCard({ slug }: { slug: ProductSlug }) {
     >
       {/* Верхняя часть: обложка книги с переплётом без перекрывающих лица плавающих миниатюр */}
       <div>
-        <div className="flex items-center justify-between gap-2 border-b border-[#E2D6C5] bg-[#FFFDF8]/80 px-6 py-3 text-xs sm:text-[13px] font-medium text-[#5C5349]">
+        <div className="flex items-center justify-between gap-2 border-b border-[#E2D6C5] bg-[#FFFDF8]/80 px-6 py-2.5 text-xs sm:text-[13px] font-medium text-[#5C5349]">
           <span>{cfg.issueNumber}</span>
-          <span className="font-script text-xl text-[#1F3042]">Я здесь</span>
+          <BrandLogo size="sm" />
         </div>
 
         <div className="px-5 pt-5 sm:px-7 sm:pt-6">

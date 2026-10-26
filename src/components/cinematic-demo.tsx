@@ -7,6 +7,7 @@ import { ProductSlug, PRODUCTS_CATALOG } from "@/lib/catalog";
 import { DemoSampleBook } from "@/lib/demo-books";
 import { formatRublesFromKopecks } from "@/lib/utils";
 import { ChevronLeft, ChevronRight, Sparkles, MailOpen, Calendar } from "lucide-react";
+import { BrandLogo } from "@/components/brand-logo";
 
 interface Spread {
   id: string;
@@ -111,7 +112,7 @@ export function CinematicDemo({
             </div>
 
             <div className="flex items-center justify-between border-t border-[#D8CBB8] pt-4">
-              <span className="font-script text-3xl text-[#1F3042]">Я здесь</span>
+              <BrandLogo size="header" />
               <span className="text-xs uppercase tracking-[0.16em] text-[#7A6855]">
                 Листайте далее →
               </span>
@@ -420,7 +421,7 @@ export function CinematicDemo({
               <span className="text-xs text-[#6E6256]">
                 {content.dedication}
               </span>
-              <span className="font-script text-3xl text-[#1F3042]">Я здесь</span>
+              <BrandLogo size="header" />
             </div>
           </article>
         </div>
@@ -460,7 +461,9 @@ export function CinematicDemo({
                 <Sparkles className="h-3.5 w-3.5" />
                 Конец демонстрационного образца
               </span>
-              <p className="font-script text-5xl text-[#1F3042]">Я здесь</p>
+              <div>
+                <BrandLogo size="footer" />
+              </div>
             </div>
 
             <div className="my-6 space-y-4">

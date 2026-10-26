@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SiteHeader, SiteFooter } from "@/components/site-layout";
 import { BookOpen, ArrowRight } from "lucide-react";
+import { BrandLogo } from "@/components/brand-logo";
 
 export default function NotFound() {
   return (
@@ -8,7 +9,9 @@ export default function NotFound() {
       <SiteHeader />
       <main className="layout-container flex-1 flex items-center justify-center py-16">
         <div className="paper-shadow max-w-lg w-full rounded-3xl border border-[#D8CBB8] bg-[#FFFDF8] p-8 sm:p-10 text-center space-y-5">
-          <p className="font-script text-4xl text-[#1F3042]">Я здесь</p>
+          <div className="flex justify-center">
+            <BrandLogo size="footer" />
+          </div>
           <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-[#7A6855]">
             Ошибка 404 · Страница не найдена
           </p>

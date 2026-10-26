@@ -3,6 +3,7 @@ import { isDemoMode } from "@/lib/env";
 import { getCurrentUser } from "@/lib/auth";
 import { ensureDemoSeed } from "@/lib/demo-seed";
 import { SiteNav } from "@/components/site-nav";
+import { BrandLogo } from "@/components/brand-logo";
 
 export async function SiteHeader() {
   ensureDemoSeed();
@@ -31,7 +32,9 @@ export function SiteFooter() {
     <footer className="mt-auto border-t border-[#DFD2C0] bg-[#EFE7DA] text-[#1F3042]">
       <div className="layout-container grid gap-10 py-14 sm:py-16 md:grid-cols-2 lg:grid-cols-12">
         <div className="lg:col-span-5 space-y-4">
-          <p className="font-script text-4xl text-[#1F3042]">Я здесь</p>
+          <Link href="/" className="inline-block" aria-label="Я здесь — на главную">
+            <BrandLogo size="footer" />
+          </Link>
           <p className="max-w-md text-base leading-relaxed text-[#2F3E4E]">
             Персональные цифровые книги из ваших фотографий, памятных дат и
             важных слов. Получатель открывает подарок по приватной ссылке или

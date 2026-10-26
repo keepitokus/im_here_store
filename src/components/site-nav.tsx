@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Menu, X, ArrowRight } from "lucide-react";
+import { BrandLogo } from "@/components/brand-logo";
 
 const LINKS = [
   { href: "/catalog", label: "Подарки" },
@@ -73,11 +74,10 @@ export function SiteNav({ accountLabel }: { accountLabel: string }) {
       <div className="flex shrink-0 items-center">
         <Link
           href="/"
-          className="inline-flex min-h-11 items-center gap-3 whitespace-nowrap rounded-lg pr-1 sm:pr-2"
+          aria-label="Я здесь — на главную"
+          className="inline-flex min-h-11 items-center gap-2.5 whitespace-nowrap rounded-lg py-0.5 pr-1 sm:pr-2"
         >
-          <span className="font-script text-[28px] sm:text-[34px] leading-none text-[#1F3042]">
-            Я здесь
-          </span>
+          <BrandLogo size="header" />
         </Link>
       </div>
 

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SiteHeader, SiteFooter } from "@/components/site-layout";
 import { HeroBook } from "@/components/hero-book";
 import { ProductCard } from "@/components/product-card";
+import { BrandLogo } from "@/components/brand-logo";
 import {
   Accordion,
   AccordionContent,
@@ -597,7 +598,9 @@ export default function HomePage() {
         {/* 9. ФИНАЛЬНЫЙ CTA */}
         <section className="bg-[#1F3042] py-16 text-center text-[#F7F2E9] sm:py-20">
           <div className="layout-container space-y-6">
-            <p className="font-script text-4xl text-[#D8C3A8]">Я здесь</p>
+            <div className="flex justify-center">
+              <BrandLogo size="lg" variant="light" />
+            </div>
             <h2 className="mx-auto max-w-3xl font-serif text-3xl sm:text-5xl lg:text-[54px] leading-[1.08]">
               У каждой семьи есть история. Начните со своей.
             </h2>
