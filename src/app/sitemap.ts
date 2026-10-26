@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { PRODUCT_SLUGS } from "@/lib/catalog";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_APP_URL || "http://127.0.0.1:43123";
   const now = new Date();
