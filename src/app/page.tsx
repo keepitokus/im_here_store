@@ -186,10 +186,9 @@ export default function HomePage() {
                 Помните, как всё начиналось?
               </h2>
               <p className="text-base sm:text-[17px] leading-[1.6] text-[#2F3E4E]">
-                Первые свидания. Мамины объятия. Детский смех и рассветы в кругу
-                близких друзей. Мы собираем ваши фотографии и короткие искренние
-                слова в коллекционное цифровое издание, к которому хочется
-                возвращаться.
+                Первая встреча, долгий разговор и место, которое стало только
+                вашим. Мы собираем фотографии и короткие слова в книгу, которую
+                хочется открыть снова.
               </p>
               <p className="text-base leading-[1.6] text-[#3E4C5C]">
                 Вам не нужно писать длинные тексты или владеть дизайном —
@@ -251,7 +250,7 @@ export default function HomePage() {
               <p className="text-base sm:text-[17px] leading-[1.6] text-[#2F3E4E]">
                 В памяти телефона хранятся тысячи случайных снимков, которые
                 редко открывают. Отобранные 15–30 фотографий с вашими подписями
-                и личным письмом превращаются в семейную книгу.
+                и личным письмом становятся книгой, к которой возвращаются.
               </p>
             </div>
 
@@ -420,10 +419,10 @@ export default function HomePage() {
                     Однажды вы откроете эту книгу снова
                   </h2>
                   <p className="text-base sm:text-[17px] leading-[1.6] text-[#EAE2D6]">
-                    Через месяц, на следующую годовщину или тихим семейным
-                    вечером. Книга открывается по приватной ссылке на любом
-                    телефоне или планшете, а полный архив фотографий и текстов
-                    всегда можно сохранить себе.
+                    Через месяц или тихим вечером, когда захочется вспомнить.
+                    Книга открывается по приватной ссылке на любом телефоне или
+                    планшете, а полный архив фотографий и текстов всегда можно
+                    сохранить себе.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3.5 pt-1">
                     <Link
@@ -599,7 +598,7 @@ export default function HomePage() {
               <BrandLogo size="lg" variant="light" />
             </div>
             <h2 className="mx-auto max-w-3xl font-serif text-3xl sm:text-5xl lg:text-[54px] leading-[1.08]">
-              У каждой семьи есть история. Начните со своей.
+              У каждого близкого человека есть история. Начните со своей.
             </h2>
             <p className="mx-auto max-w-xl text-base sm:text-lg text-[#E2D9CC]">
               Выберите повод, посмотрите живой пример книги и соберите подарок,
@@ -617,7 +616,7 @@ export default function HomePage() {
                 href="/demo/love-story"
                 className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#F7F2E9]/45 px-7 text-base font-medium text-[#F7F2E9] hover:bg-white/10 transition-colors"
               >
-                Посмотреть пример
+                Пример «Наша история»
               </Link>
             </div>
           </div>
