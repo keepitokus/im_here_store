@@ -96,7 +96,7 @@ export function BookTimeline({
 
   return (
     <div className="book-timeline w-full min-w-0" data-wide-at={WIDE_CONTAINER_PX}>
-      <div className="book-timeline-compact px-4 py-6 sm:px-6 sm:py-8" data-layout="compact">
+      <div className="book-timeline-compact px-8 py-10 sm:px-10 sm:py-12" data-layout="compact">
         <ol className="relative ml-4 space-y-4 border-l border-[#D4C5B3] pl-5 sm:ml-5 sm:pl-6">
           {events.map((event, index) => {
             const open = event.id === resolvedId;
