@@ -10,7 +10,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { SHOW_MOTHERS_DAY_BANNER } from "@/lib/landing";
 import { ArrowRight, BookOpen, Sparkles, CheckCircle2 } from "lucide-react";
 
 const PRICING_ITEMS = [
@@ -221,20 +220,13 @@ export default function HomePage() {
           className="border-y border-[#DFD2C0] bg-[#EFE7DA]/65 py-14 sm:py-20 lg:py-24"
         >
           <div className="layout-container space-y-10">
-            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-              <div className="reveal max-w-2xl space-y-2">
-                <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-[#7A6855]">
-                  Четыре повода · Четыре характера
-                </p>
-                <h2 className="font-serif text-3xl sm:text-4xl lg:text-[44px] leading-[1.1] text-[#1F3042]">
-                  Выберите книгу для вашего близкого человека
-                </h2>
-              </div>
-              {SHOW_MOTHERS_DAY_BANNER && (
-                <div className="inline-flex items-center rounded-full border border-[#B8CCDC] bg-[#EEF3F6] px-4 py-2 text-sm font-medium text-[#1F3852]">
-                  Ко Дню матери 29 ноября — «Мама, спасибо»
-                </div>
-              )}
+            <div className="reveal max-w-2xl space-y-2">
+              <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-[#7A6855]">
+                Четыре повода · Четыре характера
+              </p>
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-[44px] leading-[1.1] text-[#1F3042]">
+                Выберите книгу для вашего близкого человека
+              </h2>
             </div>
 
             {/* Сетка 2x2 на 1024px+ и 1 просторная колонка на iPhone и iPad portrait */}
