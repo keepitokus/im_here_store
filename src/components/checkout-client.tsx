@@ -224,7 +224,7 @@ export function CheckoutClient({
         <div className="rounded-3xl border border-[#DFD6CA] bg-[#FFFEFA] p-6 sm:p-7 shadow-sm space-y-6">
           <div className="flex items-baseline justify-between border-b border-[#ECE4D8] pb-4">
             <div>
-              <div className="text-xs text-[#7A6B60]">Итого к оплате (серверная цена)</div>
+              <div className="text-xs text-[#7A6B60]">К оплате</div>
               <div className="font-serif text-3xl sm:text-4xl font-semibold text-[#231C18] mt-0.5">
                 {formatRublesFromKopecks(serverAmountKopecks)}
               </div>

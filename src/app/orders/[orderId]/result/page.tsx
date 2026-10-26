@@ -111,8 +111,14 @@ export default async function OrderResultPage({
                         href={`/b/${book.publicSlug}`}
                         className="inline-flex min-h-[38px] items-center gap-1.5 rounded-full bg-[#6E2638] px-4 py-1.5 text-xs font-medium text-[#FAF4F4]"
                       >
-                        <span>Открыть опубликованную книгу</span>
+                        <span>Посмотреть как получатель</span>
                         <ExternalLink className="h-3.5 w-3.5" />
+                      </Link>
+                      <Link
+                        href={`/create/${book.productSlug}?bookId=${book.id}`}
+                        className="inline-flex min-h-11 items-center rounded-full border border-[#1F3042] px-4 text-xs"
+                      >
+                        Изменить книгу
                       </Link>
                     </div>
                   </div>

@@ -375,7 +375,7 @@ export function EditorWizard({
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 space-y-8">
       {/* Блок входа, если пользователь ещё не авторизован и нет editToken */}
-      {!user && !editToken && (
+      {step >= 3 && !user && !editToken && (
         <div className="rounded-3xl border border-[#DFD2C5] bg-[#FFFEFA] p-6 sm:p-8 shadow-sm space-y-5">
           <div className="space-y-1.5">
             <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#6E2638]">
@@ -383,7 +383,7 @@ export function EditorWizard({
               Защита вашего черновика и фотографий
             </span>
             <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-[#231C18]">
-              Войдите по email без пароля, чтобы сохранять книгу
+              Сохраните книгу на свой email — пароль не нужен
             </h2>
             <p className="text-sm text-[#574940]">
               Черновик привязывается только к вашему аккаунту. В локальном режиме{" "}

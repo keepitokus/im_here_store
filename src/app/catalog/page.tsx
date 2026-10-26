@@ -1,101 +1,48 @@
 import type { Metadata } from "next";
-import { SiteHeader, SiteFooter } from "@/components/site-layout";
-import { ProductCard } from "@/components/product-card";
-import { PRODUCTS_CATALOG, PRODUCT_SLUGS } from "@/lib/catalog";
-import { formatRublesFromKopecks } from "@/lib/utils";
 import Link from "next/link";
+import { SiteHeader, SiteFooter } from "@/components/site-layout";
+import { PRODUCTS_CATALOG, PRODUCT_SLUGS } from "@/lib/catalog";
+import { LANDINGS } from "@/lib/landing";
+import { formatRublesFromKopecks } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Каталог цифровых книг-подарков — «Я здесь»",
-  description:
-    "Четыре издания для самых близких: «Наша история» (4 990 ₽), «Мама, спасибо» (5 990 ₽), «Твой день» (5 990 ₽) и «Мой первый год» (4 990 ₽).",
+  title: "Подарки",
+  description: "Четыре цифровые книги: для мамы, для пары, на день рождения и на первый год ребёнка. От 4 990 ₽.",
 };
 
 export default function CatalogPage() {
-  const products = PRODUCT_SLUGS.map((slug) => PRODUCTS_CATALOG[slug]);
-
+  const ordered = ["mother-thanks", "love-story", "your-day", "first-year"] as const;
   return (
     <div className="min-h-screen flex flex-col">
       <SiteHeader />
-
-      <main className="flex-1 py-12 sm:py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 space-y-12">
-          <div className="max-w-3xl space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#6E2638]">
-              Каталог «Я здесь» · 4 издания
-            </p>
-            <h1 className="font-serif text-3xl sm:text-5xl font-semibold text-[#231C18]">
-              Выберите повод для вашей книги
-            </h1>
-            <p className="text-base text-[#574940] leading-relaxed">
-              Каждое издание включает пошаговый редактор с автосохранением,
-              добавление до 30 фотографий, выбор цветовой темы, приватную ссылку с
-              опциональным PIN-кодом, QR-код и 12 месяцев размещения.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-            {products.map((product) => (
-              <ProductCard key={product.slug} product={product} />
-            ))}
-          </div>
-
-          {/* Сводная таблица цен и условий согласно Разделу 2 ТЗ */}
-          <section
-            aria-label="Сравнение изданий и условий размещения"
-            className="rounded-3xl border border-[#DFD6CA] bg-[#FFFEFA] p-6 sm:p-8 space-y-4 overflow-x-auto"
-          >
-            <h2 className="font-serif text-2xl font-semibold text-[#231C18]">
-              Прозрачные цены и условия размещения
-            </h2>
-            <p className="text-sm text-[#574940]">
-              В MVP нет скрытых тарифов, допродаж или автоматических списаний с карты.
-            </p>
-            <table className="w-full min-w-[620px] text-left text-sm border-collapse">
-              <thead>
-                <tr className="border-b border-[#E5DDD2] text-xs uppercase tracking-wider text-[#7A6B60]">
-                  <th className="py-3 pr-4">Издание (SKU)</th>
-                  <th className="py-3 px-4">Первоначальная покупка</th>
-                  <th className="py-3 px-4">Продление после 1 года</th>
-                  <th className="py-3 pl-4">Действие</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#ECE4D8]">
-                {products.map((p) => (
-                  <tr key={p.slug}>
-                    <td className="py-3.5 pr-4">
-                      <div className="font-serif font-semibold text-base text-[#231C18]">
-                        {p.title}
-                      </div>
-                      <div className="text-xs text-[#7A6B60]">{p.paletteSummary}</div>
-                    </td>
-                    <td className="py-3.5 px-4 font-semibold text-[#231C18]">
-                      {formatRublesFromKopecks(p.initialPriceKopecks)}{" "}
-                      <span className="text-xs font-normal text-[#7A6B60]">
-                        (12 мес.)
-                      </span>
-                    </td>
-                    <td className="py-3.5 px-4 text-[#4A3E36]">
-                      {p.allowsRenewalInMvp && p.renewalPriceKopecks
-                        ? `${formatRublesFromKopecks(p.renewalPriceKopecks)} за каждый последующий год (вручную)`
-                        : "Нет в MVP (доступно скачивание архива)"}
-                    </td>
-                    <td className="py-3.5 pl-4">
-                      <Link
-                        href={`/create/${p.slug}`}
-                        className="text-xs font-semibold text-[#6E2638] hover:underline"
-                      >
-                        Создать →
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </section>
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-12 sm:px-6">
+        <p className="text-xs uppercase tracking-[0.2em] text-[#8A7563]">Подарки</p>
+        <h1 className="mt-3 max-w-2xl font-serif text-5xl leading-tight">Кому вы хотите это подарить?</h1>
+        <div className="mt-10 grid gap-4 md:grid-cols-2">
+          {ordered.map((slug) => {
+            const product = PRODUCTS_CATALOG[slug];
+            const landing = LANDINGS[slug];
+            return (
+              <article key={slug} className={`flex min-h-64 flex-col justify-between p-6 ${landing.wash}`}>
+                <div>
+                  <p className={`text-xs uppercase tracking-[0.16em] ${landing.ink}`}>{landing.eyebrow}</p>
+                  <h2 className="mt-3 font-serif text-4xl">{product.title.replace(/[«»]/g, "")}</h2>
+                  <p className="mt-2 text-sm text-[#3E4C5C]">{landing.lead}</p>
+                </div>
+                <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+                  <p className="font-serif text-3xl">{formatRublesFromKopecks(product.initialPriceKopecks)}</p>
+                  <div className="flex gap-2">
+                    <Link href={`/demo/${slug}`} className="inline-flex min-h-11 items-center px-2 text-sm underline">Пример</Link>
+                    <Link href={`/gifts/${slug}`} className="inline-flex min-h-11 items-center px-2 text-sm">О книге</Link>
+                    <Link href={`/create/${slug}`} className={`inline-flex min-h-11 items-center rounded-full px-4 text-sm text-[#F7F2E9] ${landing.accent}`}>Создать</Link>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
         </div>
+        <p className="mt-6 text-xs text-[#5C6B7A]">В каталоге ровно {PRODUCT_SLUGS.length} книги. Других тарифов нет.</p>
       </main>
-
       <SiteFooter />
     </div>
   );

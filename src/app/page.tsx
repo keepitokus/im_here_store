@@ -1,393 +1,239 @@
 import Link from "next/link";
 import { SiteHeader, SiteFooter } from "@/components/site-layout";
-import { ProductCard } from "@/components/product-card";
-import { PRODUCTS_CATALOG, PRODUCT_SLUGS } from "@/lib/catalog";
+import { HeroBook } from "@/components/hero-book";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import {
-  Sparkles,
-  BookOpen,
-  QrCode,
-  Clock,
-  Smartphone,
-  Download,
-  Lock,
-  ArrowRight,
-} from "lucide-react";
+import { SHOW_MOTHERS_DAY_BANNER } from "@/lib/landing";
+
+const GIFTS = [
+  {
+    href: "/gifts/mother-thanks",
+    demo: "/demo/mother-thanks",
+    title: "Мама, спасибо",
+    situation: "Ко Дню матери и просто так",
+    price: "5 990 ₽",
+    note: "Письмо, детские кадры, то, чему она научила",
+    wash: "bg-[#EEF3F6]",
+    ink: "text-[#3E5874]",
+    featured: true,
+  },
+  {
+    href: "/gifts/love-story",
+    demo: "/demo/love-story",
+    title: "Наша история",
+    situation: "Годовщина и признание",
+    price: "4 990 ₽",
+    note: "Знакомство, свидания, даты и последнее письмо",
+    wash: "bg-[#F6ECEA]",
+    ink: "text-[#7A3E4A]",
+  },
+  {
+    href: "/gifts/your-day",
+    demo: "/demo/your-day",
+    title: "Твой день",
+    situation: "День рождения",
+    price: "5 990 ₽",
+    note: "Лучшие дни, тосты и причины гордиться",
+    wash: "bg-[#F8F1E4]",
+    ink: "text-[#8A6840]",
+  },
+  {
+    href: "/gifts/first-year",
+    demo: "/demo/first-year",
+    title: "Мой первый год",
+    situation: "Первые двенадцать месяцев",
+    price: "4 990 ₽",
+    note: "Месяцы, первые слова, письмо в будущее",
+    wash: "bg-[#F3F6F2]",
+    ink: "text-[#4D6256]",
+  },
+];
 
 export default function HomePage() {
-  const products = PRODUCT_SLUGS.map((slug) => PRODUCTS_CATALOG[slug]);
-
   return (
     <div className="min-h-screen flex flex-col">
       <SiteHeader />
+      <main>
+        <section className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:py-20">
+          <div>
+            <p className="text-xs uppercase tracking-[0.22em] text-[#8A7563]">Цифровые книги для самых близких</p>
+            <h1 className="mt-4 font-serif text-5xl leading-[0.95] text-[#1F3042] sm:text-6xl lg:text-7xl">
+              Есть истории, которые хочется подарить
+            </h1>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-[#3E4C5C]">
+              Соберите ваши фотографии, воспоминания и важные слова в красивую интерактивную книгу. Создайте сами — подарите по ссылке.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link href="/catalog" className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#1F3042] px-6 text-[#F7F2E9]">
+                Выбрать подарок
+              </Link>
+              <Link href="/demo/mother-thanks" className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#1F3042] px-6">
+                Посмотреть книгу
+              </Link>
+            </div>
+            <p className="mt-5 text-sm text-[#5C6B7A]">От 4 990 ₽ · 12 месяцев доступа по ссылке · без автосписаний</p>
+          </div>
+          <HeroBook />
+        </section>
 
-      <main className="flex-1">
-        {/* Первый экран (Hero) */}
-        <section className="relative overflow-hidden border-b border-[#E5DDD2] bg-gradient-to-b from-[#FAF7F2] to-[#F3EDE2] py-12 sm:py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-              <div className="lg:col-span-7 space-y-6">
-                <div className="inline-flex items-center gap-2 rounded-full border border-[#DECFC2] bg-[#FFFEFA] px-4 py-1.5 text-xs font-medium text-[#6E2638]">
-                  <Sparkles className="h-3.5 w-3.5" />
-                  <span>Цифровое издание-подарок без общения с менеджером</span>
-                </div>
-
-                <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[#231C18] leading-[1.08]">
-                  Истории, к которым возвращаются
-                </h1>
-
-                <p className="text-base sm:text-lg text-[#4E4239] leading-relaxed max-w-2xl">
-                  Создайте персональную интерактивную книгу из ваших фотографий,
-                  памятных дат и тёплых слов за <strong>10–15 минут</strong> прямо с
-                  телефона. Посмотрите живой предпросмотр, оплатите и мгновенно
-                  получите приватную ссылку и QR-код для вручения.
-                </p>
-
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
-                  <Link
-                    href="/catalog"
-                    className="inline-flex min-h-[50px] items-center justify-center gap-2 rounded-full bg-[#6E2638] px-7 py-3 text-base font-medium text-[#FAF4F4] hover:bg-[#581D2C] transition-colors shadow-sm"
-                  >
-                    <span>Выбрать повод и создать книгу</span>
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                  <Link
-                    href="/demo/love-story"
-                    className="inline-flex min-h-[50px] items-center justify-center gap-2 rounded-full border border-[#D4C8BA] bg-[#FFFEFA] px-6 py-3 text-base font-medium text-[#2B1E1A] hover:bg-[#F4EFE6] transition-colors"
-                  >
-                    <BookOpen className="h-4 w-4 text-[#6E2638]" />
-                    <span>Листать живые образцы</span>
-                  </Link>
-                </div>
-
-                <div className="grid grid-cols-3 gap-3 pt-4 border-t border-[#E2D9CC] text-xs sm:text-sm text-[#574940]">
-                  <div>
-                    <div className="font-serif text-lg sm:text-xl font-semibold text-[#231C18]">
-                      10–15 мин
-                    </div>
-                    <div>от первой фотографии до готового QR-кода</div>
-                  </div>
-                  <div>
-                    <div className="font-serif text-lg sm:text-xl font-semibold text-[#231C18]">
-                      4 издания
-                    </div>
-                    <div>уникальные вопросы, палитра и вёрстка</div>
-                  </div>
-                  <div>
-                    <div className="font-serif text-lg sm:text-xl font-semibold text-[#231C18]">
-                      Приватно
-                    </div>
-                    <div>защита PIN-кодом и закрытие от индексации</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Интерактивная витрина книги на первом экране */}
-              <div className="lg:col-span-5">
-                <div className="rounded-3xl border border-[#DFD2C5] bg-[#FFFEFA] p-6 sm:p-8 shadow-lg space-y-5">
-                  <div className="flex items-center justify-between text-xs text-[#7A6B60]">
-                    <span className="inline-flex items-center gap-1.5 font-medium text-[#6E2638]">
-                      <span className="h-2 w-2 rounded-full bg-[#6E2638]" />
-                      Интерактивный разворот
-                    </span>
-                    <span>«Я здесь» · Коллекция 2026</span>
-                  </div>
-
-                  <div className="rounded-2xl border border-[#E6CDD2] bg-[#FAF4F4] p-6 text-center space-y-3">
-                    <div className="text-xs uppercase tracking-widest text-[#7A5B63]">
-                      Глава I · 14 сентября
-                    </div>
-                    <div className="font-serif text-2xl sm:text-3xl font-semibold text-[#2B181D]">
-                      Анна и Михаил
-                    </div>
-                    <p className="text-xs sm:text-sm text-[#5E4149] leading-relaxed italic">
-                      «Мы столкнулись у полки с альбомами по архитектуре в маленьком
-                      книжном на Малой Бронной...»
-                    </p>
-                    <div className="pt-2 flex flex-wrap justify-center gap-2">
-                      <span className="rounded-full bg-[#F3E1E4] px-3 py-1 text-[11px] font-medium text-[#6E2638]">
-                        Обложка
-                      </span>
-                      <span className="rounded-full bg-[#F3E1E4] px-3 py-1 text-[11px] font-medium text-[#6E2638]">
-                        Таймлайн дат
-                      </span>
-                      <span className="rounded-full bg-[#F3E1E4] px-3 py-1 text-[11px] font-medium text-[#6E2638]">
-                        До 30 фотографий
-                      </span>
-                      <span className="rounded-full bg-[#F3E1E4] px-3 py-1 text-[11px] font-medium text-[#6E2638]">
-                        Письмо в конверте
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2.5 text-xs">
-                    <Link
-                      href="/demo/love-story"
-                      className="rounded-xl border border-[#E5DDD2] bg-[#FAF7F2] p-3 hover:border-[#6E2638] transition-colors"
-                    >
-                      <div className="font-serif font-semibold text-sm text-[#231C18]">
-                        «Наша история»
-                      </div>
-                      <div className="text-[#7A6B60] mt-0.5">Открыть демо →</div>
-                    </Link>
-                    <Link
-                      href="/demo/mother-thanks"
-                      className="rounded-xl border border-[#E5DDD2] bg-[#FAF7F2] p-3 hover:border-[#2C4A6B] transition-colors"
-                    >
-                      <div className="font-serif font-semibold text-sm text-[#231C18]">
-                        «Мама, спасибо»
-                      </div>
-                      <div className="text-[#7A6B60] mt-0.5">Открыть демо →</div>
-                    </Link>
-                    <Link
-                      href="/demo/your-day"
-                      className="rounded-xl border border-[#E5DDD2] bg-[#FAF7F2] p-3 hover:border-[#8A6421] transition-colors"
-                    >
-                      <div className="font-serif font-semibold text-sm text-[#231C18]">
-                        «Твой день»
-                      </div>
-                      <div className="text-[#7A6B60] mt-0.5">Открыть демо →</div>
-                    </Link>
-                    <Link
-                      href="/demo/first-year"
-                      className="rounded-xl border border-[#E5DDD2] bg-[#FAF7F2] p-3 hover:border-[#4A6151] transition-colors"
-                    >
-                      <div className="font-serif font-semibold text-sm text-[#231C18]">
-                        «Мой первый год»
-                      </div>
-                      <div className="text-[#7A6B60] mt-0.5">Открыть демо →</div>
-                    </Link>
-                  </div>
-                </div>
-              </div>
+        <section className="bg-[#1F3042] px-4 py-16 text-[#F7F2E9] sm:px-6">
+          <div className="mx-auto max-w-4xl text-center">
+            <p className="font-serif text-3xl leading-snug sm:text-5xl">
+              Первые свидания. Мамины объятия. Самые счастливые дни. Всё это может стать книгой.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3 text-sm">
+              <Link href="/demo/love-story" className="rounded-full border border-white/30 px-4 py-2">История пары</Link>
+              <Link href="/demo/mother-thanks" className="rounded-full border border-white/30 px-4 py-2">Письмо маме</Link>
+              <Link href="/demo/your-day" className="rounded-full border border-white/30 px-4 py-2">День рождения</Link>
+              <Link href="/demo/first-year" className="rounded-full border border-white/30 px-4 py-2">Первый год</Link>
             </div>
           </div>
         </section>
 
-        {/* Четыре карточки продукта (Каталог на главной) */}
-        <section className="py-14 sm:py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 space-y-10">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-              <div className="space-y-2">
-                <p className="text-xs font-semibold uppercase tracking-widest text-[#6E2638]">
-                  Четыре повода · Четыре характера
-                </p>
-                <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-[#231C18]">
-                  Выберите книгу для вашего близкого человека
-                </h2>
-              </div>
-              <p className="text-sm text-[#574940] max-w-md">
-                Каждое издание имеет собственную палитру, продуманные вопросы и
-                композицию глав. Никаких длинных анкет — только бережные подсказки.
-              </p>
+        <section id="gifts" className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-xs uppercase tracking-[0.22em] text-[#8A7563]">Четыре повода</p>
+              <h2 className="mt-2 font-serif text-4xl sm:text-5xl">Выберите, кому хотите это подарить</h2>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-              {products.map((product) => (
-                <ProductCard key={product.slug} product={product} />
-              ))}
-            </div>
+            {SHOW_MOTHERS_DAY_BANNER && (
+              <p className="text-sm text-[#3E5874]">Ко Дню матери — 29 ноября. «Мама, спасибо» можно собрать заранее.</p>
+            )}
+          </div>
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            {GIFTS.map((gift) => (
+              <article key={gift.href} className={`paper-shadow flex min-h-72 flex-col justify-between p-6 sm:p-8 ${gift.wash} ${gift.featured ? "md:col-span-2 md:min-h-80" : ""}`}>
+                <div>
+                  <p className={`text-xs uppercase tracking-[0.18em] ${gift.ink}`}>{gift.situation}</p>
+                  <h3 className="mt-3 font-serif text-4xl sm:text-5xl">{gift.title}</h3>
+                  <p className="mt-3 max-w-lg text-sm leading-relaxed text-[#3E4C5C]">{gift.note}</p>
+                </div>
+                <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
+                  <p className="font-serif text-3xl">{gift.price}</p>
+                  <div className="flex gap-2">
+                    <Link href={gift.demo} className="inline-flex min-h-11 items-center px-3 text-sm underline underline-offset-4">Посмотреть пример</Link>
+                    <Link href={gift.href} className="inline-flex min-h-11 items-center rounded-full bg-[#1F3042] px-4 text-sm text-[#F7F2E9]">Создать</Link>
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
         </section>
 
-        {/* Как это работает */}
-        <section className="border-y border-[#E5DDD2] bg-[#F4EFE6] py-14 sm:py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 space-y-10">
-            <div className="text-center max-w-2xl mx-auto space-y-2">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#6E2638]">
-                Полный self-service без ожидания
-              </p>
-              <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-[#231C18]">
-                Как создаётся подарок за 10–15 минут
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <section id="how" className="border-y border-[#EAE0D2] bg-[#EFE7DA] px-4 py-16 sm:px-6">
+          <div className="mx-auto max-w-6xl">
+            <h2 className="font-serif text-4xl sm:text-5xl">Три шага, без дизайнера</h2>
+            <ol className="mt-8 grid gap-4 md:grid-cols-3">
               {[
-                {
-                  step: "Шаг 1",
-                  title: "Выберите повод и палитру",
-                  desc: "Один из четырёх сценариев с бережными вопросами и примерами коротких ответов.",
-                  icon: Sparkles,
-                },
-                {
-                  step: "Шаг 2",
-                  title: "Добавьте до 30 фотографий и дат",
-                  desc: "Прямо с телефона. Снимки автоматически выравниваются и оптимизируются, черновик сохраняется сам.",
-                  icon: Smartphone,
-                },
-                {
-                  step: "Шаг 3",
-                  title: "Проверьте живой предпросмотр",
-                  desc: "Пролистайте готовую книгу до оплаты так, как её увидит получатель.",
-                  icon: BookOpen,
-                },
-                {
-                  step: "Шаг 4",
-                  title: "Получите ссылку и QR-код",
-                  desc: "Сразу после оплаты книга публикуется по секретному адресу с возможностью защиты PIN-кодом.",
-                  icon: QrCode,
-                },
-              ].map((item, idx) => (
-                <div
-                  key={idx}
-                  className="rounded-3xl border border-[#DFD6CA] bg-[#FFFEFA] p-6 space-y-3"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-[#6E2638]">
-                      {item.step}
-                    </span>
-                    <item.icon className="h-5 w-5 text-[#6E2638]" />
-                  </div>
-                  <h3 className="font-serif text-xl font-semibold text-[#231C18]">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-[#574940] leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
+                ["01", "Выберите историю", "Один из четырёх поводов. Вопросы уже внутри — длинный рассказ писать не нужно."],
+                ["02", "Добавьте фотографии и слова", "До 30 снимков и короткие ответы. Черновик сохраняется, к нему можно вернуться."],
+                ["03", "Подарите по ссылке", "После оплаты получатель открывает книгу с телефона. Можно защитить её коротким кодом."],
+              ].map(([n, title, text]) => (
+                <li key={n} className="bg-[#F7F2E9] p-6">
+                  <p className="font-serif text-3xl text-[#B99273]">{n}</p>
+                  <h3 className="mt-4 font-serif text-2xl">{title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[#3E4C5C]">{text}</p>
+                </li>
               ))}
+            </ol>
+          </div>
+        </section>
+
+        <section className="mx-auto grid max-w-6xl items-center gap-8 px-4 py-16 sm:px-6 lg:grid-cols-2">
+          <div>
+            <p className="text-xs uppercase tracking-[0.22em] text-[#8A7563]">Посмотрите, что получится</p>
+            <h2 className="mt-3 font-serif text-4xl sm:text-5xl">Пример можно листать до оплаты</h2>
+            <p className="mt-4 text-[#3E4C5C]">Регистрация для просмотра не нужна. Это вымышленные семьи — так выглядит готовая книга, а не черновик редактора.</p>
+            <Link href="/demo/love-story" className="mt-6 inline-flex min-h-12 items-center rounded-full bg-[#7A3E4A] px-6 text-[#F7F2E9]">
+              Открыть «Нашу историю»
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-[#F6ECEA] p-5">
+              <p className="text-xs uppercase tracking-[0.16em] text-[#7A3E4A]">Глава II</p>
+              <p className="mt-6 font-serif text-2xl">Первое свидание под дождём</p>
+            </div>
+            <div className="bg-[#EEF3F6] p-5">
+              <p className="text-xs uppercase tracking-[0.16em] text-[#3E5874]">Письмо</p>
+              <p className="mt-6 font-serif text-2xl">Спасибо, что дом всегда на месте</p>
+            </div>
+            <div className="col-span-2 bg-[#F8F1E4] p-5">
+              <p className="font-serif text-3xl">За что мы тебя любим — отдельной страницей, не строчкой в чате.</p>
             </div>
           </div>
         </section>
 
-        {/* Блок доверия и честных условий */}
-        <section className="py-14 sm:py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <div className="rounded-3xl border border-[#DFD6CA] bg-[#FFFEFA] p-6 sm:p-10">
-              <div className="max-w-2xl space-y-2 mb-8">
-                <p className="text-xs font-semibold uppercase tracking-widest text-[#4A6151]">
-                  Приватность и прозрачные правила
-                </p>
-                <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-[#231C18]">
-                  Бережное отношение к семейным историям
-                </h2>
+        <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+          <h2 className="font-serif text-4xl">Почему это не открытка из магазина</h2>
+          <div className="mt-6 grid gap-px bg-[#EAE0D2] sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              ["Только ваши воспоминания", "Никаких чужих историй. Текст и фотографии добавляете вы."],
+              ["Открывается с телефона", "Ссылка или QR. Получателю не нужно ничего устанавливать."],
+              ["Слова остаются рядом", "Письмо, даты и подписи к кадрам собраны в одном месте."],
+              ["Без дизайнера", "Обложка, главы и палитра уже собраны. Вы отвечаете на короткие вопросы."],
+            ].map(([title, text]) => (
+              <div key={title} className="bg-[#F7F2E9] p-5">
+                <h3 className="font-serif text-2xl">{title}</h3>
+                <p className="mt-2 text-sm text-[#3E4C5C]">{text}</p>
               </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="space-y-2">
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#EFE9DE]">
-                    <Lock className="h-5 w-5 text-[#2B1E1A]" />
-                  </div>
-                  <h3 className="font-serif text-xl font-semibold text-[#231C18]">
-                    Секретная ссылка и PIN-код
-                  </h3>
-                  <p className="text-sm text-[#574940] leading-relaxed">
-                    Каждая опубликованная книга получает непредсказуемый адрес и
-                    закрыта от поисковиков (<code>noindex</code>). Поскольку сама по
-                    себе ссылка доступна любому, кому вы её перешлёте, вы можете
-                    включить персональный PIN-код.
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#EFE9DE]">
-                    <Clock className="h-5 w-5 text-[#2B1E1A]" />
-                  </div>
-                  <h3 className="font-serif text-xl font-semibold text-[#231C18]">
-                    12 месяцев размещения без автосписаний
-                  </h3>
-                  <p className="text-sm text-[#574940] leading-relaxed">
-                    В покупку входит 1 год хостинга книги. Для альбома «Мой первый
-                    год» доступно ручное продление за 990 ₽/год (с льготным хранением
-                    90 дней и уведомлениями за 30, 7 и 1 день). Никаких скрытых
-                    подписок.
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#EFE9DE]">
-                    <Download className="h-5 w-5 text-[#2B1E1A]" />
-                  </div>
-                  <h3 className="font-serif text-xl font-semibold text-[#231C18]">
-                    Экспорт ваших материалов в любой момент
-                  </h3>
-                  <p className="text-sm text-[#574940] leading-relaxed">
-                    Ваши тексты, даты и фотографии принадлежат вам. В личном кабинете
-                    всегда доступно скачивание полного архива книги и полное удаление
-                    данных по первому требованию.
-                  </p>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </section>
 
-        {/* FAQ */}
-        <section className="pb-16 sm:pb-24">
-          <div className="mx-auto max-w-4xl px-4 sm:px-6 space-y-6">
-            <div className="text-center space-y-2">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#6E2638]">
-                Частые вопросы
-              </p>
-              <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-[#231C18]">
-                Всё, что важно знать перед созданием книги
-              </h2>
-            </div>
-
-            <div className="rounded-3xl border border-[#DFD6CA] bg-[#FFFEFA] px-6 py-2">
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="item-1">
-                  <AccordionTrigger>
-                    Сколько времени занимает создание книги и нужно ли много писать?
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    В среднем 10–15 минут. Мы специально построили редактор вокруг
-                    коротких тёплых вопросов с готовыми примерами. Длинные рассказы
-                    писать не нужно, а любые необязательные разделы можно пропустить.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-2">
-                  <AccordionTrigger>
-                    Как получатель откроет подарок? Нужна ли ему регистрация?
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    Регистрация получателю не нужна. После оплаты вы мгновенно
-                    получаете приватную ссылку и готовый QR-код (его можно распечатать
-                    на открытке или переслать в мессенджере). Если вы установили PIN,
-                    получатель введёт его при открытии.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-3">
-                  <AccordionTrigger>
-                    Как устроено хранение книг и продление «Мой первый год»?
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    Каждая книга размещается на 12 месяцев с момента подтверждения
-                    первого платежа. Для издания «Мой первый год» (4 990 ₽) вы можете
-                    обновлять дневник малыша весь год, а затем вручную продлевать
-                    размещение за 990 ₽ за каждый последующий год — без автоматических
-                    списаний. После окончания срока данные «Мой первый год» бережно
-                    сохраняются ещё 90 дней, а мы заранее напомним за 30, 7 и 1 день.
-                    Для остальных трёх книг покупка продления в MVP не предусмотрена,
-                    при этом вы всегда можете скачать полный архив своих материалов.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-4">
-                  <AccordionTrigger>
-                    Кто может видеть мои черновики и детские фотографии?
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    Черновики и загруженные фотографии доступны только вам после входа
-                    по одноразовому коду из письма. В книге «Мой первый год» данные о
-                    ребёнке приватны по умолчанию, а детские фотографии никогда не
-                    отправляются во внешние ИИ-сервисы.
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </div>
+        <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+          <h2 className="font-serif text-4xl">Сколько это стоит</h2>
+          <div className="mt-6 overflow-x-auto">
+            <table className="w-full min-w-[640px] text-left text-sm">
+              <thead className="text-xs uppercase tracking-[0.14em] text-[#8A7563]">
+                <tr className="border-b border-[#EAE0D2]">
+                  <th className="py-3 font-medium">Книга</th>
+                  <th className="py-3 font-medium">Сейчас</th>
+                  <th className="py-3 font-medium">Дальше</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-[#EAE0D2]"><td className="py-4">Наша история</td><td>4 990 ₽ · 12 месяцев</td><td>Продление в этом выпуске не продаётся. Архив можно скачать.</td></tr>
+                <tr className="border-b border-[#EAE0D2]"><td className="py-4">Мама, спасибо</td><td>5 990 ₽ · 12 месяцев</td><td>То же: год по ссылке и скачивание своих материалов.</td></tr>
+                <tr className="border-b border-[#EAE0D2]"><td className="py-4">Твой день</td><td>5 990 ₽ · 12 месяцев</td><td>Без второго платежа в этом выпуске.</td></tr>
+                <tr><td className="py-4">Мой первый год</td><td>4 990 ₽ · первый год</td><td>Следующий год — 990 ₽, только если решите продлить. Автосписания нет.</td></tr>
+              </tbody>
+            </table>
           </div>
+        </section>
+
+        <section id="faq" className="mx-auto max-w-3xl px-4 pb-20 sm:px-6">
+          <h2 className="font-serif text-4xl">Вопросы</h2>
+          <Accordion type="single" collapsible className="mt-4">
+            <AccordionItem value="a">
+              <AccordionTrigger>Это печатная книга?</AccordionTrigger>
+              <AccordionContent>Нет. Это цифровая книга: получатель открывает её по ссылке или QR на телефоне. Бумажный тираж не печатается.</AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="b">
+              <AccordionTrigger>Можно ли вернуться и поправить текст?</AccordionTrigger>
+              <AccordionContent>Да. Черновик и оплаченная книга остаются в кабинете. «Мой первый год» можно дополнять, пока действует оплаченный срок.</AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="c">
+              <AccordionTrigger>Что увидит получатель?</AccordionTrigger>
+              <AccordionContent>Обложку, главы, фотографии и письмо. Страница закрыта от поисковиков. Если задать код из 4–8 цифр, без него книгу не откроют.</AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="d">
+              <AccordionTrigger>Сколько фотографий и что будет через год?</AccordionTrigger>
+              <AccordionContent>До 30 снимков JPEG, PNG или WebP, каждый до 15 МБ. Ссылка живёт 12 месяцев. У «Мой первый год» следующий год стоит 990 ₽ и оплачивается отдельно. Остальные книги можно скачать архивом до конца срока.</AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </section>
+
+        <section className="bg-[#1F3042] px-4 py-16 text-center text-[#F7F2E9] sm:px-6">
+          <h2 className="mx-auto max-w-3xl font-serif text-4xl sm:text-6xl">У каждой семьи есть история. Начните со своей.</h2>
+          <Link href="/catalog" className="mt-8 inline-flex min-h-12 items-center rounded-full bg-[#F7F2E9] px-6 text-[#1F3042]">
+            Выбрать подарок
+          </Link>
         </section>
       </main>
-
       <SiteFooter />
     </div>
   );

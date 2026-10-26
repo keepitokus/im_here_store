@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Cormorant_Garamond, Inter, Marck_Script } from "next/font/google";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -16,10 +16,28 @@ const inter = Inter({
   display: "swap",
 });
 
+const marck = Marck_Script({
+  variable: "--font-script",
+  subsets: ["cyrillic", "latin"],
+  weight: "400",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Я здесь — Истории, к которым возвращаются | Магазин цифровых книг-подарков",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://127.0.0.1:43123"),
+  title: {
+    default: "Я здесь — цифровые книги для самых близких",
+    template: "%s · Я здесь",
+  },
   description:
-    "Создайте интерактивную книгу-подарок из собственных фотографий, дат и тёплых слов за 10–15 минут. Мгновенная приватная ссылка и QR-код после оплаты.",
+    "Соберите фотографии, воспоминания и важные слова в красивую интерактивную книгу. Создайте сами и подарите по ссылке. От 4 990 ₽.",
+  openGraph: {
+    title: "Я здесь — есть истории, которые хочется подарить",
+    description:
+      "Цифровая книга из ваших фотографий и слов. Получатель открывает её по ссылке с телефона.",
+    locale: "ru_RU",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -30,9 +48,9 @@ export default function RootLayout({
   return (
     <html
       lang="ru"
-      className={`${cormorant.variable} ${inter.variable} h-full antialiased`}
+      className={`${cormorant.variable} ${inter.variable} ${marck.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#FAF7F2] text-[#231C18] selection:bg-[#6E2638]/15 selection:text-[#6E2638]">
+      <body className="min-h-full flex flex-col bg-[#F7F2E9] text-[#1F3042]">
         {children}
       </body>
     </html>

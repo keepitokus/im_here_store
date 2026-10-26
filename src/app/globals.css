@@ -1,8 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FAF7F2;
-  --foreground: #231C18;
+  --ivory: #f7f2e9;
+  --champagne: #eae0d2;
+  --ink: #1f3042;
+  --graphite: #292a2c;
+  --copper: #b99273;
+  --paper: #fffdf8;
+  --rose: #7a3e4a;
+  --rose-wash: #f6ecea;
+  --sky: #3e5874;
+  --sky-wash: #eef3f6;
+  --gold: #8a6840;
+  --gold-wash: #f8f1e4;
+  --sage: #4d6256;
+  --sage-wash: #f3f6f2;
+  --background: var(--ivory);
+  --foreground: var(--ink);
 }
 
 body {
@@ -13,11 +27,27 @@ body {
 }
 
 .font-serif {
-  font-family: var(--font-serif), Georgia, Cambria, "Times New Roman", serif;
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
 }
 
-.font-sans {
-  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+.font-script {
+  font-family: var(--font-script), "Segoe Script", cursive;
+}
+
+::selection {
+  background: rgba(185, 146, 115, 0.35);
+  color: #1f3042;
+}
+
+:focus-visible {
+  outline: 2px solid #1f3042;
+  outline-offset: 3px;
+}
+
+.paper-shadow {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 24px 60px -36px rgba(31, 48, 66, 0.45);
 }
 
 @media (prefers-reduced-motion: reduce) {

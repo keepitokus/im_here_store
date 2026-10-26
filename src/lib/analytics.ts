@@ -11,7 +11,16 @@ export type AnalyticsEventName =
   | "payment_succeeded"
   | "publication_ready"
   | "renewal_started"
-  | "renewal_succeeded";
+  | "renewal_succeeded"
+  | "preview"
+  | "checkout_start"
+  | "payment_success";
+
+const EVENT_ALIASES: Partial<Record<AnalyticsEventName, AnalyticsEventName>> = {
+  view_preview: "preview",
+  begin_checkout: "checkout_start",
+  payment_succeeded: "payment_success",
+};
 
 export function trackServerEvent(params: {
   event: AnalyticsEventName;
@@ -22,16 +31,21 @@ export function trackServerEvent(params: {
   amountKopecks?: number | null;
 }) {
   // ТЗ Раздел 9: Без персональных историй в аналитике.
-  recordAuditEvent({
-    actorUserId: params.userId ?? null,
-    eventType: `analytics:${params.event}`,
-    entityType: "funnel",
-    entityId: params.entityId ?? params.productSlug ?? null,
-    metadata: {
-      event: params.event,
-      productSlug: params.productSlug ?? undefined,
-      utmSource: params.utmSource ?? undefined,
-      amountKopecks: params.amountKopecks ?? undefined,
-    },
-  });
+  const names = [params.event, EVENT_ALIASES[params.event]].filter(
+    (name): name is AnalyticsEventName => Boolean(name)
+  );
+  for (const name of names) {
+    recordAuditEvent({
+      actorUserId: params.userId ?? null,
+      eventType: `analytics:${name}`,
+      entityType: "funnel",
+      entityId: params.entityId ?? params.productSlug ?? null,
+      metadata: {
+        event: name,
+        productSlug: params.productSlug ?? undefined,
+        utmSource: params.utmSource ?? undefined,
+        amountKopecks: params.amountKopecks ?? undefined,
+      },
+    });
+  }
 }
