@@ -2,12 +2,14 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import {
   PRODUCTS_CATALOG,
   PRODUCT_SLUGS,
   ProductSlug,
 } from "@/lib/catalog";
+import { DEMO_SAMPLE_BOOKS } from "@/lib/demo-books";
 import {
   BookContentJsonV1,
   createDefaultBookContent,
@@ -551,6 +553,7 @@ export function EditorWizard({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {PRODUCT_SLUGS.map((slug) => {
               const item = PRODUCTS_CATALOG[slug];
+              const sample = DEMO_SAMPLE_BOOKS[slug];
               const isSelected = slug === selectedSlug;
               return (
                 <button
@@ -562,13 +565,22 @@ export function EditorWizard({
                       setContent(createDefaultBookContent(slug));
                     }
                   }}
-                  className={`flex flex-col justify-between rounded-2xl border p-5 text-left transition-all ${
+                  className={`flex flex-col justify-between overflow-hidden rounded-2xl border text-left transition-all ${
                     isSelected
                       ? "border-[#6E2638] bg-[#FAF4F4]/60 ring-2 ring-[#6E2638]"
                       : "border-[#E2D9CC] bg-[#FAF7F2] hover:border-[#C7B8A6]"
                   }`}
                 >
-                  <div className="space-y-2">
+                  <div className="relative aspect-[16/9] w-full overflow-hidden">
+                    <Image
+                      src={sample.coverImage}
+                      alt={sample.coverImageAlt}
+                      fill
+                      sizes="(max-width: 640px) 100vw, 420px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="p-5 space-y-2">
                     <div className="flex items-center justify-between">
                       <span className="font-serif text-xl font-semibold text-[#231C18]">
                         {item.title}
@@ -580,9 +592,9 @@ export function EditorWizard({
                     <p className="text-xs text-[#574940] leading-relaxed">
                       {item.subtitle}
                     </p>
-                  </div>
-                  <div className="mt-4 pt-3 border-t border-[#E5DDD2] text-[11px] text-[#7A6B60]">
-                    Палитра: {item.paletteSummary}
+                    <div className="pt-2 border-t border-[#E5DDD2] text-[11px] text-[#7A6B60]">
+                      Палитра: {item.paletteSummary}
+                    </div>
                   </div>
                 </button>
               );

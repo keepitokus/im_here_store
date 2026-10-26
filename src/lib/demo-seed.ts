@@ -16,29 +16,6 @@ import { BookContentJsonV1 } from "./book-schema";
 export const DEMO_CUSTOMER_EMAIL = "demo@ya-zdes.ru";
 export const DEMO_ADMIN_EMAIL = "admin@ya-zdes.ru";
 
-function createSvgIllustrationDataUrl(
-  bgHex: string,
-  accentHex: string,
-  title: string,
-  subtitle: string
-): string {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
-    <defs>
-      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="${bgHex}"/>
-        <stop offset="100%" stop-color="${accentHex}" stop-opacity="0.22"/>
-      </linearGradient>
-    </defs>
-    <rect width="800" height="600" fill="url(#g)"/>
-    <rect x="44" y="44" width="712" height="512" rx="18" fill="none" stroke="${accentHex}" stroke-opacity="0.3" stroke-width="1.5"/>
-    <circle cx="400" cy="230" r="78" fill="${accentHex}" fill-opacity="0.12"/>
-    <path d="M365 230 C365 205, 400 190, 400 218 C400 190, 435 205, 435 230 C435 262, 400 280, 400 295 C400 280, 365 262, 365 230 Z" fill="${accentHex}" fill-opacity="0.55"/>
-    <text x="400" y="380" text-anchor="middle" font-family="Georgia, serif" font-size="30" fill="${accentHex}">${title}</text>
-    <text x="400" y="422" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="${accentHex}" fill-opacity="0.8">${subtitle}</text>
-  </svg>`;
-  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
-}
-
 export function ensureDemoSeed() {
   const db = getDb();
   const existingDemoUser = db
@@ -48,6 +25,28 @@ export function ensureDemoSeed() {
     .get();
 
   if (existingDemoUser) {
+    // Обновляем старые SVG-заглушки в демо-книгах на реальные фотографии, если база уже была создана
+    db.update(mediaAssets)
+      .set({
+        mimeType: "image/webp",
+        dataUrl: "/images/books/baby-1-cover.webp",
+      })
+      .where(eq(mediaAssets.id, "med_demo_fy_1"))
+      .run();
+    db.update(mediaAssets)
+      .set({
+        mimeType: "image/webp",
+        dataUrl: "/images/books/baby-5-steps.webp",
+      })
+      .where(eq(mediaAssets.id, "med_demo_fy_2"))
+      .run();
+    db.update(mediaAssets)
+      .set({
+        mimeType: "image/webp",
+        dataUrl: "/images/books/love-1-cover.webp",
+      })
+      .where(eq(mediaAssets.id, "med_demo_ls_1"))
+      .run();
     return;
   }
 
@@ -184,42 +183,32 @@ export function ensureDemoSeed() {
         id: "med_demo_fy_1",
         bookId: firstYearBookId,
         ownerId: demoUserId,
-        storageKey: "demo/first-year-cover.svg",
-        mimeType: "image/svg+xml",
-        sizeBytes: 2450,
-        width: 800,
-        height: 600,
+        storageKey: "demo/baby-1-cover.webp",
+        mimeType: "image/webp",
+        sizeBytes: 152000,
+        width: 1400,
+        height: 1050,
         caption: "Первые дни дома в тёплом пледе",
-        altText: "Иллюстрация: первые дни малыша Льва дома",
+        altText: "Новорождённый малыш Лев в молочном пледе на руках у мамы и папы",
         sortOrder: 0,
         isFavorite: true,
-        dataUrl: createSvgIllustrationDataUrl(
-          "#FAF8F3",
-          "#4A6151",
-          "Месяц 1 · Первые дни дома",
-          "Тёплый плед, тихий утренний свет и сонная улыбка"
-        ),
+        dataUrl: "/images/books/baby-1-cover.webp",
         createdAt: now,
       },
       {
         id: "med_demo_fy_2",
         bookId: firstYearBookId,
         ownerId: demoUserId,
-        storageKey: "demo/first-year-steps.svg",
-        mimeType: "image/svg+xml",
-        sizeBytes: 2450,
-        width: 800,
-        height: 600,
+        storageKey: "demo/baby-5-steps.webp",
+        mimeType: "image/webp",
+        sizeBytes: 70000,
+        width: 1400,
+        height: 1050,
         caption: "Первые шаги в гостиной в 11 месяцев",
-        altText: "Иллюстрация: первые шаги малыша",
+        altText: "Малыш Лев делает первые самостоятельные шаги к папиным рукам",
         sortOrder: 1,
         isFavorite: false,
-        dataUrl: createSvgIllustrationDataUrl(
-          "#FAF8F3",
-          "#8C5843",
-          "11 месяцев · Первые шаги",
-          "Три смелых шага от дивана к папиным рукам"
-        ),
+        dataUrl: "/images/books/baby-5-steps.webp",
         createdAt: now,
       },
     ])
@@ -414,21 +403,16 @@ export function ensureDemoSeed() {
         id: "med_demo_ls_1",
         bookId: loveBookId,
         ownerId: demoUserId,
-        storageKey: "demo/love-story-1.svg",
-        mimeType: "image/svg+xml",
-        sizeBytes: 2400,
-        width: 800,
-        height: 600,
+        storageKey: "demo/love-1-cover.webp",
+        mimeType: "image/webp",
+        sizeBytes: 77000,
+        width: 1400,
+        height: 1050,
         caption: "Тот самый сентябрьский вечер на набережной",
-        altText: "Иллюстрация: прогулка пары по осенней набережной",
+        altText: "Влюблённая пара Анна и Михаил обнимаются на старом мосту",
         sortOrder: 0,
         isFavorite: true,
-        dataUrl: createSvgIllustrationDataUrl(
-          "#FAF4F4",
-          "#6E2638",
-          "14 сентября · Набережная",
-          "Наша любимая совместная фотография у старого моста"
-        ),
+        dataUrl: "/images/books/love-1-cover.webp",
         createdAt: now,
       },
     ])
