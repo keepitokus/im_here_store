@@ -6,8 +6,10 @@ import Link from "next/link";
 import { ProductSlug, PRODUCTS_CATALOG } from "@/lib/catalog";
 import { DemoSampleBook } from "@/lib/demo-books";
 import { formatRublesFromKopecks } from "@/lib/utils";
-import { ChevronLeft, ChevronRight, Sparkles, MailOpen, Calendar, Layers, BookOpen } from "lucide-react";
+import { ChevronLeft, ChevronRight, Sparkles, MailOpen, Layers, BookOpen } from "lucide-react";
 import { BrandLogo } from "@/components/brand-logo";
+import { BookTimeline } from "@/components/book-timeline";
+import { toTimelineEvents } from "@/lib/timeline-view";
 
 interface Spread {
   id: string;
@@ -41,7 +43,6 @@ export function CinematicDemo({
   const photos = sample.photos;
   const [index, setIndex] = useState(0);
   const [viewMode, setViewMode] = useState<"spreads" | "scroll">("spreads");
-  const [activeTimelineIdx, setActiveTimelineIdx] = useState(0);
 
   const p0 = photos[0];
   const p1 = photos[1] || photos[0];
@@ -299,83 +300,11 @@ export function CinematicDemo({
       id: "timeline",
       label: "6. Хронология",
       node: (
-        <div className="grid min-h-[540px] grid-cols-1 bg-[#FFFDF8] lg:grid-cols-12">
-          <div className="p-7 sm:p-10 lg:col-span-7 space-y-5">
-            <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-[#8A7563]">
-                Интерактивная линия времени
-              </p>
-              <h3 className="font-serif text-3xl text-[#1F3042] sm:text-4xl">
-                Памятные даты и события
-              </h3>
-              <p className="text-xs text-[#6E6256] mt-1">
-                Нажмите на любую дату, чтобы рассмотреть карточку момента:
-              </p>
-            </div>
-
-            <ol className="space-y-3">
-              {content.timeline.map((event, idx) => {
-                const isSelected = idx === activeTimelineIdx;
-                return (
-                  <li key={event.id}>
-                    <button
-                      type="button"
-                      onClick={() => setActiveTimelineIdx(idx)}
-                      className={`w-full rounded-2xl border p-4 text-left transition-all ${
-                        isSelected
-                          ? `border-[#1F3042] ${wash} shadow-xs`
-                          : "border-[#EAE0D2] bg-[#FAF6EE]/60 hover:bg-[#F3ECE0]"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between gap-2 text-xs text-[#7A6855]">
-                        <span className="inline-flex items-center gap-1.5 font-semibold uppercase tracking-[0.14em]">
-                          <Calendar className="h-3.5 w-3.5" />
-                          {event.dateLabel}
-                        </span>
-                        <span>Глава 0{idx + 1}</span>
-                      </div>
-                      <p className="mt-1 font-serif text-xl font-semibold text-[#1F3042]">
-                        {event.title}
-                      </p>
-                      <p className="mt-1 text-sm text-[#3E4C5C]">
-                        {event.description}
-                      </p>
-                    </button>
-                  </li>
-                );
-              })}
-            </ol>
-          </div>
-
-          <div
-            className={`flex flex-col justify-between p-7 sm:p-10 lg:col-span-5 ${wash}`}
-          >
-            <div className="space-y-4">
-              <span className="text-xs uppercase tracking-[0.18em] text-[#7A6855]">
-                Кадр выбранной главы
-              </span>
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-[#DED0BE] shadow-md">
-                <Image
-                  src={(photos[activeTimelineIdx % photos.length] || p0).dataUrl}
-                  alt={(photos[activeTimelineIdx % photos.length] || p0).altText}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 420px"
-                  className="object-cover"
-                />
-              </div>
-              <h4 className="font-serif text-2xl text-[#1F3042]">
-                {content.timeline[activeTimelineIdx]?.title}
-              </h4>
-              <p className="text-sm leading-relaxed text-[#2F3E4E]">
-                {content.timeline[activeTimelineIdx]?.description}
-              </p>
-            </div>
-            <p className="text-xs text-[#6E6256] pt-4">
-              В редакторе можно указывать как точные даты, так и тёплые свободные
-              формулировки («Той самой осенью»).
-            </p>
-          </div>
-        </div>
+        <BookTimeline
+          events={toTimelineEvents(content.timeline, photos, { pairByIndex: true })}
+          washClassName={wash}
+          footnote="В редакторе можно указывать как точные даты, так и тёплые свободные формулировки («Той самой осенью»)."
+        />
       ),
     },
 

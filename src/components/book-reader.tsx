@@ -2,6 +2,8 @@
 
 import React, { useState, useMemo } from "react";
 import { BookContentJsonV1, sortTimelineEvents } from "@/lib/book-schema";
+import { BookTimeline } from "@/components/book-timeline";
+import { toTimelineEvents } from "@/lib/timeline-view";
 import { getProductBySlug, isValidProductSlug } from "@/lib/catalog";
 import { DEMO_SAMPLE_BOOKS } from "@/lib/demo-books";
 import { Button } from "@/components/ui/button";
@@ -440,27 +442,7 @@ export function BookReaderView({
                 <p className={`text-xs uppercase tracking-widest ${mutedClass}`}>
                   Хронология ключевых моментов
                 </p>
-                <div className="relative space-y-4 pl-5 before:absolute before:left-1.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-black/15">
-                  {sortedTimeline.map((ev) => (
-                    <div
-                      key={ev.id}
-                      className={`relative rounded-2xl border ${borderClass} p-4 sm:p-5`}
-                    >
-                      <span className="absolute -left-[23px] top-5 h-3 w-3 rounded-full bg-[#6E2638] ring-4 ring-[#FAF7F2]" />
-                      <div className="text-xs font-semibold uppercase tracking-wide opacity-75">
-                        {ev.dateLabel}
-                      </div>
-                      <h4 className={`font-serif text-lg font-semibold mt-0.5 ${textClass}`}>
-                        {ev.title}
-                      </h4>
-                      {ev.description && (
-                        <p className={`text-sm leading-relaxed mt-1 ${mutedClass}`}>
-                          {ev.description}
-                        </p>
-                      )}
-                    </div>
-                  ))}
-                </div>
+                <BookTimeline events={toTimelineEvents(sortedTimeline, photos)} />
               </div>
             )}
           </div>

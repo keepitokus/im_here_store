@@ -100,6 +100,34 @@ body {
   height: 0;
 }
 
+.book-timeline {
+  container-name: book-timeline;
+  container-type: inline-size;
+}
+
+.book-timeline-compact {
+  display: block;
+}
+
+.book-timeline-wide {
+  display: none;
+}
+
+@container book-timeline (min-width: 880px) {
+  .book-timeline-compact {
+    display: none;
+  }
+
+  .book-timeline-wide {
+    display: block;
+  }
+}
+
+.timeline-trigger:focus-visible {
+  outline: 2px solid #1f3042;
+  outline-offset: -3px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
