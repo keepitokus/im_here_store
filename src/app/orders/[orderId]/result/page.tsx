@@ -71,7 +71,7 @@ export default async function OrderResultPage({
       <SiteHeader />
 
       <main className="flex-1 py-10 sm:py-16">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 space-y-8">
+        <div className="layout-container space-y-8">
           {/* Состояние 1: Заказ выполнен (fulfilled) и книга опубликована */}
           {order.status === "fulfilled" && publicUrl && (
             <div className="rounded-3xl border border-[#BBDCC2] bg-[#FFFEFA] p-6 sm:p-10 shadow-sm space-y-8">
@@ -109,14 +109,14 @@ export default async function OrderResultPage({
                       <CopyLinkButton url={publicUrl} />
                       <Link
                         href={`/b/${book.publicSlug}`}
-                        className="inline-flex min-h-[38px] items-center gap-1.5 rounded-full bg-[#6E2638] px-4 py-1.5 text-xs font-medium text-[#FAF4F4]"
+                        className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-[#1F3042] px-5 py-2 text-sm font-medium text-[#F7F2E9]"
                       >
                         <span>Посмотреть как получатель</span>
                         <ExternalLink className="h-3.5 w-3.5" />
                       </Link>
                       <Link
                         href={`/create/${book.productSlug}?bookId=${book.id}`}
-                        className="inline-flex min-h-11 items-center rounded-full border border-[#1F3042] px-4 text-xs"
+                        className="inline-flex min-h-11 items-center rounded-full border border-[#1F3042] px-5 text-sm font-medium text-[#1F3042]"
                       >
                         Изменить книгу
                       </Link>
@@ -164,7 +164,7 @@ export default async function OrderResultPage({
                     <a
                       href={qrDataUrl}
                       download={`ya-zdes-qr-${book.publicSlug}.png`}
-                      className="inline-flex min-h-[38px] items-center justify-center rounded-full border border-[#D8CFC4] bg-[#FFFEFA] px-4 py-1.5 text-xs font-medium text-[#2B1E1A] hover:bg-[#EFE9DE]"
+                      className="inline-flex min-h-11 items-center justify-center rounded-full border border-[#D8CFC4] bg-[#FFFEFA] px-5 py-2 text-sm font-medium text-[#1F3042] hover:bg-[#EFE9DE]"
                     >
                       Скачать PNG QR-код
                     </a>

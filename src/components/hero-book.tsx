@@ -8,7 +8,7 @@ import { ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
 const HERO_SPREADS = [
   {
     id: "love-cover",
-    edition: "Издание «Наша история» · Вымышленный пример",
+    edition: "«Наша история» · Пример книги",
     kicker: "Обложка книги · Глава I",
     title: "Анна и Михаил",
     subtitle:
@@ -22,7 +22,7 @@ const HERO_SPREADS = [
   },
   {
     id: "mom-spread",
-    edition: "Издание «Мама, спасибо» · Вымышленный пример",
+    edition: "«Мама, спасибо» · Пример книги",
     kicker: "Семейный архив · Родной дом",
     title: "Любимой маме Елене",
     subtitle:
@@ -36,7 +36,7 @@ const HERO_SPREADS = [
   },
   {
     id: "baby-spread",
-    edition: "Издание «Мой первый год» · Вымышленный пример",
+    edition: "«Мой первый год» · Пример книги",
     kicker: "Хроника 0–12 месяцев",
     title: "Лев · Наш первый год",
     subtitle:
@@ -50,7 +50,7 @@ const HERO_SPREADS = [
   },
   {
     id: "day-spread",
-    edition: "Издание «Твой день» · Вымышленный пример",
+    edition: "«Твой день» · Пример книги",
     kicker: "Специальный выпуск к 30-летию",
     title: "Александр · Твой день",
     subtitle:

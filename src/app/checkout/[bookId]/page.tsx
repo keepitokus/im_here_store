@@ -70,7 +70,7 @@ export default async function CheckoutPage({
     <div className="min-h-screen flex flex-col">
       <SiteHeader />
       <main className="flex-1 py-10 sm:py-14">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="layout-container">
           <CheckoutClient
             bookId={full.book.id}
             bookTitle={full.book.title}

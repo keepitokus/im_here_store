@@ -375,7 +375,7 @@ export function EditorWizard({
   const questionFields = product.fields.filter((f) => f.step === "questions");
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 space-y-8">
+    <div className="layout-container py-8 sm:py-12 space-y-8">
       {/* Блок входа, если пользователь ещё не авторизован и нет editToken */}
       {step >= 3 && !user && !editToken && (
         <div className="rounded-3xl border border-[#DFD2C5] bg-[#FFFEFA] p-6 sm:p-8 shadow-sm space-y-5">

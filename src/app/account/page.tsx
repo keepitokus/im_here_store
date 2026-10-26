@@ -47,7 +47,7 @@ export default async function AccountPage() {
       <SiteHeader />
 
       <main className="flex-1 py-10 sm:py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 space-y-10">
+        <div className="layout-container space-y-10">
           {/* Заголовок кабинета */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-3xl border border-[#DFD6CA] bg-[#FFFEFA] p-6 sm:p-8">
             <div className="space-y-1">

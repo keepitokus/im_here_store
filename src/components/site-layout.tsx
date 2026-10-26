@@ -10,7 +10,7 @@ export async function SiteHeader() {
   const user = await getCurrentUser();
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[#DFD2C0] bg-[#F7F2E9]/95 backdrop-blur-md">
+    <>
       {demo && (
         <div
           role="status"
@@ -19,18 +19,10 @@ export async function SiteHeader() {
           Демо-режим: доступны тестовые примеры книг и пробная оплата без реального списания.
         </div>
       )}
-      <div className="layout-container relative flex items-center justify-between gap-4 py-3.5">
-        <Link href="/" className="min-w-0 flex items-baseline gap-3">
-          <span className="font-script text-3xl sm:text-4xl leading-none text-[#1F3042]">
-            Я здесь
-          </span>
-          <span className="hidden xl:inline text-xs uppercase tracking-[0.18em] text-[#7A6855]">
-            Истории, к которым возвращаются
-          </span>
-        </Link>
+      <header className="sticky top-0 z-40 border-b border-[#DFD2C0] bg-[#F7F2E9]/95 backdrop-blur-md">
         <SiteNav accountLabel={user ? "Мои книги" : "Кабинет"} />
-      </div>
-    </header>
+      </header>
+    </>
   );
 }
 
@@ -45,7 +37,7 @@ export function SiteFooter() {
             важных слов. Получатель открывает подарок по приватной ссылке или
             QR-коду на любом телефоне.
           </p>
-          <p className="text-sm text-[#5C6B7A]">
+          <p className="text-sm text-[#4E5D6C]">
             Формат продукта — цифровое интерактивное издание (печатный тираж не
             входит в заказ).
           </p>
@@ -105,7 +97,7 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
-              <Link href="/admin" className="text-sm text-[#5C6B7A] hover:text-[#1F3042] transition-colors">
+              <Link href="/admin" className="text-sm text-[#4E5D6C] hover:text-[#1F3042] transition-colors">
                 Служебный вход
               </Link>
             </li>
