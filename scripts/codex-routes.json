@@ -1,0 +1,31 @@
+[
+  {
+    "profile": "critical",
+    "model": "gpt-6.2-astra",
+    "reasoningEffort": "high",
+    "reason": "Задача или путь указывают на оплату, публикацию, доступ, данные или изменение архитектуры.",
+    "taskPattern": "\\b(?:оплат\\w*|плат[её]ж\\w*|вебхук\\w*|эквайринг\\w*|цен(?:а|у|ы|е|ой|ами)|тариф\\w*|продл[её]н\\w*|публикац\\w*|авторизац\\w*|аутентификац\\w*|миграц\\w*|архитектур\\w*|(?:payment|webhook|checkout|pricing|renewal|auth|authentication|authorization|publication|migrate|migration|architecture)s?)\\b|\\b(?:pin|пин)(?:[- ]?код\\w*)?\\b|приватн\\w*\\s+(?:ссылк|доступ|книг|медиа)|(?:удал|перенос|перенест)\\w*\\s+(?:пользовательск\\w*\\s+)?данн\\w*",
+    "pathPattern": "(?m)^(?:\\./)?(?:src/lib/(?:auth\\.ts$|commerce\\.ts$|books\\.ts$|db/)|src/app/(?:b/|checkout/|orders/|api/(?:auth/|orders/|admin/|webhooks/|payments/|books/[^/]+/(?:media|export)/)))"
+  },
+  {
+    "profile": "visual",
+    "model": "gpt-6.1-terra",
+    "reasoningEffort": "medium",
+    "reason": "Задача или путь указывают на визуальную проверку или оформление.",
+    "taskPattern": "\\b(?:скриншот\\w*|снимок\\s+экран\\w*|макет\\w*|в[её]рстк\\w*|сверст\\w*|адаптив\\w*|визуальн\\w*|типографик\\w*|screenshot\\w*|mockup\\w*|typography|visual\\s+(?:regression|review|check))\\b",
+    "pathPattern": "(?m)(?:^|/)(?:visual\\.spec\\.ts|[^/\\n]+\\.css)$"
+  },
+  {
+    "profile": "light",
+    "model": "gpt-6.2-sol",
+    "reasoningEffort": "low",
+    "reason": "Формулировка указывает на точечную правку текста или поиск файла.",
+    "taskPattern": "^\\s*(?:(?:исправь|исправить|поправь|поправить|fix|correct)\\s+(?:одну\\s+|a\\s+|the\\s+)?(?:опечатк\\w*|typo)(?:\\s+(?:в|in)\\s+\\S+)?|(?:найди|найти|find|locate)\\s+(?:файл|the\\s+file|file)\\s+\\S+)[.!]?\\s*$"
+  },
+  {
+    "profile": "standard",
+    "model": "gpt-6.2-sol",
+    "reasoningEffort": "medium",
+    "reason": "Подходит стандартный профиль для разработки, диагностики или задачи с неясным объёмом."
+  }
+]
