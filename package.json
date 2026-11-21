@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start -p 43123",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit --incremental false",
     "test": "vitest run"
   },
   "dependencies": {
