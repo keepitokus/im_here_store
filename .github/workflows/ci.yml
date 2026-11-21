@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Проверки проекта
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Получить код
+        uses: actions/checkout@v6
+
+      - name: Подготовить Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Установить зависимости
+        run: npm ci
+
+      - name: Сгенерировать типы Next.js
+        run: npm exec -- next typegen
+
+      - name: Проверить TypeScript
+        run: npm run typecheck
+
+      - name: Запустить тесты
+        run: npm test
+
+      - name: Запустить ESLint
+        run: npm run lint
