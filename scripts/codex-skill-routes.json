@@ -1,0 +1,48 @@
+[
+  {
+    "skill": "ya-zdes-clarify-product",
+    "chatTrigger": "До Plan, если ожидаемое поведение книги зависит от нерешённого продуктового выбора."
+  },
+  {
+    "skill": "ya-zdes-book-editor",
+    "modes": ["Inspect", "Plan", "Apply"],
+    "taskPattern": "\\b(?:редактор\\w*|черновик\\w*|предпросмотр\\w*|хронологи\\w*|плейсхолдер\\w*|вопрос\\w*\\s+издани\\w*|editor|draft|preview|timeline|placeholder)s?\\b",
+    "pathPattern": "(?m)^(?:\\./)?(?:src/app/(?:create|edit|preview)(?:/|$)|src/app/api/books(?:/route\\.ts|/[^/]+/route\\.ts)$|src/components/(?:free-editor|editor-wizard|book-timeline)\\.tsx$|src/lib/(?:editor-copy|timeline-view|book-schema)\\.ts$)"
+  },
+  {
+    "skill": "ya-zdes-book-lifecycle",
+    "modes": ["Inspect", "Plan", "Apply"],
+    "taskPattern": "\\b(?:кабинет\\w*|лк|авторизац\\w*|(?<!\\bбез\\s+)публикац\\w*|публиков\\w*|опубликов\\w*|оплат\\w*|продлен\\w*|продлён\\w*|плат[её]ж\\w*|пин(?:[- ]?код\\w*)?|account|auth|pin|checkout|payment|publish\\w*|publication|renewal)s?\\b|\\bприватн\\w*\\s+(?:ссылк|доступ|книг|медиа)|\\b(?:private\\s+(?:link|access|book|media)|(?:экспорт|export)\\s+(?:книг\\w*|материал\\w*|book\\w*|media))",
+    "pathPattern": "(?m)^(?:\\./)?(?:src/app/(?:account|b|checkout|orders|api/(?:account|auth|orders|webhooks|payments))(?:/|$)|src/app/api/books/[^/]+/(?:media|export)(?:/|$)|src/components/(?:account-client|book-reader|checkout-client|order-result-actions)\\.tsx$|src/lib/(?:auth|commerce|books|media)\\.ts$)"
+  },
+  {
+    "skill": "ya-zdes-design-ux",
+    "modes": ["Inspect", "Plan", "Apply"],
+    "taskPattern": "\\b(?:дизайн\\w*|интерфейс\\w*|в[её]рстк\\w*|типографик\\w*|навигац\\w*|удобств\\w*|удобнее|понятнее|визуальн\\w*|экран\\w*|UX|UI|design|usability|layout)\\b",
+    "pathPattern": "(?m)^(?:\\./)?(?:src/app/(?:page\\.tsx$|layout\\.tsx$|globals\\.css$|account/|b/|catalog/|checkout/|create/|demo/|gifts/|orders/|preview/)|src/components/(?:account-client|book-reader|book-timeline|checkout-client|cinematic-demo|editor-wizard|free-cabinet|free-editor|hero-book|order-result-actions|product-card|site-layout)\\.tsx$|src/components/ui/)"
+  },
+  {
+    "skill": "ya-zdes-sales-copy",
+    "modes": ["Inspect", "Plan", "Apply"],
+    "taskPattern": "\\b(?:витрин\\w*|продаж\\w*|конверси\\w*|слоган\\w*|цен(?:а|у|ы|е|ой|ами)|перв\\w*\\s+экран\\w*|карточк\\w*\\s+издани\\w*|(?:экран|кнопк)\\w*\\s+оплат\\w*|текст\\w*\\s+(?:кнопк|оплат)\\w*|pricing|sales|conversion|storefront|checkout\\s+(?:copy|screen))\\b",
+    "pathPattern": "(?m)^(?:\\./)?(?:src/app/(?:page\\.tsx$|catalog/|checkout/|demo/|gifts/|orders/)|src/components/(?:checkout-client|hero-book|order-result-actions|product-card)\\.tsx$|src/lib/(?:catalog|landing)\\.ts$)"
+  },
+  {
+    "skill": "ya-zdes-pages-export",
+    "modes": ["Inspect", "Plan", "Apply"],
+    "taskPattern": "\\b(?:github[ _-]+pages|на\\s+pages|статическ\\w*\\s+(?:экспорт\\w*|верси\\w*|сборк\\w*)|static\\s+export|basePath|assetPrefix|браузерн\\w*\\s+кабинет\\w*)\\b|/im_here_store\\b",
+    "pathPattern": "(?m)^(?:\\./)?(?:scripts/export-github-pages\\.sh$|\\.github/workflows/[^/]*pages[^/]*\\.ya?ml$|next\\.config\\.[^/]+$|src/app/account(?:/|$)|src/lib/browser-demo\\.ts$|src/components/free-cabinet\\.tsx$)"
+  },
+  {
+    "skill": "ya-zdes-retro",
+    "chatTrigger": "По просьбе владелицы, после блокировки, прерывания или ручного обхода рабочего запуска либо перед явно порученным коммитом."
+  },
+  {
+    "skill": "ya-zdes-commit",
+    "chatTrigger": "При явной просьбе сделать коммит, отправить рабочую ветку на GitHub или открыть PR."
+  },
+  {
+    "skill": "ya-zdes-review-pr",
+    "chatTrigger": "Когда пользователь просит независимо проверить GitHub PR по номеру или ссылке. Публикуй ревью по явному поручению."
+  }
+]
