@@ -4,7 +4,7 @@
     "model": "gpt-6.2-astra",
     "reasoningEffort": "high",
     "reason": "Задача или путь указывают на оплату, публикацию, доступ, данные или изменение архитектуры.",
-    "taskPattern": "\\b(?:оплат\\w*|плат[её]ж\\w*|вебхук\\w*|эквайринг\\w*|цен(?:а|у|ы|е|ой|ами)|тариф\\w*|продл[её]н\\w*|публикац\\w*|авторизац\\w*|аутентификац\\w*|миграц\\w*|архитектур\\w*|(?:payment|webhook|checkout|pricing|renewal|auth|authentication|authorization|publication|migrate|migration|architecture)s?)\\b|\\b(?:pin|пин)(?:[- ]?код\\w*)?\\b|приватн\\w*\\s+(?:ссылк|доступ|книг|медиа)|(?:удал|перенос|перенест)\\w*\\s+(?:пользовательск\\w*\\s+)?данн\\w*",
+    "taskPattern": "\\b(?:оплат\\w*|плат[её]ж\\w*|вебхук\\w*|эквайринг\\w*|цен(?:а|у|ы|е|ой|ами)|тариф\\w*|продл[её]н\\w*|(?<!\\bбез\\s+)публикац\\w*|авторизац\\w*|аутентификац\\w*|миграц\\w*|архитектур\\w*|(?:payment|webhook|checkout|pricing|renewal|auth|authentication|authorization|publication|migrate|migration|architecture)s?)\\b|\\b(?:pin|пин)(?:[- ]?код\\w*)?\\b|приватн\\w*\\s+(?:ссылк|доступ|книг|медиа)|(?:удал|перенос|перенест)\\w*\\s+(?:пользовательск\\w*\\s+)?данн\\w*",
     "pathPattern": "(?m)^(?:\\./)?(?:src/lib/(?:auth\\.ts$|commerce\\.ts$|books\\.ts$|db/)|src/app/(?:b/|checkout/|orders/|api/(?:auth/|orders/|admin/|webhooks/|payments/|books/[^/]+/(?:media|export)/)))"
   },
   {
