@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { sortTimelineEvents } from "@/lib/book-schema";
 import { toTimelineEvents } from "@/lib/timeline-view";
 
 const photos = [
@@ -18,6 +19,23 @@ describe("toTimelineEvents", () => {
 
     expect(events.map((event) => event.id)).toEqual(["late", "early"]);
     expect(events[0]).toMatchObject({ date: "Позже", title: "Второе", description: "После" });
+  });
+
+  it("сохраняет порядок событий с одинаковой точной датой в предпросмотре", () => {
+    const date = { eventDate: "2026-03-15", dateLabel: "15 марта 2026" };
+    const events = [
+      { ...date, id: "c", title: "В", description: "" },
+      { ...date, id: "a", title: "А", description: "" },
+      { ...date, id: "b", title: "Б", description: "" },
+    ];
+
+    const timeline = toTimelineEvents(sortTimelineEvents(events), []);
+
+    expect(timeline.map(({ id, title }) => [id, title])).toEqual([
+      ["c", "В"],
+      ["a", "А"],
+      ["b", "Б"],
+    ]);
   });
 
   it("в демонстрационных книгах связывает фотографию с событием по порядку", () => {
