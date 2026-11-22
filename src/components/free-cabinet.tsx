@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
+import { BrowserOnly } from "@/components/browser-only";
 import { SiteHeader, SiteFooter } from "@/components/site-layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -110,16 +111,15 @@ function FreeLogin({
 }
 
 export function FreeAccountApp() {
-  const [user, setUser] = useState<FreeUser | null>(null);
-  const [ready, setReady] = useState(false);
+  return (
+    <BrowserOnly>
+      <FreeAccount />
+    </BrowserOnly>
+  );
+}
 
-  useEffect(() => {
-    setUser(readFreeSession());
-    setReady(true);
-  }, []);
-
-  if (!ready) return null;
-
+function FreeAccount() {
+  const [user, setUser] = useState(readFreeSession);
   const books = user && user.role === "customer" ? listFreeBooks(user.email) : listFreeBooks();
 
   return (
@@ -183,15 +183,15 @@ export function FreeAccountApp() {
 }
 
 export function FreeAdminApp() {
-  const [user, setUser] = useState<FreeUser | null>(null);
-  const [ready, setReady] = useState(false);
+  return (
+    <BrowserOnly>
+      <FreeAdmin />
+    </BrowserOnly>
+  );
+}
 
-  useEffect(() => {
-    setUser(readFreeSession());
-    setReady(true);
-  }, []);
-
-  if (!ready) return null;
+function FreeAdmin() {
+  const [user, setUser] = useState(readFreeSession);
   const books = listFreeBooks();
 
   return (
