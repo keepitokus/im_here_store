@@ -1,3 +1,8 @@
 {
-  "terminal.integrated.windowsUseConptyDll": true
+  "terminal.integrated.windowsUseConptyDll": true,
+  "terminal.integrated.copyOnSelection": false,
+  "terminal.integrated.sendKeybindingsToShell": false,
+  "terminal.integrated.commandsToSkipShell": [
+    "workbench.action.terminal.copyAndClearSelection"
+  ]
 }
