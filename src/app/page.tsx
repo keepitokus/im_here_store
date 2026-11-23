@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SiteHeader, SiteFooter } from "@/components/site-layout";
-import { HeroBook } from "@/components/hero-book";
+import { HeroBook, HeroBookIntro } from "@/components/hero-book";
 import { ProductCard } from "@/components/product-card";
 import { BrandLogo } from "@/components/brand-logo";
 import {
@@ -10,7 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ArrowRight, BookOpen, Sparkles, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 const PRICING_ITEMS = [
   {
@@ -60,125 +60,16 @@ const PRICING_ITEMS = [
 ] as const;
 
 export default function HomePage() {
-  return (
-    <div className="min-h-screen flex flex-col">
+  return <>
+    <HeroBookIntro />
+    <div className="home-page min-h-screen flex flex-col">
       <SiteHeader />
 
       <main className="flex flex-1 flex-col">
-        <section className="order-1 bg-[#F7F2E9] px-5 pb-6 pt-4 lg:hidden">
-          <p className="mh-title text-[13px] font-semibold uppercase tracking-[0.18em] text-[#7A6855]">
-            Когда слова важнее подарка
-          </p>
-          <h1 className="mh-title mt-2 font-serif text-[28px] leading-[1.12] text-[#1F3042] min-[390px]:text-[32px]">
-            Есть истории, которые хочется подарить
-          </h1>
-          <p className="mh-sub mt-2 text-base leading-snug text-[#2F3E4E]">
-            Ваши фотографии, воспоминания и самые тёплые слова — в одной красивой цифровой книге.
-          </p>
-
-          <Link
-            href="/demo/love-story"
-            className="mh-book mt-4 block"
-            aria-label="Открыть демонстрационную книгу «Наша история»"
-          >
-            <span className="relative block">
-              <span
-                aria-hidden
-                className="absolute inset-y-2 left-3 right-1 rounded-r-[24px] border border-[#E4D3C0] bg-[#EFE4D4]"
-              />
-              <span className="relative block overflow-hidden rounded-[24px] border border-[#D8C9B5] bg-[#FFFDF8] shadow-[0_28px_50px_-30px_rgba(31,48,66,0.55)]">
-                <span aria-hidden className="absolute inset-y-0 left-0 z-10 w-3 bg-[#6E2F3B]" />
-                <span className="block pl-3">
-                  <span className="relative block h-[min(26vh,200px)] w-full overflow-hidden bg-[#EAE0D2]">
-                    <Image
-                      src="/images/books/love-1-cover.webp"
-                      alt="Влюблённая пара на каменном мосту — обложка книги «Наша история»"
-                      fill
-                      priority
-                      sizes="100vw"
-                      className="object-cover object-[center_30%]"
-                    />
-                  </span>
-                  <span className="block bg-[#F6ECEA] px-4 py-3">
-                    <span className="block text-[13px] font-semibold uppercase tracking-[0.16em] text-[#7A3E4A]">
-                      Наша история
-                    </span>
-                    <span className="mt-0.5 block font-serif text-2xl leading-[1.1] text-[#1F3042]">
-                      Анна и Михаил
-                    </span>
-                  </span>
-                </span>
-              </span>
-            </span>
-          </Link>
-          <p className="mt-2 text-center text-sm text-[#7A6855]">Нажмите, чтобы открыть книгу</p>
-
-          <Link
-            href="/catalog"
-            className="mt-3 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#1F3042] px-6 text-base font-medium text-[#F7F2E9] shadow-xs hover:bg-[#162433]"
-          >
-            Выбрать подарок
-          </Link>
-          <p className="mt-2 text-center text-sm text-[#3E4C5C]">
-            Четыре истории · От 4 990 ₽ · Создаётся онлайн
-          </p>
-        </section>
-
-        {/* 1. ПЕРВЫЙ ЭКРАН (HERO) — десктоп */}
-        <section className="hidden border-b border-[#DFD2C0] bg-gradient-to-b from-[#F7F2E9] via-[#F5EFE3] to-[#EFE7DA] py-7 sm:py-12 lg:block lg:py-20">
-          <div className="layout-container grid grid-cols-1 items-center gap-7 sm:gap-10 lg:grid-cols-12 lg:gap-12">
-            {/* Левая колонка */}
-            <div className="lg:col-span-6 space-y-4 sm:space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#D4C5B3] bg-[#FFFDF8] px-4 py-2 text-xs sm:text-sm font-medium text-[#7A3E4A]">
-                <Sparkles className="h-4 w-4 shrink-0" />
-                <span>Цифровые книги-подарки для самых близких</span>
-              </div>
-
-              <h1 className="font-serif text-[38px] leading-[1.08] text-[#1F3042] sm:text-5xl xl:text-[62px]">
-                Есть истории, которые хочется подарить
-              </h1>
-
-              <p className="max-w-[54ch] text-base sm:text-lg leading-[1.6] text-[#2F3E4E]">
-                Превратите ваши фотографии, воспоминания и самые важные слова в
-                красивую цифровую книгу для близкого человека. Создайте сами —
-                подарите по приватной ссылке или QR-коду.
-              </p>
-
-              <div className="flex flex-col gap-3.5 pt-1 sm:flex-row sm:items-center">
-                <Link
-                  href="/catalog"
-                  className="inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-[#1F3042] px-7 text-base font-medium text-[#F7F2E9] hover:bg-[#162433] transition-colors shadow-xs"
-                >
-                  <span>Создать книгу</span>
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="/demo/love-story"
-                  className="inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-[#1F3042] bg-[#FFFDF8] px-6 text-base font-medium text-[#1F3042] hover:bg-[#EFE7DA] transition-colors"
-                >
-                  <BookOpen className="h-4 w-4" />
-                  <span>Посмотреть пример</span>
-                </Link>
-              </div>
-
-              {/* Спокойная читаемая строка ключевых условий без сжатых микроколонок */}
-              <div className="rounded-2xl border border-[#DFD2C0] bg-[#FFFDF8]/85 px-5 py-4 text-sm sm:text-[15px] text-[#2F3E4E] flex flex-wrap items-center gap-x-5 gap-y-2">
-                <span className="font-semibold text-[#1F3042]">
-                  От 4 990 ₽ за готовое издание
-                </span>
-                <span className="text-[#B99273]">•</span>
-                <span>До 30 ваших фотографий</span>
-                <span className="text-[#B99273]">•</span>
-                <span>12 месяцев доступа без автосписаний</span>
-              </div>
-            </div>
-
-            {/* Правая колонка: Крупная цифровая книга */}
-            <div className="lg:col-span-6">
-              <HeroBook />
-            </div>
-          </div>
-        </section>
+        <noscript>
+          <style>{`@layer base { body > [hidden]:has(.home-page) { display: block !important; } }`}</style>
+        </noscript>
+        <HeroBook />
 
         <section className="hidden py-14 sm:py-20 lg:block lg:py-24">
           <div className="layout-container grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-12">
@@ -685,5 +576,5 @@ export default function HomePage() {
 
       <SiteFooter />
     </div>
-  );
+  </>;
 }

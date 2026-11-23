@@ -102,3 +102,73 @@ export async function runVisualAndSmokeAudit(baseUrl = "http://127.0.0.1:43123")
   await browser.close();
   return results;
 }
+
+export async function runHeroAudit(baseUrl: string, executablePath: string) {
+  const browser = await chromium.launch({ executablePath, headless: true });
+  const results: string[] = [];
+  try {
+    for (const viewport of [{ width: 320, height: 568 }, { width: 390, height: 844 }, { width: 768, height: 1024 }, { width: 1024, height: 768 }, { width: 1440, height: 900 }]) {
+      const context = await browser.newContext({ viewport, hasTouch: viewport.width < 1200 });
+      const page = await context.newPage();
+      await page.goto(baseUrl, { waitUntil: "networkidle" });
+      const cover = page.getByRole("button", { name: "Открыть книгу «Наша история»" });
+      await cover.waitFor({ state: "visible" });
+      const closed = await cover.boundingBox();
+      if (!closed || closed.width < Math.min(viewport.width * .7, viewport.height * .5, 390)) throw new Error("cover is too small");
+      if (viewport.width < 1200) await cover.tap(); else await cover.click();
+      await page.waitForFunction(() => {
+        const intro = document.querySelector(".hero-cover-wrap")!;
+        const opacity = Number(getComputedStyle(intro).opacity);
+        return opacity > 0 && opacity < 1 && getComputedStyle(document.querySelector(".home-page")!).visibility === "visible";
+      });
+      const photo = page.locator(".hero-photo");
+      const photoDuringReveal = await photo.boundingBox();
+      await page.waitForFunction(() => document.documentElement.dataset.heroBook === "story");
+      const photoAfterReveal = await photo.boundingBox();
+      if (!photoDuringReveal || JSON.stringify(photoDuringReveal) !== JSON.stringify(photoAfterReveal)) throw new Error("home page moved during reveal");
+      const info = await page.evaluate(() => ({ overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth, focus: document.activeElement?.textContent, image: Array.from(document.querySelectorAll<HTMLImageElement>(".hero-photo img")).every(i => i.complete && i.naturalWidth > 0) }));
+      if (info.overflow || !info.image || info.focus !== "Анна и Михаил") throw new Error(JSON.stringify(info));
+      await page.reload({ waitUntil: "networkidle" });
+      if (await cover.isVisible()) throw new Error("cover returned after reload");
+      await page.getByRole("link", { name: "Листать эту книгу целиком" }).click();
+      await page.waitForURL(/\/demo\/love-story\/?$/, { timeout: 10000 });
+      await page.waitForFunction(() => !document.querySelector(".home-page") && document.readyState === "complete");
+      await page.goBack();
+      await page.waitForURL(baseUrl, { timeout: 10000 });
+      await page.getByRole("heading", { name: "Анна и Михаил" }).waitFor({ state: "visible" });
+      if (await cover.isVisible()) throw new Error("cover returned after demo");
+      await page.getByRole("link", { name: "Выбрать подарок", exact: true }).first().click();
+      await page.waitForURL(/\/catalog\/?$/, { timeout: 10000 });
+      results.push(`${viewport.width}x${viewport.height}: touch/click, reload, demo return, catalog, image, focus, overflow OK`);
+      await context.close();
+    }
+    for (const mode of ["keyboard", "reduced", "storage", "nojs", "no-react"]) {
+      const context = await browser.newContext({ reducedMotion: mode === "reduced" ? "reduce" : "no-preference", javaScriptEnabled: mode !== "nojs" });
+      if (mode === "storage") await context.addInitScript(() => { Object.defineProperty(window, "sessionStorage", { get() { throw new Error("denied"); } }); });
+      if (mode === "no-react") await context.route("**/_next/static/**/*.js", (route) => route.abort());
+      const page = await context.newPage(); await page.goto(baseUrl, { waitUntil: "networkidle" });
+      if (mode !== "nojs") {
+        const button = page.getByRole("button", { name: "Открыть книгу", exact: true }); await button.waitFor();
+        if (mode === "keyboard" || mode === "reduced") {
+          await button.focus();
+          await page.keyboard.press(mode === "reduced" ? "Enter" : "Space");
+          await page.waitForFunction(() => document.activeElement?.matches(".hero-heading"), undefined, { timeout: 3500 });
+        } else await button.click();
+        await page.waitForFunction(() => document.documentElement.dataset.heroBook === "story");
+      }
+      await page.getByRole("heading", { name: "Анна и Михаил" }).waitFor({ state: "visible", timeout: 3000 });
+      results.push(`${mode}: OK`); await context.close();
+    }
+    const idlePage = await browser.newPage({ viewport: { width: 390, height: 844 }, hasTouch: true });
+    await idlePage.route("**/_next/static/**/*.js", (route) => route.abort());
+    await idlePage.goto(baseUrl);
+    await idlePage.locator(".hero-cover").waitFor();
+    await idlePage.waitForFunction(() => document.documentElement.dataset.heroBook === "opening", undefined, { timeout: 4500 });
+    await idlePage.keyboard.press("Tab");
+    await idlePage.waitForFunction(() => document.activeElement?.matches(".hero-heading"), undefined, { timeout: 3500 });
+    await idlePage.getByRole("heading", { name: "Анна и Михаил" }).waitFor({ state: "visible" });
+    await idlePage.close();
+    results.push("automatic opening and Tab focus without Next.js bundles: OK");
+    return results;
+  } finally { await browser.close(); }
+}
