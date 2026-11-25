@@ -1,0 +1,40 @@
+@reference "tailwindcss";
+
+.root {
+  @apply relative overflow-hidden rounded-2xl border border-[#D8CBB8] bg-[#FFFDF8] shadow-sm;
+}
+
+.spine {
+  @apply absolute inset-y-0 left-0 z-10 w-3;
+}
+
+.spread {
+  @apply pl-3;
+}
+
+.photo {
+  @apply relative aspect-[16/10] w-full overflow-hidden bg-[#EAE0D2];
+}
+
+.image {
+  @apply object-cover object-center transition-transform duration-700;
+}
+
+@media (hover: hover) {
+  :global(.group):hover .image {
+    scale: 1.03;
+  }
+}
+
+.caption {
+  @apply flex flex-col gap-0.5 border-t border-[#ECE2D4] bg-[#FFFDF8] px-4 py-2.5 text-[13px] text-[#5C5349];
+  @apply sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-3;
+}
+
+.title {
+  @apply font-medium text-[#1F3042];
+}
+
+.composition {
+  @apply whitespace-nowrap;
+}
