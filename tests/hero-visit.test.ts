@@ -1,17 +1,25 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { HERO_VISIT_KEY, HERO_VISIT_SCRIPT } from "@/lib/hero-visit";
+import { HERO_VISIT_KEY, HERO_VISIT_SCRIPT } from "@/components/home-page/BookIntro/BookIntro.script";
 
-function loadBook(storage: Pick<Storage, "getItem" | "setItem">, reducedMotion = false) {
+function loadBook(
+  storage: Pick<Storage, "getItem" | "setItem">,
+  { reducedMotion = false, hash = "", onHome = true } = {},
+) {
   vi.useFakeTimers();
   const state: Record<string, string> = {};
   const heading = { focus: vi.fn() };
   const listeners = new Map<string, (event?: unknown) => void>();
   const page = { inert: false, querySelector: () => heading };
   const intro = { addEventListener: vi.fn(), isConnected: true, contains: () => false };
+  const pricing = { scrollIntoView: vi.fn() };
+  const location = { hash };
+  let currentIntro = onHome ? intro : null;
+  let onMutation: () => void;
   const document = {
     documentElement: { dataset: state },
     hidden: false,
-    querySelector: (selector: string) => selector === ".hero-cover-wrap" ? intro : page,
+    querySelector: (selector: string) => selector === "[data-hero-intro]" ? currentIntro : page,
+    getElementById: (id: string) => id === "pricing" ? pricing : null,
     addEventListener: (name: string, listener: (event?: unknown) => void) => listeners.set(name, listener),
     removeEventListener: (name: string) => listeners.delete(name),
   };
@@ -21,19 +29,31 @@ function loadBook(storage: Pick<Storage, "getItem" | "setItem">, reducedMotion =
     document,
     {
       sessionStorage: storage,
-      location: { hash: "" },
+      location,
       matchMedia: () => ({ matches: reducedMotion }),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
       setTimeout,
       clearTimeout,
       requestAnimationFrame: (callback: () => void) => setTimeout(callback, 16),
     },
-    class { observe() {} disconnect() {} },
+    class {
+      constructor(callback: () => void) { onMutation = callback; }
+      observe() {}
+      disconnect() {}
+    },
   );
 
   return {
     state,
     heading,
     page,
+    pricing,
+    navigateHome: (hash: string) => {
+      currentIntro = intro;
+      location.hash = hash;
+      onMutation();
+    },
     activity: () => listeners.get("pointermove")?.(),
     setHidden: (hidden: boolean) => {
       document.hidden = hidden;
@@ -95,12 +115,22 @@ describe("hero visit", () => {
 
   it("opens immediately with reduced motion when storage is unavailable", () => {
     const denied = () => { throw new Error("denied"); };
-    const visit = loadBook({ getItem: denied, setItem: denied }, true);
-    visit.click();
+    const visit = loadBook({ getItem: denied, setItem: denied }, { reducedMotion: true });
+
+    expect(visit.state.heroBook).toBe("story");
+    expect(visit.heading.focus).not.toHaveBeenCalled();
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it("skips the cover and restores the scroll target on a client transition to a home anchor", () => {
+    const visit = loadBook({ getItem: () => null, setItem: vi.fn() }, { onHome: false });
+
+    visit.navigateHome("#pricing");
 
     expect(visit.state.heroBook).toBe("story");
     vi.advanceTimersByTime(16);
-    expect(visit.heading.focus).toHaveBeenCalledOnce();
+    expect(visit.pricing.scrollIntoView).toHaveBeenCalledOnce();
+    expect(visit.heading.focus).not.toHaveBeenCalled();
     expect(vi.getTimerCount()).toBe(0);
   });
 

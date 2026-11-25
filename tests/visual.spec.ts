@@ -106,67 +106,127 @@ export async function runVisualAndSmokeAudit(baseUrl = "http://127.0.0.1:43123")
 export async function runHeroAudit(baseUrl: string, executablePath: string) {
   const browser = await chromium.launch({ executablePath, headless: true });
   const results: string[] = [];
+  const heroTitle = "Есть истории, которые хочется подарить";
   try {
-    for (const viewport of [{ width: 320, height: 568 }, { width: 390, height: 844 }, { width: 768, height: 1024 }, { width: 1024, height: 768 }, { width: 1440, height: 900 }]) {
-      const context = await browser.newContext({ viewport, hasTouch: viewport.width < 1200 });
+    const screens = [
+      { width: 320, height: 568, hasTouch: true },
+      { width: 390, height: 844, hasTouch: true },
+      { width: 768, height: 1024, hasTouch: true },
+      { width: 1366, height: 1024, hasTouch: true },
+      { width: 1440, height: 740, hasTouch: true },
+      { width: 1024, height: 768, hasTouch: false },
+      { width: 1440, height: 900, hasTouch: false },
+    ];
+    for (const { width, height, hasTouch } of screens) {
+      const viewport = { width, height };
+      const context = await browser.newContext({ viewport, hasTouch });
       const page = await context.newPage();
-      await page.goto(baseUrl, { waitUntil: "networkidle" });
+      if (width === 320) {
+        await page.route((url) => url.href.includes("love-1-cover.webp"), async (route) => {
+          await new Promise((resolve) => setTimeout(resolve, 3500));
+          await route.continue();
+        }, { times: 1 });
+      }
+      await page.goto(baseUrl, { waitUntil: "commit" });
       const cover = page.getByRole("button", { name: "Открыть книгу «Наша история»" });
       await cover.waitFor({ state: "visible" });
       const closed = await cover.boundingBox();
       if (!closed || closed.width < Math.min(viewport.width * .7, viewport.height * .5, 390)) throw new Error("cover is too small");
-      if (viewport.width < 1200) await cover.tap(); else await cover.click();
-      await page.waitForFunction(() => {
-        const intro = document.querySelector(".hero-cover-wrap")!;
+      const reveal = page.waitForFunction(() => {
+        const intro = document.querySelector("[data-hero-intro]");
+        const homePage = document.querySelector("[data-home-page]");
+        const photo = document.querySelector("#home-hero-title")?.closest("section")?.querySelector("article img");
+        if (!intro || !homePage || !photo) return false;
         const opacity = Number(getComputedStyle(intro).opacity);
-        return opacity > 0 && opacity < 1 && getComputedStyle(document.querySelector(".home-page")!).visibility === "visible";
-      });
-      const photo = page.locator(".hero-photo");
-      const photoDuringReveal = await photo.boundingBox();
+        if (opacity <= 0 || opacity >= 1 || getComputedStyle(homePage).visibility !== "visible") return false;
+        return photo.getBoundingClientRect().toJSON();
+      }, undefined, { timeout: 5000 });
+      const [revealPhoto] = await Promise.all([reveal, hasTouch ? cover.tap() : cover.click()]);
+      const photoDuringReveal = await revealPhoto.jsonValue();
+      const hero = page.getByRole("region", { name: heroTitle });
+      const photo = hero.locator("article img");
       await page.waitForFunction(() => document.documentElement.dataset.heroBook === "story");
-      const photoAfterReveal = await photo.boundingBox();
-      if (!photoDuringReveal || JSON.stringify(photoDuringReveal) !== JSON.stringify(photoAfterReveal)) throw new Error("home page moved during reveal");
-      const info = await page.evaluate(() => ({ overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth, focus: document.activeElement?.textContent, image: Array.from(document.querySelectorAll<HTMLImageElement>(".hero-photo img")).every(i => i.complete && i.naturalWidth > 0) }));
-      if (info.overflow || !info.image || info.focus !== "Анна и Михаил") throw new Error(JSON.stringify(info));
+      const photoAfterReveal = await photo.evaluate((image) => image.getBoundingClientRect().toJSON());
+      if (JSON.stringify(photoDuringReveal) !== JSON.stringify(photoAfterReveal)) throw new Error("home page moved during reveal");
+      await photo.evaluate((image) => (image as HTMLImageElement).decode());
+      const info = await hero.evaluate((section) => {
+        const heading = section.querySelector("h1")!;
+        const photo = section.querySelector("img")!;
+        const description = heading.nextElementSibling!.getBoundingClientRect();
+        const example = section.querySelector("article")!.getBoundingClientRect();
+        const create = section.querySelector('a[href$="/create/love-story"], a[href$="/create/love-story/"]')!.getBoundingClientRect();
+        return {
+          overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth,
+          focused: document.activeElement === heading,
+          imageLoaded: photo.complete && photo.naturalWidth > 0,
+          firstSection: section.getBoundingClientRect().top === section.parentElement!.getBoundingClientRect().top,
+          stacked: description.bottom < example.top && example.bottom < create.top,
+          sideBySide: example.left > heading.getBoundingClientRect().right && create.right < example.left,
+        };
+      });
+      const layoutMatches = hasTouch && viewport.width < 1440 ? info.stacked : info.sideBySide;
+      if (info.overflow || !info.imageLoaded || !info.focused || !info.firstSection || !layoutMatches) throw new Error(JSON.stringify(info));
       await page.reload({ waitUntil: "networkidle" });
       if (await cover.isVisible()) throw new Error("cover returned after reload");
-      await page.getByRole("link", { name: "Листать эту книгу целиком" }).click();
+      await hero.getByRole("link", { name: "Пролистать пример", exact: true }).click();
       await page.waitForURL(/\/demo\/love-story\/?$/, { timeout: 10000 });
-      await page.waitForFunction(() => !document.querySelector(".home-page") && document.readyState === "complete");
+      await page.waitForFunction(() => !document.querySelector("[data-home-page]") && document.readyState === "complete");
       await page.goBack();
       await page.waitForURL(baseUrl, { timeout: 10000 });
-      await page.getByRole("heading", { name: "Анна и Михаил" }).waitFor({ state: "visible" });
+      await hero.waitFor({ state: "visible" });
       if (await cover.isVisible()) throw new Error("cover returned after demo");
-      await page.getByRole("link", { name: "Выбрать подарок", exact: true }).first().click();
-      await page.waitForURL(/\/catalog\/?$/, { timeout: 10000 });
-      results.push(`${viewport.width}x${viewport.height}: touch/click, reload, demo return, catalog, image, focus, overflow OK`);
+      await hero.getByRole("link", { name: "Создать книгу", exact: true }).click();
+      await page.waitForURL(/\/create\/love-story\/?$/, { timeout: 10000 });
+      await page.waitForFunction(() => !document.querySelector("[data-home-page]") && document.readyState === "complete");
+      results.push(`${viewport.width}x${viewport.height}: touch/click, reload, demo return, editor, image, focus, layout OK`);
       await context.close();
     }
     for (const mode of ["keyboard", "reduced", "storage", "nojs", "no-react"]) {
       const context = await browser.newContext({ reducedMotion: mode === "reduced" ? "reduce" : "no-preference", javaScriptEnabled: mode !== "nojs" });
       if (mode === "storage") await context.addInitScript(() => { Object.defineProperty(window, "sessionStorage", { get() { throw new Error("denied"); } }); });
       if (mode === "no-react") await context.route("**/_next/static/**/*.js", (route) => route.abort());
-      const page = await context.newPage(); await page.goto(baseUrl, { waitUntil: "networkidle" });
-      if (mode !== "nojs") {
+      const page = await context.newPage(); await page.goto(baseUrl, { waitUntil: "commit" });
+      if (mode === "reduced") {
+        const heading = page.getByRole("heading", { name: heroTitle });
+        await heading.waitFor({ state: "attached" });
+        if (await page.locator("html").getAttribute("data-hero-book") !== "story") throw new Error("cover delayed the home page with reduced motion");
+      } else if (mode !== "nojs") {
         const button = page.getByRole("button", { name: "Открыть книгу", exact: true }); await button.waitFor();
-        if (mode === "keyboard" || mode === "reduced") {
+        if (mode === "keyboard") {
           await button.focus();
-          await page.keyboard.press(mode === "reduced" ? "Enter" : "Space");
-          await page.waitForFunction(() => document.activeElement?.matches(".hero-heading"), undefined, { timeout: 3500 });
+          await page.keyboard.press("Space");
+          await page.waitForFunction(() => document.activeElement?.matches("#home-hero-title"), undefined, { timeout: 3500 });
         } else await button.click();
         await page.waitForFunction(() => document.documentElement.dataset.heroBook === "story");
       }
-      await page.getByRole("heading", { name: "Анна и Михаил" }).waitFor({ state: "visible", timeout: 3000 });
+      await page.getByRole("heading", { name: heroTitle }).waitFor({ state: "visible", timeout: 3000 });
       results.push(`${mode}: OK`); await context.close();
+    }
+    for (const reducedMotion of ["no-preference", "reduce"] as const) {
+      const context = await browser.newContext({ reducedMotion });
+      const page = await context.newPage();
+      await page.goto(new URL("catalog/", baseUrl).href, { waitUntil: "networkidle" });
+      const timeOrigin = await page.evaluate(() => performance.timeOrigin);
+      await page.getByRole("link", { name: "Стоимость", exact: true }).click();
+      await page.waitForURL(new URL("#pricing", baseUrl).href);
+      await page.waitForFunction(() => {
+        const pricing = document.getElementById("pricing");
+        if (!pricing || document.documentElement.dataset.heroBook !== "story") return false;
+        const top = pricing.getBoundingClientRect().top;
+        return window.scrollY > 0 && top >= 0 && top <= innerHeight / 2;
+      }, undefined, { timeout: 2000 });
+      if (await page.evaluate(() => performance.timeOrigin) !== timeOrigin) throw new Error("catalog did not use client navigation");
+      results.push(`catalog to pricing (${reducedMotion}): OK`);
+      await context.close();
     }
     const idlePage = await browser.newPage({ viewport: { width: 390, height: 844 }, hasTouch: true });
     await idlePage.route("**/_next/static/**/*.js", (route) => route.abort());
     await idlePage.goto(baseUrl);
-    await idlePage.locator(".hero-cover").waitFor();
+    await idlePage.locator("[data-hero-intro] [data-hero-open]").first().waitFor();
     await idlePage.waitForFunction(() => document.documentElement.dataset.heroBook === "opening", undefined, { timeout: 4500 });
     await idlePage.keyboard.press("Tab");
-    await idlePage.waitForFunction(() => document.activeElement?.matches(".hero-heading"), undefined, { timeout: 3500 });
-    await idlePage.getByRole("heading", { name: "Анна и Михаил" }).waitFor({ state: "visible" });
+    await idlePage.waitForFunction(() => document.activeElement?.matches("#home-hero-title"), undefined, { timeout: 3500 });
+    await idlePage.getByRole("heading", { name: heroTitle }).waitFor({ state: "visible" });
     await idlePage.close();
     results.push("automatic opening and Tab focus without Next.js bundles: OK");
     return results;

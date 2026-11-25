@@ -1,0 +1,66 @@
+@reference "tailwindcss";
+
+.root {
+  @apply border-y border-[#DFD2C0] bg-[#EFE7DA] py-14;
+  @apply sm:py-20 lg:py-24;
+}
+
+.layout {
+  @apply space-y-10;
+}
+
+.heading {
+  @apply max-w-2xl space-y-2;
+}
+
+.label {
+  @apply text-xs font-semibold uppercase tracking-[0.18em] text-[#7A6855];
+  @apply sm:text-sm;
+}
+
+.title {
+  @apply text-3xl leading-[1.12] text-[#1F3042];
+  @apply sm:text-4xl lg:text-[44px];
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+}
+
+.steps {
+  @apply grid grid-cols-1 gap-6;
+  @apply md:grid-cols-3 lg:gap-8;
+}
+
+.step {
+  @apply flex h-full flex-col overflow-hidden rounded-3xl border border-[#D8CBB8] bg-[#FFFDF8];
+}
+
+.photo {
+  @apply relative aspect-[16/10] w-full overflow-hidden bg-[#EAE0D2];
+}
+
+.image {
+  @apply object-cover;
+}
+
+.number {
+  @apply absolute left-4 top-4 rounded-full bg-[#1F3042] px-4 py-1.5 text-base font-medium text-[#FFFDF8] shadow-xs;
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+}
+
+.stepContent {
+  @apply flex flex-1 flex-col justify-between p-6 space-y-3;
+  @apply sm:p-7;
+}
+
+.copy {
+  @apply space-y-2.5;
+}
+
+.stepTitle {
+  @apply text-2xl font-medium leading-tight text-[#1F3042];
+  @apply sm:text-[28px];
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+}
+
+.stepDescription {
+  @apply text-base leading-relaxed text-[#2F3E4E];
+}

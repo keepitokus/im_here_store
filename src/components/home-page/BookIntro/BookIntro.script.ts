@@ -4,11 +4,16 @@ export const HERO_VISIT_KEY = "hero-book-opened";
 export const HERO_VISIT_SCRIPT = `(() => {
   const key = ${JSON.stringify(HERO_VISIT_KEY)};
   const state = document.documentElement.dataset;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  if (reducedMotion.matches || window.location.hash) {
+    state.heroBook = "story";
+    return;
+  }
+
   state.heroBook = "cover";
   try {
     if (window.sessionStorage.getItem(key) === "1") state.heroBook = "story";
   } catch {}
-  if (window.location.hash) state.heroBook = "story";
   if (state.heroBook === "story") return;
 
   const activityEvents = ["pointerdown", "pointermove", "keydown", "visibilitychange"];
@@ -16,15 +21,20 @@ export const HERO_VISIT_SCRIPT = `(() => {
   let idleTimer;
   let swipeStart = null;
 
-  const openBook = (cover, manual) => {
-    if (!cover?.isConnected || state.heroBook !== "cover") return;
+  function stopWaiting() {
     observer.disconnect();
     window.clearTimeout(idleTimer);
     for (const type of activityEvents) document.removeEventListener(type, resetIdleTimer);
     document.removeEventListener("click", handleClick);
+    window.removeEventListener("hashchange", syncIntro);
     removeGestureListeners();
+  }
 
-    const page = document.querySelector(".home-page");
+  const openBook = (cover, manual) => {
+    if (!cover?.isConnected || state.heroBook !== "cover") return;
+    stopWaiting();
+
+    const page = document.querySelector("[data-home-page]");
 
     try { window.sessionStorage.setItem(key, "1"); } catch {}
     const showStory = () => {
@@ -34,12 +44,12 @@ export const HERO_VISIT_SCRIPT = `(() => {
       if (page) {
         page.inert = false;
         if (shouldFocus) window.requestAnimationFrame(() => {
-          page.querySelector(".hero-heading")?.focus({ preventScroll: true });
+          page.querySelector("#home-hero-title")?.focus({ preventScroll: true });
         });
       }
     };
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (reducedMotion.matches) {
       showStory();
     } else {
       if (page) page.inert = true;
@@ -60,7 +70,7 @@ export const HERO_VISIT_SCRIPT = `(() => {
   }
 
   function handleClick(event) {
-    const cover = event.target?.closest?.("[data-hero-open]")?.closest(".hero-cover-wrap");
+    const cover = event.target?.closest?.("[data-hero-open]")?.closest("[data-hero-intro]");
     if (cover) openBook(cover, true);
   }
 
@@ -93,7 +103,18 @@ export const HERO_VISIT_SCRIPT = `(() => {
   }
 
   function syncIntro() {
-    const current = document.querySelector(".hero-cover-wrap");
+    const current = document.querySelector("[data-hero-intro]");
+    const hash = window.location.hash;
+    if (current && hash) {
+      stopWaiting();
+      state.heroBook = "story";
+      // The router may have attempted to scroll before the home page was visible.
+      window.requestAnimationFrame(() => {
+        if (window.location.hash === hash) document.getElementById(hash.slice(1))?.scrollIntoView();
+      });
+      return;
+    }
+
     if (intro === current) return;
     removeGestureListeners();
     intro = current;
@@ -109,5 +130,6 @@ export const HERO_VISIT_SCRIPT = `(() => {
   observer.observe(document.documentElement, { childList: true, subtree: true });
   for (const type of activityEvents) document.addEventListener(type, resetIdleTimer, { passive: true });
   document.addEventListener("click", handleClick);
+  window.addEventListener("hashchange", syncIntro);
   syncIntro();
 })();`;

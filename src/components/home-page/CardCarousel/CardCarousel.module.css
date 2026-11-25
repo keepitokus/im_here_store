@@ -1,0 +1,78 @@
+.track {
+  --card-gap: 1.5rem;
+  display: grid;
+  grid-auto-columns: 100%;
+  grid-auto-flow: column;
+  gap: var(--card-gap);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.track > * {
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+.track[data-arrow-scrolling] {
+  scroll-snap-type: none;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.button {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border: 1px solid #d8cbb8;
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--rose);
+  cursor: pointer;
+}
+
+.button[aria-disabled="true"] {
+  color: #8e8175;
+  cursor: default;
+  opacity: 0.5;
+}
+
+@media (hover: hover) {
+  .button[aria-disabled="false"]:hover {
+    border-color: var(--rose);
+    background: var(--rose-wash);
+  }
+}
+
+@media (min-width: 640px) and (min-height: 600px) {
+  .track {
+    grid-auto-columns: calc((100% - var(--card-gap)) / 2);
+  }
+}
+
+@media (min-width: 1440px), (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  .track {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-flow: row;
+    gap: 2rem;
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+
+  .controls {
+    display: none;
+  }
+
+  .track[data-desktop-columns="2"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+

@@ -1,0 +1,60 @@
+@reference "tailwindcss";
+
+.root {
+  @apply order-7 py-14;
+  @apply sm:py-20 lg:order-none lg:py-24;
+}
+
+.content {
+  @apply mx-auto max-w-4xl space-y-8;
+}
+
+.heading {
+  @apply space-y-2;
+}
+
+.label {
+  @apply text-xs font-semibold uppercase tracking-[0.18em] text-[#7A6855];
+  @apply sm:text-sm;
+}
+
+.title {
+  @apply text-3xl leading-[1.12] text-[#1F3042];
+  @apply sm:text-4xl lg:text-[44px];
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+}
+
+.accordion {
+  @apply rounded-3xl border border-[#D8CBB8] bg-[#FFFDF8] px-6 py-3 shadow-xs;
+  @apply sm:px-8;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .accordion button[aria-expanded]:hover {
+    cursor: pointer;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .accordion button[aria-expanded] > svg {
+    transition: rotate 280ms ease;
+  }
+
+  .accordion [role="region"][data-state="open"] {
+    animation: expandAnswer 300ms ease-out;
+  }
+
+  .accordion [role="region"][data-state="closed"] {
+    animation: collapseAnswer 250ms ease-in-out;
+  }
+}
+
+@keyframes expandAnswer {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
+}
+
+@keyframes collapseAnswer {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
+}

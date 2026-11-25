@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
-import { HERO_VISIT_SCRIPT } from "@/lib/hero-visit";
+import { HERO_VISIT_SCRIPT } from "@/components/home-page/BookIntro/BookIntro.script";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
