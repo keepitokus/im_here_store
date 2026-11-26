@@ -34,7 +34,7 @@ const EXAMPLES: readonly BookExample[] = [
 
 export function BookExamples() {
   return (
-    <section className={styles.root} aria-labelledby="book-examples-title">
+    <section id="book-examples" className={styles.root} aria-labelledby="book-examples-title">
       <div className={"layout-container " + styles.layout}>
         <div className={styles.heading}>
           <p className={styles.label}>

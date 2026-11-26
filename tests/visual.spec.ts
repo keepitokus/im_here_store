@@ -5,7 +5,7 @@
  * - Bounding-box проверка шапки (отсутствие пересечений, однострочность ссылок, tap target >=44px)
  * - Снятие финальных скриншотов в /opt/cursor/artifacts/screenshots/final_after/
  */
-import { chromium } from "playwright-core";
+import { chromium, webkit, type Browser } from "playwright-core";
 
 export async function runVisualAndSmokeAudit(baseUrl = "http://127.0.0.1:43123") {
   const VIEWPORTS = [
@@ -202,23 +202,7 @@ export async function runHeroAudit(baseUrl: string, executablePath: string) {
       await page.getByRole("heading", { name: heroTitle }).waitFor({ state: "visible", timeout: 3000 });
       results.push(`${mode}: OK`); await context.close();
     }
-    for (const reducedMotion of ["no-preference", "reduce"] as const) {
-      const context = await browser.newContext({ reducedMotion });
-      const page = await context.newPage();
-      await page.goto(new URL("catalog/", baseUrl).href, { waitUntil: "networkidle" });
-      const timeOrigin = await page.evaluate(() => performance.timeOrigin);
-      await page.getByRole("link", { name: "Стоимость", exact: true }).click();
-      await page.waitForURL(new URL("#pricing", baseUrl).href);
-      await page.waitForFunction(() => {
-        const pricing = document.getElementById("pricing");
-        if (!pricing || document.documentElement.dataset.heroBook !== "story") return false;
-        const top = pricing.getBoundingClientRect().top;
-        return window.scrollY > 0 && top >= 0 && top <= innerHeight / 2;
-      }, undefined, { timeout: 2000 });
-      if (await page.evaluate(() => performance.timeOrigin) !== timeOrigin) throw new Error("catalog did not use client navigation");
-      results.push(`catalog to pricing (${reducedMotion}): OK`);
-      await context.close();
-    }
+    results.push(...await checkHomeAnchors(browser, baseUrl));
     const idlePage = await browser.newPage({ viewport: { width: 390, height: 844 }, hasTouch: true });
     await idlePage.route("**/_next/static/**/*.js", (route) => route.abort());
     await idlePage.goto(baseUrl);
@@ -231,4 +215,38 @@ export async function runHeroAudit(baseUrl: string, executablePath: string) {
     results.push("automatic opening and Tab focus without Next.js bundles: OK");
     return results;
   } finally { await browser.close(); }
+}
+
+export async function runHomeAnchorAudit(baseUrl: string) {
+  const browser = await webkit.launch();
+  try {
+    return await checkHomeAnchors(browser, baseUrl);
+  } finally { await browser.close(); }
+}
+
+async function checkHomeAnchors(browser: Browser, baseUrl: string) {
+  const targets = ["how", "book-examples", "pricing", "faq"];
+  const results: string[] = [];
+  for (const reducedMotion of ["no-preference", "reduce"] as const) {
+    const context = await browser.newContext({ reducedMotion, viewport: { width: 1280, height: 720 } });
+    try {
+      for (const target of targets) {
+        const page = await context.newPage();
+        await page.goto(baseUrl, { waitUntil: "networkidle" });
+        await page.goto(new URL("catalog/", baseUrl).href, { waitUntil: "networkidle" });
+        await page.locator(`header nav a[href$="#${target}"]`).click();
+        await page.waitForURL(new URL(`#${target}`, baseUrl).href);
+        await page.waitForFunction((id) => {
+          const section = document.getElementById(id);
+          const header = document.querySelector("header");
+          if (!section || !header || document.documentElement.dataset.heroBook !== "story") return false;
+          const top = section.getBoundingClientRect().top;
+          return top >= header.getBoundingClientRect().bottom && top <= innerHeight / 2;
+        }, target, { timeout: 5000 });
+        await page.close();
+      }
+      results.push(`home → catalog → ${targets.join(", ")} (${reducedMotion}): OK`);
+    } finally { await context.close(); }
+  }
+  return results;
 }

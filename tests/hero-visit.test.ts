@@ -49,6 +49,7 @@ function loadBook(
     heading,
     page,
     pricing,
+    domReady: () => listeners.get("DOMContentLoaded")?.(),
     navigateHome: (hash: string) => {
       currentIntro = intro;
       location.hash = hash;
@@ -132,6 +133,20 @@ describe("hero visit", () => {
     expect(visit.pricing.scrollIntoView).toHaveBeenCalledOnce();
     expect(visit.heading.focus).not.toHaveBeenCalled();
     expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it("restores a directly requested anchor once the document is ready", () => {
+    const visit = loadBook(
+      { getItem: () => null, setItem: vi.fn() },
+      { hash: "#pricing", reducedMotion: true },
+    );
+
+    expect(visit.state.heroBook).toBe("story");
+    expect(visit.pricing.scrollIntoView).not.toHaveBeenCalled();
+    visit.domReady();
+    vi.advanceTimersByTime(16);
+    expect(visit.pricing.scrollIntoView).toHaveBeenCalledOnce();
+    expect(visit.heading.focus).not.toHaveBeenCalled();
   });
 
   it("opens after 2.5 idle seconds and resets the countdown on activity or tab changes", () => {

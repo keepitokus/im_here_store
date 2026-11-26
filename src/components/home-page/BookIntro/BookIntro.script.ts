@@ -5,7 +5,21 @@ export const HERO_VISIT_SCRIPT = `(() => {
   const key = ${JSON.stringify(HERO_VISIT_KEY)};
   const state = document.documentElement.dataset;
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  if (reducedMotion.matches || window.location.hash) {
+  const initialHash = window.location.hash;
+
+  function scrollToAnchor(hash) {
+    window.requestAnimationFrame(() => {
+      if (window.location.hash === hash) document.getElementById(hash.slice(1))?.scrollIntoView();
+    });
+  }
+
+  if (initialHash) {
+    state.heroBook = "story";
+    document.addEventListener("DOMContentLoaded", () => scrollToAnchor(initialHash), { once: true });
+    return;
+  }
+
+  if (reducedMotion.matches) {
     state.heroBook = "story";
     return;
   }
@@ -109,9 +123,7 @@ export const HERO_VISIT_SCRIPT = `(() => {
       stopWaiting();
       state.heroBook = "story";
       // The router may have attempted to scroll before the home page was visible.
-      window.requestAnimationFrame(() => {
-        if (window.location.hash === hash) document.getElementById(hash.slice(1))?.scrollIntoView();
-      });
+      scrollToAnchor(hash);
       return;
     }
 
