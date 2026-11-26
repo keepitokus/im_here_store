@@ -4,8 +4,11 @@ import styles from "./ReadingStory.module.css";
 
 export function ReadingStory() {
   return (
-    <section className={styles.root}>
+    <section className={styles.root} aria-labelledby="reading-story-title">
       <div className="layout-container">
+        <h2 id="reading-story-title" className={styles.sectionTitle}>
+          Истории, к которым возвращаются
+        </h2>
         <div className={"paper-shadow " + styles.panel}>
           <div className={styles.grid}>
             <div className={styles.photo}>
@@ -19,12 +22,9 @@ export function ReadingStory() {
               />
             </div>
             <div className={styles.content}>
-              <p className={styles.label}>
-                Истории, к которым возвращаются
-              </p>
-              <h2 className={styles.title}>
+              <h3 className={styles.title}>
                 Однажды вы откроете эту книгу снова
-              </h2>
+              </h3>
               <p className={styles.description}>
                 Через месяц или тихим вечером, когда захочется вспомнить.
                 Книга открывается по приватной ссылке на любом телефоне или
@@ -42,11 +42,7 @@ export function ReadingStory() {
                   href="/demo/mother-thanks"
                   className={styles.exampleLink}
                 >
-                  <span className={styles.mobileLabel}>
-                    <span className={styles.mobileLine}>Смотреть демо</span>
-                    <span className={styles.mobileLine}>«Мама, спасибо»</span>
-                  </span>
-                  <span className={styles.desktopLabel}>Смотреть демо «Мама, спасибо»</span>
+                  Смотреть демо
                 </Link>
               </div>
             </div>

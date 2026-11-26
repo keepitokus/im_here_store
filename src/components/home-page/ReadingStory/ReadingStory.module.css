@@ -5,6 +5,13 @@
   @apply sm:py-20 lg:order-none lg:py-24;
 }
 
+.sectionTitle {
+  @apply text-3xl leading-[1.12] text-[#1F3042];
+  @apply sm:text-4xl lg:text-[44px];
+  margin-bottom: 40px;
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+}
+
 .panel {
   @apply overflow-hidden rounded-3xl border border-[#1F3042] bg-[#1F3042];
 }
@@ -26,11 +33,6 @@
 .content {
   @apply flex flex-col justify-center p-7 text-[#F7F2E9] space-y-6;
   @apply sm:p-10 lg:p-14 lg:col-span-6;
-}
-
-.label {
-  @apply text-xs font-semibold uppercase tracking-[0.2em] text-[#D8C3A8];
-  @apply sm:text-sm;
 }
 
 .title {
@@ -57,17 +59,4 @@
 .exampleLink {
   @apply inline-flex min-h-12 w-full items-center justify-center rounded-full border border-[#F7F2E9]/45 px-6 py-2.5 text-center text-base font-medium leading-tight text-[#F7F2E9];
   @apply hover:bg-white/10 sm:w-auto sm:py-0;
-}
-
-.mobileLabel {
-  @apply sm:hidden;
-}
-
-.mobileLine {
-  @apply block whitespace-nowrap;
-}
-
-.desktopLabel {
-  @apply hidden whitespace-nowrap;
-  @apply sm:inline;
 }

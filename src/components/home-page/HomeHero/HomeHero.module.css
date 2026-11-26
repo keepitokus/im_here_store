@@ -1,26 +1,26 @@
 .root {
   order: -1;
-  padding-block: 2rem;
+  padding-block: 32px;
   background: var(--ivory);
 }
 
 .layout {
   display: grid;
   align-items: center;
-  gap: 1.75rem;
+  gap: 28px;
 }
 
 .label {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  padding: 0.5rem 0.75rem;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 8px 12px;
   border: 1px solid #d8c9b5;
   border-radius: 999px;
   background: var(--paper);
   color: var(--rose);
-  font-size: 0.75rem;
+  font-size: 12px;
   line-height: 1.25;
 }
 
@@ -35,10 +35,10 @@
 }
 
 .description {
-  max-width: 29rem;
-  margin-top: 1rem;
+  max-width: 464px;
+  margin-top: 16px;
   color: #2f3e4e;
-  font-size: 1rem;
+  font-size: 16px;
   line-height: 1.625;
 }
 
@@ -46,21 +46,21 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.5rem;
+  gap: 8px;
 }
 
 .createLink,
 .exampleLink {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 8px;
 }
 
 .createLink {
   flex-shrink: 0;
   justify-content: center;
-  min-height: 3rem;
-  padding-inline: 1.5rem;
+  min-height: 48px;
+  padding-inline: 24px;
   border-radius: 999px;
   background: var(--ink);
   color: var(--paper);
@@ -81,8 +81,8 @@
 
 .freeNote,
 .terms {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .freeNote {
@@ -93,11 +93,10 @@
 .terms {
   display: flex;
   flex-direction: column;
-  row-gap: 0.25rem;
-  margin-top: 1rem;
-  padding: 0.75rem 1rem 0.75rem 2rem;
+  row-gap: 4px;
+  padding: 12px 16px 12px 32px;
   border: 1px solid #d8c9b5;
-  border-radius: 1rem;
+  border-radius: 16px;
   background: var(--paper);
   color: var(--ink);
   list-style: disc;
@@ -130,33 +129,33 @@
 }
 
 .exampleContent {
-  padding: 1rem 1.25rem 0.5rem;
+  padding: 16px 20px 8px;
 }
 
 .exampleLabel {
   color: var(--rose);
-  font-size: 0.75rem;
+  font-size: 12px;
   font-weight: 600;
-  line-height: 1rem;
+  line-height: 16px;
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
 
 .exampleTitle {
-  margin-top: 0.25rem;
+  margin-top: 4px;
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
-  font-size: 1.875rem;
+  font-size: 30px;
   line-height: 1.25;
 }
 
 .exampleQuote {
-  margin-top: 0.5rem;
+  margin-top: 8px;
   color: #2f3e4e;
 }
 
 .exampleLink {
-  min-height: 2.75rem;
-  margin-top: 0.25rem;
+  min-height: 44px;
+  margin-top: 4px;
   color: var(--rose);
   font-weight: 500;
   text-decoration: underline rgb(122 62 74 / 50%);
@@ -165,68 +164,103 @@
 
 @media (min-width: 640px) {
   .root {
-    padding-block: 3rem;
+    padding-block: 48px;
   }
 
   .label {
-    margin-bottom: 1.25rem;
-    padding-inline: 1rem;
-    font-size: 0.875rem;
+    margin-bottom: 20px;
+    padding-inline: 16px;
+    font-size: 14px;
   }
 
   .description {
-    font-size: 1.125rem;
+    font-size: 18px;
   }
 
   .exampleContent {
-    padding: 1.25rem 1.75rem 0.75rem;
+    padding: 20px 28px 12px;
   }
 
   .exampleTitle {
-    font-size: 2.25rem;
+    font-size: 36px;
   }
 }
 
-@media (min-width: 1440px), (min-width: 1024px) and (hover: hover) and (pointer: fine) {
-  .root {
-    padding-block: 4rem;
+@media (min-width: 640px) and (min-height: 600px) {
+  .example {
+    width: min(100%, 640px, 76svh);
+    justify-self: center;
   }
+}
 
+@media (height < 600px) and (orientation: landscape) and (pointer: coarse) {
+  .example {
+    width: min(100%, 480px, 110svh);
+    justify-self: center;
+  }
+}
+
+@media (min-width: 1440px),
+  (min-width: 1024px) and (hover: hover) and (pointer: fine),
+  (min-width: 900px) and (min-height: 600px) and (orientation: landscape) and (pointer: coarse) {
   .layout {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: minmax(0, 1fr) auto auto minmax(0, 1fr);
-    gap: 0 3rem;
+    grid-template-rows: minmax(0, 1fr) auto auto auto minmax(0, 1fr);
+    gap: 0 32px;
   }
 
   .intro {
     grid-area: 2 / 1;
   }
 
-  .purchase {
+  .actions {
     grid-area: 3 / 1;
-    margin-top: 1.25rem;
+    margin-top: 20px;
+  }
+
+  .terms {
+    grid-area: 4 / 1;
+    margin-top: 16px;
   }
 
   .example {
     grid-area: 1 / 2 / -1;
+    width: 100%;
+  }
+}
+
+@media (900px <= width < 1440px) and (min-height: 600px) and (orientation: landscape) and (pointer: coarse) {
+  .createLink,
+  .freeNote {
+    align-self: auto;
+  }
+}
+
+@media (min-width: 1440px), (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  .root {
+    padding-block: 64px;
+  }
+
+  .layout {
+    column-gap: 48px;
   }
 
   .actions {
     flex-direction: row;
     align-items: center;
-    gap: 1rem;
+    gap: 16px;
   }
 
   .terms {
     flex-flow: row wrap;
-    column-gap: 1.75rem;
-    padding: 1rem 1.25rem 1rem 2.25rem;
+    column-gap: 28px;
+    padding: 16px 20px 16px 36px;
   }
 }
 
 @media (min-width: 1440px), (min-width: 1280px) and (hover: hover) and (pointer: fine) {
   .layout {
-    column-gap: 4rem;
+    column-gap: 64px;
   }
 }
 

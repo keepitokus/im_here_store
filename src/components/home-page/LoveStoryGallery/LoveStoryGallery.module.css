@@ -1,18 +1,18 @@
 .root {
-  padding-block: 2.75rem 3.5rem;
+  padding-block: 44px 56px;
   border-top: 1px solid var(--champagne);
 }
 
 .layout {
   display: grid;
-  gap: 1.5rem;
+  gap: 24px;
 }
 
 .intro,
 .details,
 .gallery {
   display: grid;
-  gap: 0.875rem;
+  gap: 14px;
   min-width: 0;
 }
 
@@ -24,7 +24,7 @@
 }
 
 .mainFigure {
-  border-radius: 1.25rem;
+  border-radius: 20px;
   box-shadow: 0 8px 20px -15px rgb(31 48 66 / 36%);
 }
 
@@ -43,10 +43,10 @@
 }
 
 .mainCaption {
-  padding: 0.75rem 1rem;
+  padding: 12px 16px;
   border-top: 1px solid var(--champagne);
   color: #3e4c5c;
-  font-size: 0.875rem;
+  font-size: 14px;
   font-style: italic;
   line-height: 1.45;
 }
@@ -54,11 +54,11 @@
 .smallGallery {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
+  gap: 12px;
 }
 
 .smallFigure {
-  border-radius: 1rem;
+  border-radius: 16px;
 }
 
 .smallPhoto {
@@ -66,15 +66,15 @@
 }
 
 .smallCaption {
-  padding: 0.625rem 0.75rem;
+  padding: 10px 12px;
   color: #3e4c5c;
-  font-size: 0.8125rem;
+  font-size: 13px;
   line-height: 1.4;
 }
 
 .label {
   color: var(--rose);
-  font-size: 0.75rem;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -82,13 +82,13 @@
 
 .title {
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
-  font-size: clamp(2rem, 5vw, 2.625rem);
+  font-size: clamp(32px, 5vw, 42px);
   line-height: 1.05;
 }
 
 .lead,
 .note {
-  max-width: 33rem;
+  max-width: 528px;
   line-height: 1.6;
 }
 
@@ -104,16 +104,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: 12px;
   width: 100%;
-  max-width: 24rem;
-  min-height: 3rem;
-  padding: 0.75rem 0.875rem 0.75rem 1.125rem;
+  max-width: 384px;
+  min-height: 48px;
+  padding: 12px 14px 12px 18px;
   border: 1px solid var(--rose);
-  border-radius: 1.5rem;
+  border-radius: 24px;
   background: var(--rose-wash);
   color: var(--rose);
-  font-size: 0.9375rem;
+  font-size: 15px;
   font-weight: 500;
   line-height: 1.25;
   transition: background-color 150ms ease;
@@ -131,26 +131,26 @@
 }
 
 .linkMeta {
-  margin-top: 0.125rem;
+  margin-top: 2px;
   color: rgb(122 62 74 / 80%);
-  font-size: 0.8125rem;
+  font-size: 13px;
   letter-spacing: 0.025em;
 }
 
 .arrow {
-  flex: 0 0 1rem;
-  width: 1rem;
-  height: 1rem;
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
 }
 
 @media (min-width: 640px) {
   .root {
-    padding-block: 4rem 5rem;
+    padding-block: 64px 80px;
   }
 
   .mainCaption,
   .lead {
-    font-size: 1.0625rem;
+    font-size: 17px;
   }
 
   .smallPhoto {
@@ -160,21 +160,21 @@
 
 @media (min-width: 1024px) {
   .root {
-    padding-block: 6rem;
+    padding-block: 96px;
     border-top: 0;
   }
 
   .layout {
     grid-template-columns: repeat(12, minmax(0, 1fr));
     grid-template-rows: repeat(2, 1fr);
-    column-gap: 3rem;
-    row-gap: 1.25rem;
+    column-gap: 48px;
+    row-gap: 20px;
   }
 
   .intro,
   .details {
     grid-column: 8 / -1;
-    gap: 1.25rem;
+    gap: 20px;
   }
 
   .intro {
@@ -196,28 +196,28 @@
   }
 
   .mainCaption {
-    padding-inline: 1.25rem;
-    font-size: 0.9375rem;
+    padding-inline: 20px;
+    font-size: 15px;
   }
 
   .smallGallery {
-    gap: 1rem;
+    gap: 16px;
   }
 
   .smallCaption {
-    padding-inline: 1rem;
-    font-size: 0.875rem;
+    padding-inline: 16px;
+    font-size: 14px;
   }
 
   .label {
-    font-size: 0.875rem;
+    font-size: 14px;
     letter-spacing: 0.18em;
   }
 
   .link {
     width: fit-content;
-    gap: 1rem;
-    padding-inline: 1.5rem 1.25rem;
+    gap: 16px;
+    padding-inline: 24px 20px;
     border-radius: 999px;
   }
 }

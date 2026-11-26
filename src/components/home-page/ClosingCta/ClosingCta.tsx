@@ -29,7 +29,7 @@ export function ClosingCta() {
             href="/demo/love-story"
             className={styles.exampleLink}
           >
-            Пример «Наша история»
+            Смотреть демо
           </Link>
         </div>
       </div>

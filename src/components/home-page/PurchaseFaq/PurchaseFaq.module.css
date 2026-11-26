@@ -1,8 +1,9 @@
 @reference "tailwindcss";
 
 .root {
-  @apply order-7 py-14;
+  @apply order-7 bg-[#EFE7DA]/50 py-14;
   @apply sm:py-20 lg:order-none lg:py-24;
+  border-top: 1px solid #dfd2c0;
 }
 
 .content {

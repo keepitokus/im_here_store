@@ -1,8 +1,9 @@
 @reference "tailwindcss";
 
 .root {
-  @apply border-t border-[#DFD2C0] bg-[#EFE7DA]/50 py-14;
+  @apply bg-[#EFE7DA]/50 py-14;
   @apply sm:py-20 lg:py-24;
+  border-block: 1px solid #dfd2c0;
 }
 
 .layout {
@@ -32,7 +33,7 @@
 .summary {
   display: grid;
   align-items: start;
-  padding-bottom: 1.5rem;
+  padding-bottom: 24px;
 }
 
 .badge {
@@ -44,17 +45,17 @@
 .cardTitle {
   @apply text-2xl font-medium text-[#1F3042];
   @apply sm:text-3xl;
-  margin-top: 0.75rem;
+  margin-top: 12px;
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
 }
 
 .cardDescription {
   @apply text-base leading-relaxed text-[#2F3E4E];
-  margin-top: 0.75rem;
+  margin-top: 12px;
 }
 
 .details {
-  margin-top: 1.25rem;
+  margin-top: 20px;
 }
 
 .term {
@@ -63,7 +64,7 @@
 }
 
 .term + .term {
-  margin-top: 0.375rem;
+  margin-top: 6px;
 }
 
 .check {
@@ -73,7 +74,7 @@
 .cardFooter {
   @apply border-t border-[#D8CBB8]/80 pt-5;
   grid-template-columns: minmax(0, 1fr);
-  margin-top: 1rem;
+  margin-top: 16px;
 }
 
 .priceGroup {
@@ -94,7 +95,7 @@
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
   text-align: end;
   /* The serif numerals sit below the visual middle of their line box. */
-  translate: 0 -0.25rem;
+  translate: 0 -4px;
 }
 
 @media (width < 400px) {
@@ -106,7 +107,7 @@
 
 .createLink {
   @apply flex min-h-12 items-center justify-center gap-1.5 rounded-full px-4 text-[15px] font-medium text-[#F7F2E9];
-  margin-top: 1.5rem;
+  margin-top: 24px;
 }
 
 .arrow {
@@ -164,8 +165,8 @@
     display: grid;
     grid-template: "create price" auto / 56% minmax(0, 1fr);
     align-items: end;
-    column-gap: 1rem;
-    padding-top: 0.75rem;
+    column-gap: 16px;
+    padding-top: 12px;
   }
 
   .priceGroup {

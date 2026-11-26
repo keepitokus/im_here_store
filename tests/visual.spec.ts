@@ -112,6 +112,8 @@ export async function runHeroAudit(baseUrl: string, executablePath: string) {
       { width: 320, height: 568, hasTouch: true },
       { width: 390, height: 844, hasTouch: true },
       { width: 768, height: 1024, hasTouch: true },
+      { width: 1032, height: 1376, hasTouch: true },
+      { width: 1024, height: 768, hasTouch: true },
       { width: 1366, height: 1024, hasTouch: true },
       { width: 1440, height: 740, hasTouch: true },
       { width: 1024, height: 768, hasTouch: false },
@@ -149,6 +151,7 @@ export async function runHeroAudit(baseUrl: string, executablePath: string) {
       const photoAfterReveal = await photo.evaluate((image) => image.getBoundingClientRect().toJSON());
       if (JSON.stringify(photoDuringReveal) !== JSON.stringify(photoAfterReveal)) throw new Error("home page moved during reveal");
       await photo.evaluate((image) => (image as HTMLImageElement).decode());
+      await page.waitForFunction(() => document.activeElement?.id === "home-hero-title");
       const info = await hero.evaluate((section) => {
         const heading = section.querySelector("h1")!;
         const photo = section.querySelector("img")!;
@@ -157,15 +160,23 @@ export async function runHeroAudit(baseUrl: string, executablePath: string) {
         const create = section.querySelector('a[href$="/create/love-story"], a[href$="/create/love-story/"]')!.getBoundingClientRect();
         return {
           overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth,
-          focused: document.activeElement === heading,
           imageLoaded: photo.complete && photo.naturalWidth > 0,
           firstSection: section.getBoundingClientRect().top === section.parentElement!.getBoundingClientRect().top,
-          stacked: description.bottom < example.top && example.bottom < create.top,
+          stacked: description.bottom < create.top && create.bottom < example.top,
           sideBySide: example.left > heading.getBoundingClientRect().right && create.right < example.left,
         };
       });
-      const layoutMatches = hasTouch && viewport.width < 1440 ? info.stacked : info.sideBySide;
-      if (info.overflow || !info.imageLoaded || !info.focused || !info.firstSection || !layoutMatches) throw new Error(JSON.stringify(info));
+      const landscapeTablet = width >= 900 && height >= 600 && width > height;
+      const twoColumns = !hasTouch || width >= 1440 || landscapeTablet;
+      const layoutMatches = twoColumns ? info.sideBySide : info.stacked;
+      if (info.overflow || !info.imageLoaded || !info.firstSection || !layoutMatches) throw new Error(JSON.stringify(info));
+      for (const href of ["create/love-story", "demo/love-story"]) {
+        await page.keyboard.press("Tab");
+        const focusedHref = await page.evaluate(() => document.activeElement?.getAttribute("href"));
+        if (focusedHref?.replace(/\/$/, "") !== new URL(href, baseUrl).pathname) {
+          throw new Error(`Unexpected hero focus order at ${width}x${height}: expected ${href}`);
+        }
+      }
       await page.reload({ waitUntil: "networkidle" });
       if (await cover.isVisible()) throw new Error("cover returned after reload");
       await hero.getByRole("link", { name: "Пролистать пример", exact: true }).click();

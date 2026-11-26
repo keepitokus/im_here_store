@@ -27,6 +27,13 @@ export function HomeHero() {
           </p>
         </div>
 
+        <div className={styles.actions}>
+          <Link href="/create/love-story" className={styles.createLink}>
+            Создать книгу <ArrowRight size={16} aria-hidden="true" />
+          </Link>
+          <p className={styles.freeNote}>Черновик и предпросмотр бесплатны</p>
+        </div>
+
         <article className={styles.example}>
           <div className={styles.photo}>
             <Image
@@ -35,7 +42,7 @@ export function HomeHero() {
               fill
               loading="eager"
               fetchPriority="high"
-              sizes="(min-width: 1440px) 550px, (min-width: 1240px) and (hover: hover) and (pointer: fine) 550px, (min-width: 1024px) and (hover: hover) and (pointer: fine) 45vw, 100vw"
+              sizes="(min-width: 1440px) 550px, (min-width: 1240px) and (hover: hover) and (pointer: fine) 550px, (min-width: 1024px) and (hover: hover) and (pointer: fine) 45vw, (min-width: 900px) and (min-height: 600px) and (orientation: landscape) and (pointer: coarse) 45vw, (min-width: 640px) and (min-height: 600px) 640px, (height < 600px) and (orientation: landscape) and (pointer: coarse) 480px, 100vw"
             />
           </div>
           <div className={styles.exampleContent}>
@@ -48,19 +55,11 @@ export function HomeHero() {
           </div>
         </article>
 
-        <div className={styles.purchase}>
-          <div className={styles.actions}>
-            <Link href="/create/love-story" className={styles.createLink}>
-              Создать книгу <ArrowRight size={16} aria-hidden="true" />
-            </Link>
-            <p className={styles.freeNote}>Черновик и предпросмотр бесплатны</p>
-          </div>
-          <ul className={styles.terms}>
-            <li><strong>От {price} за готовое издание</strong></li>
-            <li>До 30 ваших фотографий</li>
-            <li>12 месяцев доступа без автосписаний</li>
-          </ul>
-        </div>
+        <ul className={styles.terms}>
+          <li><strong>От {price} за готовое издание</strong></li>
+          <li>До 30 ваших фотографий</li>
+          <li>12 месяцев доступа без автосписаний</li>
+        </ul>
       </div>
     </section>
   );

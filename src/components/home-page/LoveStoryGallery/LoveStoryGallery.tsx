@@ -21,6 +21,20 @@ export function LoveStoryGallery() {
           </p>
         </div>
 
+        <div className={styles.details}>
+          <p className={styles.note}>
+            Вам не нужно писать длинные тексты или владеть дизайном —
+            достаточно выбрать повод и ответить на бережные вопросы.
+          </p>
+          <Link href="/demo/love-story" className={styles.link}>
+            <span>
+              <span className={styles.linkTitle}>Пролистать пример «Наша&nbsp;история»</span>
+              <span className={styles.linkMeta}>8 разворотов</span>
+            </span>
+            <ArrowRight className={styles.arrow} aria-hidden="true" />
+          </Link>
+        </div>
+
         <div className={styles.gallery}>
           <figure className={styles.mainFigure}>
             <div className={styles.mainPhoto}>
@@ -71,20 +85,6 @@ export function LoveStoryGallery() {
               </figcaption>
             </figure>
           </div>
-        </div>
-
-        <div className={styles.details}>
-          <p className={styles.note}>
-            Вам не нужно писать длинные тексты или владеть дизайном —
-            достаточно выбрать повод и ответить на бережные вопросы.
-          </p>
-          <Link href="/demo/love-story" className={styles.link}>
-            <span>
-              <span className={styles.linkTitle}>Пролистать пример «Наша&nbsp;история»</span>
-              <span className={styles.linkMeta}>8 разворотов</span>
-            </span>
-            <ArrowRight className={styles.arrow} aria-hidden="true" />
-          </Link>
         </div>
       </div>
     </section>
