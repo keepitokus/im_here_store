@@ -1,0 +1,186 @@
+@reference "tailwindcss";
+
+.root {
+  @apply bg-[#EFE7DA]/50 py-14;
+  @apply sm:py-20 lg:py-24;
+  border-block: 1px solid #dfd2c0;
+}
+
+.layout {
+  @apply space-y-10;
+}
+
+.heading {
+  @apply max-w-3xl space-y-3;
+}
+
+.label {
+  @apply text-xs font-semibold uppercase tracking-[0.18em] text-[#7A6855];
+  @apply sm:text-sm;
+}
+
+.title {
+  @apply text-3xl leading-[1.12] text-[#1F3042];
+  @apply sm:text-4xl lg:text-[44px];
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+}
+
+.description {
+  @apply text-base leading-[1.6] text-[#2F3E4E];
+  @apply sm:text-[17px];
+}
+
+.summary {
+  display: grid;
+  align-items: start;
+  padding-bottom: 24px;
+}
+
+.badge {
+  @apply rounded-full px-3.5 py-1 text-xs font-medium;
+  @apply sm:text-[13px];
+  justify-self: start;
+}
+
+.cardTitle {
+  @apply text-2xl font-medium text-[#1F3042];
+  @apply sm:text-3xl;
+  margin-top: 12px;
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+}
+
+.cardDescription {
+  @apply text-base leading-relaxed text-[#2F3E4E];
+  margin-top: 12px;
+}
+
+.details {
+  margin-top: 20px;
+}
+
+.term {
+  @apply flex items-start gap-2 text-sm text-[#2F3E4E];
+  @apply sm:text-[15px];
+}
+
+.term + .term {
+  margin-top: 6px;
+}
+
+.check {
+  @apply h-4 w-4 shrink-0 text-[#4D6256] mt-1;
+}
+
+.cardFooter {
+  @apply border-t border-[#D8CBB8]/80 pt-5;
+  grid-template-columns: minmax(0, 1fr);
+  margin-top: 16px;
+}
+
+.priceGroup {
+  @apply grid content-start items-center gap-x-2 gap-y-1;
+  inline-size: 100%;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.priceLabel {
+  @apply text-[13px] leading-4 font-medium text-[#3E4C5C];
+  white-space: nowrap;
+}
+
+.price {
+  @apply text-3xl font-semibold text-[#1F3042];
+  @apply sm:text-4xl;
+  white-space: nowrap;
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  text-align: end;
+  /* The serif numerals sit below the visual middle of their line box. */
+  translate: 0 -4px;
+}
+
+@media (width < 400px) {
+  .priceLabel {
+    max-inline-size: min-content;
+    white-space: normal;
+  }
+}
+
+.createLink {
+  @apply flex min-h-12 items-center justify-center gap-1.5 rounded-full px-4 text-[15px] font-medium text-[#F7F2E9];
+  margin-top: 24px;
+}
+
+.arrow {
+  @apply h-4 w-4 shrink-0;
+}
+
+.card {
+  @apply flex flex-col rounded-3xl border border-[#D8CBB8] p-6;
+  @apply lg:p-8;
+}
+
+@supports (grid-template-rows: subgrid) {
+  .track {
+    --pricing-card-rows: 8;
+    grid-template-rows: repeat(var(--pricing-card-rows), auto);
+    row-gap: 0;
+  }
+
+  .card,
+  .summary,
+  .details,
+  .terms,
+  .cardFooter {
+    display: grid;
+    grid-template-rows: subgrid;
+    row-gap: 0;
+  }
+
+  .card {
+    grid-row: span var(--pricing-card-rows);
+  }
+
+  .summary {
+    grid-row: span 3;
+  }
+
+  .details {
+    grid-row: span 4;
+  }
+
+  .terms,
+  .cardFooter {
+    grid-row: span 2;
+  }
+
+  @media (min-width: 1440px), (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+    .track {
+      grid-template-rows: none;
+    }
+  }
+}
+
+@media (min-width: 1440px), (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  .cardFooter {
+    display: grid;
+    grid-template: "create price" auto / 56% minmax(0, 1fr);
+    align-items: end;
+    column-gap: 16px;
+    padding-top: 12px;
+  }
+
+  .priceGroup {
+    grid-area: price;
+    grid-template-columns: minmax(0, 1fr);
+    text-align: end;
+  }
+
+  .price {
+    translate: none;
+  }
+
+  .createLink {
+    grid-area: create;
+    margin-top: 0;
+  }
+}

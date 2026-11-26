@@ -1,0 +1,48 @@
+@reference "tailwindcss";
+
+.root {
+  @apply order-8 bg-[#1F3042] py-16 text-center text-[#F7F2E9];
+  @apply sm:py-20 lg:order-none;
+}
+
+.layout {
+  @apply space-y-6;
+}
+
+.logo {
+  @apply flex justify-center;
+}
+
+.title {
+  @apply mx-auto max-w-3xl text-3xl leading-[1.08];
+  @apply sm:text-5xl lg:text-[54px];
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+}
+
+.description {
+  @apply mx-auto max-w-xl text-base text-[#E2D9CC];
+  @apply sm:text-lg;
+}
+
+.actions {
+  @apply mx-auto flex w-full max-w-md flex-col justify-center gap-3 pt-2;
+  @apply sm:max-w-none sm:flex-row;
+}
+
+.catalogLink {
+  @apply inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[#F7F2E9] px-8 text-base font-medium text-[#1F3042];
+  @apply hover:bg-white sm:w-auto;
+}
+
+.noWrap {
+  @apply whitespace-nowrap;
+}
+
+.arrow {
+  @apply h-4 w-4 shrink-0;
+}
+
+.exampleLink {
+  @apply inline-flex min-h-12 w-full items-center justify-center whitespace-nowrap rounded-full border border-[#F7F2E9]/45 px-7 text-base font-medium text-[#F7F2E9];
+  @apply hover:bg-white/10 sm:w-auto;
+}

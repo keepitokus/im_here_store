@@ -1,0 +1,75 @@
+@reference "tailwindcss";
+
+.root {
+  @apply border-t border-[#DFD2C0] py-14;
+  @apply sm:py-20 lg:py-24;
+}
+
+.layout {
+  @apply space-y-10;
+}
+
+.heading {
+  @apply max-w-3xl space-y-3;
+}
+
+.label {
+  @apply text-xs font-semibold uppercase tracking-[0.18em] text-[#7A6855];
+  @apply sm:text-sm;
+}
+
+.title {
+  @apply text-3xl leading-[1.12] text-[#1F3042];
+  @apply sm:text-4xl lg:text-[44px];
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+}
+
+.description {
+  @apply text-base leading-[1.6] text-[#2F3E4E];
+  @apply sm:text-[17px];
+}
+
+.card {
+  @apply flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-[#D8CBB8] bg-[#FFFDF8];
+}
+
+.photo {
+  @apply relative aspect-[4/3] w-full overflow-hidden bg-[#EAE0D2];
+}
+
+.image {
+  @apply object-cover;
+}
+
+.cardContent {
+  @apply p-6 space-y-2.5;
+}
+
+.cardLabel {
+  @apply text-xs font-semibold uppercase tracking-[0.14em] text-[#7A6855] block;
+  @apply sm:text-[13px];
+}
+
+.cardTitle {
+  @apply text-2xl leading-snug text-[#1F3042];
+  @apply sm:text-[26px];
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+}
+
+.cardText {
+  @apply text-[15px] leading-relaxed text-[#2F3E4E];
+  @apply sm:text-base;
+}
+
+.cardActions {
+  @apply px-6 pb-6 pt-2;
+}
+
+.link {
+  @apply inline-flex items-center gap-1.5 text-sm font-medium text-[#1F3042] underline decoration-[#B99273] underline-offset-4;
+  @apply sm:text-[15px] hover:text-[#7A3E4A];
+}
+
+.arrow {
+  @apply h-4 w-4;
+}

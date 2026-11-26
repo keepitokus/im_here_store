@@ -1,0 +1,21 @@
+.shell {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+:global(html[data-hero-book="cover"]) .shell {
+  visibility: hidden;
+}
+
+@layer base {
+  :global(body) > :global([hidden]):has(.shell .noScript) {
+    display: block !important;
+  }
+}

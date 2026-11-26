@@ -1,0 +1,5 @@
+.drawer {
+  max-height: calc(100dvh - var(--drawer-top, 68px));
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+}

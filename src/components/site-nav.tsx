@@ -1,17 +1,28 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type MouseEvent } from "react";
 import Link from "next/link";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { BrandLogo } from "@/components/brand-logo";
+import styles from "./site-nav.module.css";
 
 const LINKS = [
   { href: "/catalog", label: "Подарки" },
   { href: "/#how", label: "Как это работает" },
-  { href: "/demo/mother-thanks", label: "Примеры книг" },
+  { href: "/#book-examples", label: "Примеры книг" },
   { href: "/#pricing", label: "Стоимость" },
   { href: "/#faq", label: "Вопросы" },
 ];
+
+function navigateToHomeSection(event: MouseEvent<HTMLAnchorElement>) {
+  const link = event.currentTarget;
+  if (!link.hash || link.pathname === window.location.pathname) return;
+  if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+  // Let the browser position the fragment after the homepage has loaded.
+  event.preventDefault();
+  window.location.assign(link.href);
+}
 
 export function SiteNav({ accountLabel }: { accountLabel: string }) {
   const [open, setOpen] = useState(false);
@@ -21,16 +32,33 @@ export function SiteNav({ accountLabel }: { accountLabel: string }) {
   useEffect(() => {
     if (!open) return;
 
+    const toggleButton = toggleBtnRef.current;
+    const drawerEl = drawerRef.current;
+    if (!toggleButton || !drawerEl) return;
+
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     const focusableSelector =
       'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
-    const drawerEl = drawerRef.current;
-    const firstLink = drawerEl?.querySelector<HTMLElement>(focusableSelector);
-    firstLink?.focus();
+    const fitDrawer = () => {
+      if (toggleButton.getClientRects().length === 0) {
+        setOpen(false);
+        return;
+      }
 
-    function handleKeyDown(e: KeyboardEvent) {
+      drawerEl.style.setProperty("--drawer-top", `${drawerEl.getBoundingClientRect().top}px`);
+    };
+
+    fitDrawer();
+    drawerEl.querySelector<HTMLElement>(focusableSelector)?.focus({ preventScroll: true });
+    const observer = new ResizeObserver(fitDrawer);
+    observer.observe(toggleButton);
+    if (drawerEl.parentElement) observer.observe(drawerEl.parentElement);
+    window.addEventListener("resize", fitDrawer);
+    window.addEventListener("scroll", fitDrawer, { passive: true });
+
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
         setOpen(false);
@@ -38,7 +66,7 @@ export function SiteNav({ accountLabel }: { accountLabel: string }) {
         return;
       }
 
-      if (e.key === "Tab" && drawerEl) {
+      if (e.key === "Tab") {
         const focusables = Array.from(
           drawerEl.querySelectorAll<HTMLElement>(focusableSelector)
         );
@@ -54,11 +82,14 @@ export function SiteNav({ accountLabel }: { accountLabel: string }) {
           first.focus();
         }
       }
-    }
+    };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => {
+      observer.disconnect();
       document.body.style.overflow = previousOverflow;
+      window.removeEventListener("resize", fitDrawer);
+      window.removeEventListener("scroll", fitDrawer);
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [open]);
@@ -90,6 +121,7 @@ export function SiteNav({ accountLabel }: { accountLabel: string }) {
           <Link
             key={link.href}
             href={link.href}
+            onClick={navigateToHomeSection}
             className="inline-flex min-h-11 items-center whitespace-nowrap px-2 text-[15px] font-medium text-[#1F3042] transition-colors hover:text-[#7A3E4A]"
           >
             {link.label}
@@ -140,7 +172,7 @@ export function SiteNav({ accountLabel }: { accountLabel: string }) {
             role="dialog"
             aria-modal="true"
             aria-label="Навигационное меню"
-            className="absolute inset-x-0 top-full z-50 border-b border-[#D8CBB8] bg-[#FFFDF8] shadow-xl xl:hidden"
+            className={styles.drawer + " absolute inset-x-0 top-full z-50 border-b border-[#D8CBB8] bg-[#FFFDF8] shadow-xl xl:hidden"}
           >
             <div className="layout-container py-5 space-y-4">
               <div className="flex flex-col divide-y divide-[#EAE0D2]">
@@ -149,7 +181,10 @@ export function SiteNav({ accountLabel }: { accountLabel: string }) {
                     key={link.href}
                     href={link.href}
                     className="flex min-h-12 items-center justify-between py-3 text-base font-medium text-[#1F3042] hover:text-[#7A3E4A]"
-                    onClick={() => setOpen(false)}
+                    onClick={(event) => {
+                      setOpen(false);
+                      navigateToHomeSection(event);
+                    }}
                   >
                     <span>{link.label}</span>
                     <ArrowRight className="h-4 w-4 text-[#8A7563]" />

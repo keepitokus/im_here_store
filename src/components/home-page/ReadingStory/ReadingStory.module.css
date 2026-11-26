@@ -1,0 +1,62 @@
+@reference "tailwindcss";
+
+.root {
+  @apply order-5 py-14;
+  @apply sm:py-20 lg:order-none lg:py-24;
+}
+
+.sectionTitle {
+  @apply text-3xl leading-[1.12] text-[#1F3042];
+  @apply sm:text-4xl lg:text-[44px];
+  margin-bottom: 40px;
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+}
+
+.panel {
+  @apply overflow-hidden rounded-3xl border border-[#1F3042] bg-[#1F3042];
+}
+
+.grid {
+  @apply grid grid-cols-1;
+  @apply lg:grid-cols-12;
+}
+
+.photo {
+  @apply relative min-h-[280px];
+  @apply sm:min-h-[360px] lg:col-span-6 lg:min-h-[460px];
+}
+
+.image {
+  @apply object-cover;
+}
+
+.content {
+  @apply flex flex-col justify-center p-7 text-[#F7F2E9] space-y-6;
+  @apply sm:p-10 lg:p-14 lg:col-span-6;
+}
+
+.title {
+  @apply text-3xl leading-[1.1];
+  @apply sm:text-4xl lg:text-5xl;
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+}
+
+.description {
+  @apply text-base leading-[1.6] text-[#EAE2D6];
+  @apply sm:text-[17px];
+}
+
+.actions {
+  @apply flex flex-col gap-3 pt-1;
+  @apply sm:flex-row sm:flex-wrap;
+}
+
+.catalogLink {
+  @apply inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#F7F2E9] px-7 text-base font-medium text-[#1F3042];
+  @apply hover:bg-white sm:w-auto;
+}
+
+.exampleLink {
+  @apply inline-flex min-h-12 w-full items-center justify-center rounded-full border border-[#F7F2E9]/45 px-6 py-2.5 text-center text-base font-medium leading-tight text-[#F7F2E9];
+  @apply hover:bg-white/10 sm:w-auto sm:py-0;
+}

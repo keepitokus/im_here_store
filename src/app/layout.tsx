@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
+import { HERO_VISIT_SCRIPT } from "@/components/home-page/BookIntro/BookIntro.script";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -44,7 +45,11 @@ export default function RootLayout({
     <html
       lang="ru"
       className={`${cormorant.variable} ${inter.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: HERO_VISIT_SCRIPT }} />
+      </head>
       <body className="min-h-full flex flex-col bg-[#F7F2E9] text-[#1F3042]">
         {children}
       </body>

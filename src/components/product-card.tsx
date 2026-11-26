@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ProductSlug, PRODUCTS_CATALOG } from "@/lib/catalog";
 import { formatRublesFromKopecks } from "@/lib/utils";
 import { ArrowRight, BookOpen } from "lucide-react";
 import { BrandLogo } from "@/components/brand-logo";
+import { ProductCover } from "@/components/product-cover/ProductCover";
 
 interface EditorialCardConfig {
   slug: ProductSlug;
@@ -101,32 +101,13 @@ export function ProductCard({
         </div>
 
         <div className="px-5 pt-5 sm:px-7 sm:pt-6">
-          <div className="relative overflow-hidden rounded-2xl border border-[#D8CBB8] bg-[#FFFDF8] shadow-sm">
-            {/* Корешок обложки книги */}
-            <div
-              aria-hidden
-              className={`absolute inset-y-0 left-0 z-10 w-3 ${cfg.spineColor}`}
-            />
-            <div className="pl-3">
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#EAE0D2]">
-                <Image
-                  src={cfg.scenePhoto}
-                  alt={cfg.sceneAlt}
-                  fill
-                  priority={priority}
-                  loading={priority ? "eager" : "lazy"}
-                  sizes="(max-width: 768px) 100vw, 520px"
-                  className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
-                />
-              </div>
-              <div className="flex flex-col gap-0.5 border-t border-[#ECE2D4] bg-[#FFFDF8] px-4 py-2.5 text-[13px] text-[#5C5349] sm:flex-row sm:items-center sm:justify-between sm:gap-3">
-                <span className="font-medium text-[#1F3042]">
-                  Обложка издания «{cfg.coverMiniTitle}»
-                </span>
-                <span className="whitespace-nowrap">До 30 фото · 6 глав</span>
-              </div>
-            </div>
-          </div>
+          <ProductCover
+            image={cfg.scenePhoto}
+            alt={cfg.sceneAlt}
+            title={cfg.coverMiniTitle}
+            spineClassName={cfg.spineColor}
+            priority={priority}
+          />
         </div>
 
         {/* Текстовая часть карточки */}

@@ -68,9 +68,11 @@ describe("тематическая чистота системных текст�
   });
 
   it("главная не смешивает маму и малыша в блоке про книгу пары", () => {
-    const home = readFileSync(new URL("../src/app/page.tsx", import.meta.url), "utf8");
-    const story = home.slice(home.indexOf("Помните, как всё начиналось"), home.indexOf("id=\"gifts\""));
-    expect(story).toMatch(/Пролистать пример «Наша история»/);
+    const story = readFileSync(
+      new URL("../src/components/home-page/LoveStoryGallery/LoveStoryGallery.tsx", import.meta.url),
+      "utf8",
+    );
+    expect(story).toContain("Пролистать пример «Наша&nbsp;история»");
     expect(story).not.toMatch(/Мамин/);
     expect(story).not.toMatch(/малыш/i);
     expect(story).not.toMatch(/день рождения/i);

@@ -19,13 +19,13 @@
     "skill": "ya-zdes-design-ux",
     "modes": ["Inspect", "Plan", "Apply"],
     "taskPattern": "\\b(?:дизайн\\w*|интерфейс\\w*|в[её]рстк\\w*|типографик\\w*|навигац\\w*|удобств\\w*|удобнее|понятнее|визуальн\\w*|экран\\w*|UX|UI|design|usability|layout)\\b",
-    "pathPattern": "(?m)^(?:\\./)?(?:src/app/(?:page\\.tsx$|layout\\.tsx$|globals\\.css$|account/|b/|catalog/|checkout/|create/|demo/|gifts/|orders/|preview/)|src/components/(?:account-client|book-reader|book-timeline|checkout-client|cinematic-demo|editor-wizard|free-cabinet|free-editor|hero-book|order-result-actions|product-card|site-layout)\\.tsx$|src/components/ui/)"
+    "pathPattern": "(?m)^(?:\\./)?(?:src/app/(?:page\\.(?:tsx|module\\.css)$|layout\\.tsx$|globals\\.css$|account/|b/|catalog/|checkout/|create/|demo/|gifts/|orders/|preview/)|src/components/(?:home-page|product-cover)/|src/components/(?:account-client|book-reader|book-timeline|checkout-client|cinematic-demo|editor-wizard|free-cabinet|free-editor|order-result-actions|product-card|site-layout)\\.tsx$|src/components/ui/)"
   },
   {
     "skill": "ya-zdes-sales-copy",
     "modes": ["Inspect", "Plan", "Apply"],
     "taskPattern": "\\b(?:витрин\\w*|продаж\\w*|конверси\\w*|слоган\\w*|цен(?:а|у|ы|е|ой|ами)|перв\\w*\\s+экран\\w*|карточк\\w*\\s+издани\\w*|(?:экран|кнопк)\\w*\\s+оплат\\w*|текст\\w*\\s+(?:кнопк|оплат)\\w*|pricing|sales|conversion|storefront|checkout\\s+(?:copy|screen))\\b",
-    "pathPattern": "(?m)^(?:\\./)?(?:src/app/(?:page\\.tsx$|catalog/|checkout/|demo/|gifts/|orders/)|src/components/(?:checkout-client|hero-book|order-result-actions|product-card)\\.tsx$|src/lib/(?:catalog|landing)\\.ts$)"
+    "pathPattern": "(?m)^(?:\\./)?(?:src/app/(?:page\\.tsx$|catalog/|checkout/|demo/|gifts/|orders/)|src/components/(?:home-page|product-cover)/|src/components/(?:checkout-client|order-result-actions|product-card)\\.tsx$|src/lib/(?:catalog|landing)\\.ts$)"
   },
   {
     "skill": "ya-zdes-pages-export",
